@@ -30,14 +30,17 @@ void RendManager::Destroy()
 	// m_pinstance 에 뭔가 들어있을 경우, delete
 	if (m_pinstance != NULL)
 	{
-		// 다 쓴 instance (동적할당) 삭제
-		delete m_pinstance;
-		m_pinstance = NULL;
-
+		// 내부 데이터를 삭제해준 뒤에 동적할당 된 주소값을 가리키는 m_pinstance 삭제.
+		// 순서가 잘못 되면 주소값에 접근할 수 없어서 잘못된 주소값을 clear() 하고 본래 있던 데이터 clear가 안 됨.
 		for (int i = 0; i < EOBJECT_OBJNUM; i++)
 		{
 			m_vecRendObj[i].clear();
 		}
+
+		// 다 쓴 instance (동적할당) 삭제
+		delete m_pinstance;
+		m_pinstance = NULL;
+
 	}
 	return;
 };

@@ -191,6 +191,9 @@
     <Image Include="metalslug.ico">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="..\source\background\metalslug_background1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="metalslug.cpp">

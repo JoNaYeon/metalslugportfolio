@@ -210,6 +210,7 @@
     <ResourceCompile Include="metalslug.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\source\background\metalslug_background1.bmp" />
     <Image Include="metalslug.ico" />
     <Image Include="small.ico" />
   </ItemGroup>

@@ -1,6 +1,8 @@
 ﻿// metalslug.cpp : 애플리케이션에 대한 진입점을 정의합니다.
 //
 
+#pragma comment (lib, "Msimg32.lib")
+
 #include "framework.h"
 #include "metalslug.h"
 // 메인프레임을 추가시키기 위해 메인프레임 헤더를 포함시킨다. 
@@ -135,8 +137,21 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+    // 그림 저장할 도화지 변수 
+    static HBITMAP hBit = NULL;
+    // 윈도우 크기 담을 RECT 변수
+    RECT recClient = { NULL, };
+    static int ibitx = 0;
+    static bool bx = false;
+
     switch (message)
     {
+    case WM_CREATE:
+        {
+            SetTimer(hWnd, 1, 60, NULL);
+        }
+        break;
+
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
@@ -154,17 +169,79 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
+
     case WM_PAINT:
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
+
+            ////////////////////////////////////////////////////////////////////////// 더블버퍼링
+            // 메모리 dc
+            HDC hMemdc = CreateCompatibleDC(hdc);
+            // 이전 도화지 저장해줄 변수
+            HBITMAP hOldBit = NULL;
+
+            // 윈도우 화면 크기 가져오기
+            GetClientRect(hWnd, &recClient);
+
+            // 비트맵을 hBIt에 뿌려주기
+            hBit = LoadBitmap(hInst, MAKEINTRESOURCE(IDB_BACKGROUND1));
+            // 기존의 도화지를 hOldBit 에 저장해둠
+            hOldBit = (HBITMAP)SelectObject(hMemdc, hBit);
+            //GetObject(hBit, sizeof(IDC_METALSLUG), &hBit);
+
+            // hdc와 hMemdc를 바꿔줌
+            //BitBlt(hdc, 0, 0, recClient.right, recClient.bottom, hMemdc, 0, 0, SRCCOPY);
+
+
+            TransparentBlt(hdc, 0, 0, recClient.right, recClient.bottom, 
+                hMemdc, ibitx, 186, 460, 236, RGB(255, 000, 255));
+
+            ibitx += 3;
+
+            if (ibitx >= 800)
+            {
+                bx = true;
+            }
+            else if (ibitx <= 0)
+            {
+                bx = false;
+            }
+
+            if(bx)
+            {
+                TransparentBlt(hdc, 460 - ibitx, 236, recClient.right, recClient.bottom,
+                    hMemdc, 0, 186, 460, 236, RGB(255, 000, 255));
+            }
+
+            // 다시 hOldBit 으로 갈아주기
+            SelectObject(hMemdc, hOldBit);
+
+            // HBITMAP 해제
+            DeleteObject(hBit);
+            // dc 해제
+            DeleteDC(hMemdc);
+
             EndPaint(hWnd, &ps);
         }
         break;
-    case WM_DESTROY:
-        PostQuitMessage(0);
+
+    case WM_TIMER:
+        {
+            // 윈도우 화면 크기 가져오기
+            GetClientRect(hWnd, &recClient);
+            InvalidateRect(hWnd, &recClient, TRUE);
+        }   
         break;
+
+    case WM_DESTROY:
+        {   
+            KillTimer(hWnd, 1);
+            PostQuitMessage(0);
+        }
+        break;
+
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
     }

@@ -1,0 +1,33 @@
+﻿  Background.cpp
+  BossET.cpp
+  BossSpaceship.cpp
+  BossTomb.cpp
+  Bullet.cpp
+  DBManager.cpp
+D:\Private\Git\metalslugportfolio\metalslugportfolio\metalslug\DBManager.cpp(47,22): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+D:\Private\Git\metalslugportfolio\metalslugportfolio\metalslug\DBManager.cpp(61,21): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  Effect.cpp
+  Helper.cpp
+  InputManager.cpp
+  Item.cpp
+  ItemBomb.cpp
+  ItemGun.cpp
+  Mainfrm.cpp
+  metalslug.cpp
+  Monster.cpp
+  MonsterBoss.cpp
+  MonsterZombieBig.cpp
+  MonsterZombieMan.cpp
+  MonsterZombieSordier.cpp
+  MonsterZombieWm.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  Object.cpp
+  Player.cpp
+  PlayerNormal.cpp
+  PlayerZombie.cpp
+  RendManager.cpp
+D:\Private\Git\metalslugportfolio\metalslugportfolio\metalslug\RendManager.cpp(49,21): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  UI.cpp
+  코드를 생성하고 있습니다...
+  metalslug.vcxproj -> D:\Private\Git\metalslugportfolio\metalslugportfolio\Debug\metalslug.exe

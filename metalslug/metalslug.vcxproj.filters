@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="00. Mainfrm">
+      <UniqueIdentifier>{9b9391d0-b360-4add-b736-0fa033cda869}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Default">
+      <UniqueIdentifier>{82411518-f753-43df-8de4-ff03558175bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Manager">
+      <UniqueIdentifier>{e3b02d68-3e17-4aaa-96a0-f34375f89741}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Manager\Input">
+      <UniqueIdentifier>{e9a2bf11-4842-46b1-9c3d-b852dd3d984a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Manager\DB">
+      <UniqueIdentifier>{68648247-235a-4029-b359-452cf2d0019e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Manager\Rend">
+      <UniqueIdentifier>{ecf3d7f1-d367-4034-829c-8d7825ae3537}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object">
+      <UniqueIdentifier>{f4231651-82b2-45d4-951c-9b81f928c097}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\01. UI">
+      <UniqueIdentifier>{be9a7a3b-c489-49dc-bf0e-eef09b416f8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\02. Player">
+      <UniqueIdentifier>{28791f66-2385-473b-a628-c85c0b03beaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\02. Player\01. Normal">
+      <UniqueIdentifier>{053286a9-dc60-48ef-b546-cdded3fa5bba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\02. Player\02. Zombie">
+      <UniqueIdentifier>{f388b942-b540-426a-a3e6-85067bf1eae5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\03. Monster">
+      <UniqueIdentifier>{3c0892aa-eb56-443b-9b7f-5bd6c718ef0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\03. Monster\01. ZombieWm">
+      <UniqueIdentifier>{4cb93d99-c7d0-4c19-9673-fe74cc10df82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\03. Monster\02. ZombieMan">
+      <UniqueIdentifier>{25f1d397-6eef-494e-9879-3b56aadfe8d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\03. Monster\03. ZombieBig">
+      <UniqueIdentifier>{3a2080a0-3701-405b-92c2-2e0c1f8a72d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\03. Monster\04. ZomvbieSordier">
+      <UniqueIdentifier>{fdd747a3-3911-433e-bde3-f5641c9f81fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\03. Monster\05. Boss">
+      <UniqueIdentifier>{80ad0ad9-bf26-4fad-94e8-003993e52131}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\03. Monster\05. Boss\01. ET">
+      <UniqueIdentifier>{158865af-2f92-4d0e-ad40-49db14a49338}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\03. Monster\05. Boss\02. Tomb">
+      <UniqueIdentifier>{8a018a2d-be61-4d00-b319-9cf3df2f3d2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\03. Monster\05. Boss\03. Spaceship">
+      <UniqueIdentifier>{035a55c2-26e4-42cd-9aff-4308b17afed5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\04. Helper">
+      <UniqueIdentifier>{b581526d-d342-4ba0-8465-d3915a729509}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\05. Effect">
+      <UniqueIdentifier>{5b1b83c4-8188-45a6-8638-5520bbb32a20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\06. Item">
+      <UniqueIdentifier>{2e4487ce-fa7a-4a3f-b583-3424560bb79d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\06. Item\01. Gun">
+      <UniqueIdentifier>{dedce759-860c-457b-82f2-9951525a2516}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\06. Item\02. Bomb">
+      <UniqueIdentifier>{cb8dda50-7fe5-4b60-ae1e-ef97f9222c8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\07. Background">
+      <UniqueIdentifier>{819e2f99-ff7a-4334-ada3-2ab923133726}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Object\06. Item\01. Gun\01. Bullet">
+      <UniqueIdentifier>{cc40f581-7980-461c-9183-489405b52c87}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>01. Default</Filter>
+    </ClInclude>
+    <ClInclude Include="metalslug.h">
+      <Filter>01. Default</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>01. Default</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>01. Default</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>02. Manager\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="DBManager.h">
+      <Filter>02. Manager\DB</Filter>
+    </ClInclude>
+    <ClInclude Include="RendManager.h">
+      <Filter>02. Manager\Rend</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>03. Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>03. Object\02. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerNormal.h">
+      <Filter>03. Object\02. Player\01. Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerZombie.h">
+      <Filter>03. Object\02. Player\02. Zombie</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>03. Object\03. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterZombieWm.h">
+      <Filter>03. Object\03. Monster\01. ZombieWm</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterZombieMan.h">
+      <Filter>03. Object\03. Monster\02. ZombieMan</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterZombieBig.h">
+      <Filter>03. Object\03. Monster\03. ZombieBig</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterZombieSordier.h">
+      <Filter>03. Object\03. Monster\04. ZomvbieSordier</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterBoss.h">
+      <Filter>03. Object\03. Monster\05. Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="BossET.h">
+      <Filter>03. Object\03. Monster\05. Boss\01. ET</Filter>
+    </ClInclude>
+    <ClInclude Include="BossTomb.h">
+      <Filter>03. Object\03. Monster\05. Boss\02. Tomb</Filter>
+    </ClInclude>
+    <ClInclude Include="BossSpaceship.h">
+      <Filter>03. Object\03. Monster\05. Boss\03. Spaceship</Filter>
+    </ClInclude>
+    <ClInclude Include="Helper.h">
+      <Filter>03. Object\04. Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>03. Object\05. Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>03. Object\06. Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Background.h">
+      <Filter>03. Object\07. Background</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemGun.h">
+      <Filter>03. Object\06. Item\01. Gun</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemBomb.h">
+      <Filter>03. Object\06. Item\02. Bomb</Filter>
+    </ClInclude>
+    <ClInclude Include="Mainfrm.h">
+      <Filter>00. Mainfrm</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>03. Object\01. UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>03. Object\06. Item\01. Gun\01. Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="define.h">
+      <Filter>01. Default</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="metalslug.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="metalslug.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="metalslug.cpp">
+      <Filter>01. Default</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>02. Manager\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="DBManager.cpp">
+      <Filter>02. Manager\DB</Filter>
+    </ClCompile>
+    <ClCompile Include="RendManager.cpp">
+      <Filter>02. Manager\Rend</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>03. Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>03. Object\02. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerNormal.cpp">
+      <Filter>03. Object\02. Player\01. Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerZombie.cpp">
+      <Filter>03. Object\02. Player\02. Zombie</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>03. Object\03. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterZombieWm.cpp">
+      <Filter>03. Object\03. Monster\01. ZombieWm</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterZombieMan.cpp">
+      <Filter>03. Object\03. Monster\02. ZombieMan</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterZombieBig.cpp">
+      <Filter>03. Object\03. Monster\03. ZombieBig</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterZombieSordier.cpp">
+      <Filter>03. Object\03. Monster\04. ZomvbieSordier</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterBoss.cpp">
+      <Filter>03. Object\03. Monster\05. Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="BossET.cpp">
+      <Filter>03. Object\03. Monster\05. Boss\01. ET</Filter>
+    </ClCompile>
+    <ClCompile Include="BossTomb.cpp">
+      <Filter>03. Object\03. Monster\05. Boss\02. Tomb</Filter>
+    </ClCompile>
+    <ClCompile Include="BossSpaceship.cpp">
+      <Filter>03. Object\03. Monster\05. Boss\03. Spaceship</Filter>
+    </ClCompile>
+    <ClCompile Include="Helper.cpp">
+      <Filter>03. Object\04. Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>03. Object\05. Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>03. Object\06. Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Background.cpp">
+      <Filter>03. Object\07. Background</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemGun.cpp">
+      <Filter>03. Object\06. Item\01. Gun</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemBomb.cpp">
+      <Filter>03. Object\06. Item\02. Bomb</Filter>
+    </ClCompile>
+    <ClCompile Include="Mainfrm.cpp">
+      <Filter>00. Mainfrm</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>03. Object\01. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>03. Object\06. Item\01. Gun\01. Bullet</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+</Project>

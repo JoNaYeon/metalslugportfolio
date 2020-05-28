@@ -1,0 +1,12 @@
+#pragma once
+
+#define PURE =0;
+
+enum E_OBJECT
+{
+	EOBJECT_BG = 0,
+	EOBJECT_TERRAIN,
+	EOBJECT_OBJ,
+	EOBJECT_UI,
+	EOBJECT_OBJNUM,
+};

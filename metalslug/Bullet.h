@@ -1,0 +1,32 @@
+#pragma once
+#include "ItemGun.h"
+class Bullet :
+	public ItemGun
+{
+protected:
+
+public:
+	// 생성자
+	Bullet()
+	{
+
+	};
+	// 소멸자
+	virtual ~Bullet()
+	{
+
+	};
+
+	// 오브젝트 초기화
+	void Init();
+	// 오브젝트 움직임
+	void Run();
+	// 오브젝트 출력
+	void Render();
+	// 오브젝트 파괴
+	void Destroy();
+
+	// 총알 닿으면
+	void Hit();
+};
+

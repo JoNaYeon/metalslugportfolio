@@ -1,6 +1,6 @@
 #pragma once
 
-#define PURE =0;
+#define PURE = 0;
 
 enum E_OBJECT
 {

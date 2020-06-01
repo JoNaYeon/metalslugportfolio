@@ -178,6 +178,9 @@
     <ClInclude Include="define.h">
       <Filter>01. Default</Filter>
     </ClInclude>
+    <ClInclude Include="ObjectImage.h">
+      <Filter>03. Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="metalslug.rc">
@@ -273,6 +276,9 @@
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>03. Object\06. Item\01. Gun\01. Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectImage.cpp">
+      <Filter>03. Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -170,6 +170,7 @@
     <ClInclude Include="MonsterZombieSordier.h" />
     <ClInclude Include="MonsterZombieWm.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="ObjectImage.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerNormal.h" />
     <ClInclude Include="PlayerZombie.h" />
@@ -200,6 +201,7 @@
     <ClCompile Include="MonsterZombieSordier.cpp" />
     <ClCompile Include="MonsterZombieWm.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="ObjectImage.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerNormal.cpp" />
     <ClCompile Include="PlayerZombie.cpp" />

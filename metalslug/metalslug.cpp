@@ -191,6 +191,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
             // 윈도우 화면 크기 가져오기
             GetClientRect(hWnd, &recClient);
+
             InvalidateRect(hWnd, &recClient, TRUE);
         }   
         break;

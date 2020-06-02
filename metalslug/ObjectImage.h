@@ -5,18 +5,26 @@
 class ObjectImage :
     public Object
 {
+private:
+    // 좌표를 가질 POINT 변수
+    POINT position;
+
 public:
     ObjectImage()
     {
-
+        position.x = 0;
+        position.y = 0;
     }
     ~ObjectImage()
     {
 
     }
 
-    HDC ImageLoading(HWND _hWnd, HDC _hdc, HDC hMemdc, HINSTANCE _hInst, RECT _recClient,
-        HBITMAP _hBit, int ixoriginSrc, int iyoriginSrc, int iwSrc, int ihSrc);
+//    HDC ImageLoading(HWND _hWnd, HDC _hdc, HDC hMemdc, HINSTANCE _hInst, RECT _recClient,
+//        HBITMAP _hBit, int istartpointx, int istartpointy, int ixoriginSrc, int iyoriginSrc, int iwSrc, int ihSrc);
+
+    void ImageLoading(HDC _hMemdc, RECT _recClientImgSize, HDC _hImage, POINT _recImageposition, POINT _pImagesize);
+
     void ImageSize();
 
     // 오브젝트 초기화
@@ -27,5 +35,10 @@ public:
     void Render();
     // 오브젝트 파괴
     void Destroy();
+
+    // 좌표를 내보낼 함수
+    POINT GetPosition();
+    // 좌표를 받을 함수
+    void SetPosition(POINT _pposition);
 };
 

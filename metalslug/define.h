@@ -1,6 +1,7 @@
 #pragma once
 
 #define PURE = 0;
+#define BACKGROUNDMOVE 5
 
 enum E_OBJECT
 {

@@ -40,10 +40,10 @@ void ObjectImage::Destroy()
 }*/
 
 // 이미지를 뿌려줄 함수
-void ObjectImage::ImageLoading(HDC _hMemdc, RECT _recClientImgSize, HDC _hImage, POINT _recImageposition, POINT _pImagesize)
+void ObjectImage::ImageLoading(HDC& _hMemdc, RECT _recClientImgSize, HDC& _hImage, POINT _recImageposition, POINT _pImagesize)
 {
     // 이미지 뿌려주기
-    TransparentBlt(_hMemdc, position.x, position.y, _recClientImgSize.right, _recClientImgSize.bottom, _hImage,
+    TransparentBlt(_hMemdc, position.x, position.y, _recClientImgSize.right / 0.49, _recClientImgSize.bottom, _hImage,
         _recImageposition.x, _recImageposition.y, _pImagesize.x, _pImagesize.y, RGB(000, 255, 000));
 
     return;

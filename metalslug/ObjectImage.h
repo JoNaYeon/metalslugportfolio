@@ -23,7 +23,7 @@ public:
 //    HDC ImageLoading(HWND _hWnd, HDC _hdc, HDC hMemdc, HINSTANCE _hInst, RECT _recClient,
 //        HBITMAP _hBit, int istartpointx, int istartpointy, int ixoriginSrc, int iyoriginSrc, int iwSrc, int ihSrc);
 
-    void ImageLoading(HDC _hMemdc, RECT _recClientImgSize, HDC _hImage, POINT _recImageposition, POINT _pImagesize);
+    void ImageLoading(HDC& _hMemdc, RECT _recClientImgSize, HDC& _hImage, POINT _recImageposition, POINT _pImagesize);
 
     void ImageSize();
 

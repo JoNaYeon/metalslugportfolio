@@ -142,6 +142,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     // 윈도우 크기 담을 RECT 변수
     RECT recClient = { NULL, };
+    static Background classbg(hWnd);
 
     switch (message)
     {
@@ -178,8 +179,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // client 화면 크기를 안 받아오고 있으니 화면에 아무것도 안 뜨죠! 
             GetClientRect(hWnd, &recClient);
 
-            Background classbg;
-
             // 배경 그려줄 함수 불러오기 
             classbg.Run(hWnd, hdc, hInst, recClient);
 
@@ -192,7 +191,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // 윈도우 화면 크기 가져오기
             GetClientRect(hWnd, &recClient);
 
-            InvalidateRect(hWnd, &recClient, TRUE);
+            InvalidateRect(hWnd, &recClient, false);
         }   
         break;
 

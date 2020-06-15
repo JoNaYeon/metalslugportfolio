@@ -16,7 +16,13 @@ public:
 	// 持失切
 	Player()
 	{
-
+		m_ihp = 0;
+		m_istrength = 0;
+		m_ispeed = 0;
+		m_igun = 0;
+		m_ibomb = 0;
+		m_ivirous = 0;
+		m_bhuman = 0;
 	}
 	// 社瑚切
 	virtual ~Player()

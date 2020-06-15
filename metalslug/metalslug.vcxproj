@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -30,7 +30,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -148,20 +148,26 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Background.h" />
+    <ClInclude Include="BossStage.h" />
     <ClInclude Include="BossET.h" />
     <ClInclude Include="BossSpaceship.h" />
     <ClInclude Include="BossTomb.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="CharactorSelect.h" />
     <ClInclude Include="DBManager.h" />
     <ClInclude Include="define.h" />
     <ClInclude Include="Effect.h" />
+    <ClInclude Include="firstRound.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Helper.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Intro.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemBomb.h" />
     <ClInclude Include="ItemGun.h" />
     <ClInclude Include="Mainfrm.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="metalslug.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MonsterBoss.h" />
@@ -176,23 +182,33 @@
     <ClInclude Include="PlayerZombie.h" />
     <ClInclude Include="RendManager.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="Score.h" />
+    <ClInclude Include="secondRound.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="BossStage.cpp" />
     <ClCompile Include="BossET.cpp" />
     <ClCompile Include="BossSpaceship.cpp" />
     <ClCompile Include="BossTomb.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="CharactorSelect.cpp" />
     <ClCompile Include="DBManager.cpp" />
     <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="firstRound.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="generalfunction.h" />
     <ClCompile Include="Helper.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="Intro.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemBomb.cpp" />
     <ClCompile Include="ItemGun.cpp" />
     <ClCompile Include="Mainfrm.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="metalslug.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MonsterBoss.cpp" />
@@ -206,6 +222,9 @@
     <ClCompile Include="PlayerNormal.cpp" />
     <ClCompile Include="PlayerZombie.cpp" />
     <ClCompile Include="RendManager.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Score.cpp" />
+    <ClCompile Include="secondRound.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -215,9 +234,6 @@
     <Image Include="..\source\background\metalslug_background1.bmp" />
     <Image Include="metalslug.ico" />
     <Image Include="small.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

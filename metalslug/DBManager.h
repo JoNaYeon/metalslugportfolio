@@ -1,5 +1,7 @@
 #pragma once
 #include "define.h"
+#include "framework.h"
+#include "Object.h"
 #include <vector>
 
 class Object;
@@ -24,6 +26,7 @@ private:
 
 	}
 public:
+	// static 함수 : class의 선언 없이 사용이 가능.
 	static DBManager* GetInstance();
 	static void Create();
 	void Destroy();

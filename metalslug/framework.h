@@ -21,3 +21,24 @@
 #include <random>
 
 #include "define.h"
+
+// 전역 변수를 다른 클래스에서도 사용할 수 있도록 해주는 키워드
+extern HINSTANCE hInst;
+
+// CreateCompatableBitmap() 의 내용을 바꾸어서 커스텀 한 함수
+// 한슬이표
+static HBITMAP MakeDIBSection(HDC& dc, int width, int height)
+{
+	BITMAPINFO bmi;
+	LPVOID pBits;
+	HBITMAP hBitmap;
+	memset(&bmi.bmiHeader, 0, sizeof(BITMAPINFOHEADER));
+	bmi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+	bmi.bmiHeader.biBitCount = 32;
+	bmi.bmiHeader.biWidth = width;
+	bmi.bmiHeader.biHeight = height;
+	bmi.bmiHeader.biPlanes = 1;
+	hBitmap = ::CreateDIBSection(dc, &bmi, DIB_RGB_COLORS, (void**)&pBits, NULL, 0);
+	return hBitmap;
+}
+

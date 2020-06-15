@@ -1,4 +1,6 @@
 #pragma once
+#include "framework.h"
+
 class InputManager
 	// 사용자의 입력값을 관리
 {

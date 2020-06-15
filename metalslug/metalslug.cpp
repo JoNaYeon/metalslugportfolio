@@ -3,13 +3,8 @@
 
 #pragma comment (lib, "Msimg32.lib")
 
-#include "framework.h"
 #include "metalslug.h"
 // 메인프레임을 추가시키기 위해 메인프레임 헤더를 포함시킨다. 
-#include "Mainfrm.h"
-#include "define.h"
-#include "Object.h"
-#include "Background.h"
 
 #define MAX_LOADSTRING 100
 
@@ -53,6 +48,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     Mainfrm framework;
     framework.Create();
     framework.Initialize();
+    
 
     // 기본 메시지 루프입니다:
     while (GetMessage(&msg, nullptr, 0, 0))
@@ -138,11 +134,21 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 //
 //
+
+Object* classbgptr = NULL;
+// Rend class 에서 받아온 클라이언트 크기 가져오기
+RECT recClient = RendManager::GetInstance()->GetRect();
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    // 윈도우 크기 담을 RECT 변수
-    RECT recClient = { NULL, };
-    static Background classbg(hWnd);
+
+    if (classbgptr == NULL)
+    {
+        classbgptr = new Background(hWnd);
+        // 싱글톤을 이용하여 static 으로 선언된 함수인 GetInstance() 로 백터를 저장하는 함수를 불러옴.
+        // 백터 포인터를 RendManager 클래스에 넣음으로서 알아서 오브젝트가 존재하도록 함.
+        RendManager::GetInstance() -> SetVector(classbgptr, EOBJECT_BG);
+    }
 
     switch (message)
     {
@@ -176,11 +182,30 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
 
+            // 윈도우 크기 담을 RECT 변수
+            //RECT recClient = { NULL, };
+
             // client 화면 크기를 안 받아오고 있으니 화면에 아무것도 안 뜨죠! 
             GetClientRect(hWnd, &recClient);
 
-            // 배경 그려줄 함수 불러오기 
-            classbg.Run(hWnd, hdc, hInst, recClient);
+            HBITMAP oldmembit;
+            // 더블버퍼링 할 Memdc 생성
+            HDC hMemdc = CreateCompatibleDC(hdc);
+            // 오류나서 CreateCompatibleBitmap() 대신 사용하는 커스텀 함수 (한슬표)
+            HBITMAP hmembit = MakeDIBSection(hMemdc, recClient.right, recClient.bottom);
+            oldmembit = (HBITMAP)SelectObject(hMemdc, hmembit);
+            // 윈도우 배경을 하얗게 바꿔주는 함수
+            PatBlt(hMemdc, 0, 0, recClient.right, recClient.bottom, WHITENESS);
+
+            // 오브젝트 그려줄 함수 불러오기 
+            RendManager::GetInstance()->Rend(hMemdc, hWnd);
+
+            BitBlt(hdc, 0, 0, recClient.right, recClient.bottom, hMemdc, 0, 0, SRCCOPY);
+
+            SelectObject(hMemdc, oldmembit);
+
+            DeleteDC(hMemdc);
+            DeleteObject(hmembit);
 
             EndPaint(hWnd, &ps);
         }
@@ -188,10 +213,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     case WM_TIMER:
         {
-            // 윈도우 화면 크기 가져오기
-            GetClientRect(hWnd, &recClient);
-
-            InvalidateRect(hWnd, &recClient, false);
+            // 지정 영역 (null)을 갱신. NULL일 경우에 Client 전체를 리셋함 
+            InvalidateRect(hWnd, NULL , false);
         }   
         break;
 

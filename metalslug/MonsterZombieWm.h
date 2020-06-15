@@ -1,5 +1,6 @@
 #pragma once
 #include "Monster.h"
+
 class MonsterZombieWm :
 	public Monster
 {

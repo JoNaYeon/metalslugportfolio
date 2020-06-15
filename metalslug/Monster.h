@@ -12,6 +12,9 @@ public:
 	// 持失切
 	Monster()
 	{
+		m_ihp = 0;
+		m_istrength = 0;
+		m_ispeed = 0;
 
 	};
 	// 社瑚切

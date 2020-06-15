@@ -1,5 +1,4 @@
 #include "InputManager.h"
-#include "framework.h"
 
 // √ ±‚»≠
 InputManager* InputManager::m_pinstance = NULL;

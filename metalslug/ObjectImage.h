@@ -1,6 +1,8 @@
 #pragma once
 #include "Object.h"
 #include "framework.h"
+//#include "metalslug.h"
+#include "define.h"
 
 class ObjectImage :
     public Object
@@ -32,7 +34,7 @@ public:
     // 오브젝트 움직임
     void Run();
     // 오브젝트 출력 
-    void Render();
+    void Render(HDC& _hdc, HWND& _hWnd);
     // 오브젝트 파괴
     void Destroy();
 

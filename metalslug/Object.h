@@ -1,6 +1,7 @@
 #pragma once
 
 #include "define.h"
+#include "framework.h"
 
 class Object
 {
@@ -20,10 +21,10 @@ public:
 
 	// 오브젝트 초기화
 	virtual void Init() PURE
-		// 오브젝트 움직임
-		virtual void Run() PURE
+	// 오브젝트 움직임
+	virtual void Run() PURE
 	// 오브젝트 출력 
-	virtual void Render() PURE
+	virtual void Render(HDC& _hdc, HWND& _hWnd) PURE
 	// 오브젝트 파괴
 	virtual void Destroy() PURE
 };

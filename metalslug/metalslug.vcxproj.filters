@@ -86,6 +86,24 @@
     <Filter Include="03. Object\06. Item\01. Gun\01. Bullet">
       <UniqueIdentifier>{cc40f581-7980-461c-9183-489405b52c87}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{46f02eb9-cb36-4458-bf70-8d9bb3c44f47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Game">
+      <UniqueIdentifier>{4e60e96b-bcc1-4296-a551-f0f4a0c8a5c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Menu">
+      <UniqueIdentifier>{ac01abda-af6b-47bc-9526-aa7a431f1b95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\CharactorSelect">
+      <UniqueIdentifier>{0cef053c-bf3c-4812-9eab-6a2151e55ad1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Intro">
+      <UniqueIdentifier>{542649a2-8b77-4933-8829-a38239c56b12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Score">
+      <UniqueIdentifier>{43df8dff-6ce8-4b77-8118-51813cb79ff9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -180,6 +198,33 @@
     </ClInclude>
     <ClInclude Include="ObjectImage.h">
       <Filter>03. Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="firstRound.h">
+      <Filter>Scene\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Scene\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
+      <Filter>Scene\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="CharactorSelect.h">
+      <Filter>Scene\CharactorSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="Intro.h">
+      <Filter>Scene\Intro</Filter>
+    </ClInclude>
+    <ClInclude Include="secondRound.h">
+      <Filter>Scene\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Score.h">
+      <Filter>Scene\Score</Filter>
+    </ClInclude>
+    <ClInclude Include="BossStage.h">
+      <Filter>Scene\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -280,8 +325,33 @@
     <ClCompile Include="ObjectImage.cpp">
       <Filter>03. Object</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
+    <ClCompile Include="Scene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="firstRound.cpp">
+      <Filter>Scene\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Scene\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>Scene\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="CharactorSelect.cpp">
+      <Filter>Scene\CharactorSelect</Filter>
+    </ClCompile>
+    <ClCompile Include="Intro.cpp">
+      <Filter>Scene\Intro</Filter>
+    </ClCompile>
+    <ClCompile Include="secondRound.cpp">
+      <Filter>Scene\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Score.cpp">
+      <Filter>Scene\Score</Filter>
+    </ClCompile>
+    <ClCompile Include="BossStage.cpp">
+      <Filter>Scene\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="generalfunction.h" />
   </ItemGroup>
 </Project>

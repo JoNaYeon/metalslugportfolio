@@ -1,7 +1,10 @@
 #pragma once
-#include "Object.h"
-#include "framework.h"
+//#include "Object.h"
 #include "ObjectImage.h"
+//#include "framework.h"
+//#include "metalslug.h"
+//#include "define.h"
+#include "RendManager.h"
 
 
 
@@ -23,8 +26,8 @@ private:
 public:
 	enum backgroundsize
 	{
-		BACKGROUNDX = 700,
-		BACKGROUNDY = 230
+		BACKGROUNDX = 740,
+		BACKGROUNDY = 220
 	};
 	enum backgroundposition
 	{
@@ -39,8 +42,8 @@ public:
 		m_hWnd = _hWnd;
 		m_pimagesize = { 0, };
 		m_pimagestartposition = { 0, };
-		m_pbackgroundposition1 = { 0, };
-		m_pbackgroundposition2 = { BACKGROUNDPOSX, 0 };
+		m_pbackgroundposition1 = { 0, 0 };
+		m_pbackgroundposition2 = { 3 * BACKGROUNDX, 0 };
 	};
 	// 소멸자
 	virtual ~Background()
@@ -55,9 +58,9 @@ public:
 	// 매개변수가 다르면 안 되므로 매개변수 다른 함수를 정의해주고 싶으면
 	// 오버라이딩 한 함수를 넣은 뒤에 오버로딩 해줘야 함. 
 	void Run();
-	void Run(HWND _hWnd, HDC& _hdc, HINSTANCE _hInst, RECT _recClient);
+	//void Run(HWND _hWnd, HDC& _hdc, HINSTANCE _hInst, RECT _recClient);
 	// 오브젝트 출력
-	void Render();
+	void Render(HDC& _hdc, HWND& _hWnd);
 	// 오브젝트 파괴
 	void Destroy();
 };

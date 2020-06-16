@@ -8,11 +8,6 @@ void Mainfrm::Create()
 	InputManager::Create();
 	DBManager::Create();
 	RendManager::Create();
-	// scene 积己
-	if (scene != NULL)
-	{
-		scene->BackgroundProduce();
-	}
 
 	return;
 }
@@ -29,6 +24,10 @@ void Mainfrm::Run()
 	// Rend() 绰 WN_PAINT 肺 颗辫.
 	DBManager::GetInstance()->Run();
 	InputManager::GetInstance()->Run();
+	if (scene != NULL)
+	{
+		BackgroundRun(scene);
+	}
 
 	return;
 }
@@ -42,8 +41,25 @@ void Mainfrm::Destroy()
 	return;
 }
 
-void Mainfrm::GetScene(Scene* _scene)
+bool Mainfrm::SetScene(Scene* _scene)
 {
-	scene = _scene;
+	if (_scene != NULL)
+	{
+		scene = _scene;
+		return TRUE;
+	}
+	else
+	{
+		return FALSE;
+	}
+}
+
+void Mainfrm::BackgroundRun(Scene* _scene)
+{
+	// scene 积己
+	if (scene != NULL)
+	{
+		scene->BackgroundProduce();
+	}
 	return;
 }

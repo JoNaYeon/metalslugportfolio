@@ -4,6 +4,7 @@
 #include "DBManager.h"
 #include "InputManager.h"
 #include "Scene.h"
+#include "define.h"
 
 class Mainfrm
 {
@@ -26,6 +27,8 @@ public:
 	void Initialize();
 	void Run();
 	void Destroy();
-	void GetScene(Scene* _scene);
+	bool SetScene(Scene* _scene);
+
+	void BackgroundRun(Scene* _scene);
 };
 

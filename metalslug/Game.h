@@ -22,5 +22,10 @@ public:
 	void BackgroundProduce();
 	void BackgroundRend();
 	void BackgroundDestroy();
+
+	static void SethWnd(HWND _hWnd);
+	static HWND GethWnd(void);
+	static void Sethdc(HDC _hdc);
+	static HDC Gethdc(void);
 };
 

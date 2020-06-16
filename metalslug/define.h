@@ -15,3 +15,7 @@ enum E_OBJECT
 	EOBJECT_OBJNUM,
 };
 
+enum E_BGSCENE
+{
+	E_BGSCENE_GAME = 0
+};

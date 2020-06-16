@@ -9,3 +9,4 @@
 #include "Background.h"
 #include "RendManager.h"
 #include "ObjectImage.h"
+#include "Game.h"

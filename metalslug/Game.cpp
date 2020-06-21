@@ -5,25 +5,36 @@ Game::Game()
 {
 	// 게임이 생성될 때 백그라운드 생성될 수 있도록.
 	// 그러면 함수를 쓸 것이 없어짐! 
-	BackgroundProduce();
+	Create();
 
 	return;
 }
 
-void Game::ObjectProduce()
+void Game::Create()
+{
+	static Object* classbgptr = NULL;
+
+	if (classbgptr == NULL)
+	{
+		classbgptr = new Background();
+		// 싱글톤을 이용하여 static 으로 선언된 함수인 GetInstance() 로 백터를 저장하는 함수를 불러옴.
+		// 백터 포인터를 RendManager 클래스에 넣음으로서 알아서 오브젝트가 존재하도록 함.
+		RendManager::GetInstance()->SetVector(classbgptr, EOBJECT_BG);
+	}
+
+	Rend();
+	return;
+}
+void Game::Rend()
 {
 	return;
 }
-void Game::ObjectRend()
-{
-	return;
-}
-void Game::ObjectDestroy()
+void Game::Destroy()
 {
 	return;
 }
 
-void Game::BackgroundProduce()
+/*void Game::BackgroundProduce()
 {
 	// hWnd를 가져오는 함수
 	//HWND hWnd = GetConsoleHwnd();
@@ -83,43 +94,4 @@ void Game::BackgroundRend()
 void Game::BackgroundDestroy()
 {
 	return;
-}
-
-
-void Game::SethWnd(HWND hWnd)
-{
-	if (hWnd != NULL)
-	{
-		m_hWnd = hWnd;
-	}
-
-	return;
-}
-
-
-HWND Game::GethWnd(void)
-{
-	if (m_hWnd != NULL)
-	{
-		return m_hWnd;
-	}
-	return FALSE;
-}
-
-void Game::Sethdc(HDC _hdc)
-{
-	if (_hdc != NULL)
-	{
-		m_hdc = _hdc;
-	}
-	return;
-}
-
-HDC Game::Gethdc(void)
-{
-	if (m_hdc != NULL)
-	{
-		return m_hdc;
-	}
-	return FALSE;
-}
+}*/

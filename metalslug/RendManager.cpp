@@ -45,14 +45,46 @@ void RendManager::Destroy()
 
 void RendManager::Rend(HDC& _hdc, HWND& _hWnd)
 {
-	for (int i = 0; i < EOBJECT_OBJNUM; i++)
+	if (_hdc != NULL && _hWnd != NULL)
 	{
-		for (int j = 0; j < m_vecRendObj[i].size(); j++)
+		PAINTSTRUCT ps;
+		HDC hdctemp = BeginPaint(_hWnd, &ps);
+
+		// client 화면 크기를 안 받아오고 있으니 화면에 아무것도 안 뜨죠! 
+		GetClientRect(_hWnd, &m_recClient);
+
+		HBITMAP oldmembit;
+		// 더블버퍼링 할 Memdc 생성
+		HDC hMemdc = CreateCompatibleDC(hdctemp);
+		// 오류나서 CreateCompatibleBitmap() 대신 사용하는 커스텀 함수 (한슬표)
+		HBITMAP hmembit = MakeDIBSection(hMemdc, m_recClient.right, m_recClient.bottom);
+		oldmembit = (HBITMAP)SelectObject(hMemdc, hmembit);
+		// 윈도우 배경을 하얗게 바꿔주는 함수
+		PatBlt(hMemdc, 0, 0, m_recClient.right, m_recClient.bottom, WHITENESS);
+
+		// 바꿔야함 mainfrm에서 진행하니 backgr 불러와야함
+		// 오브젝트 그려줄 함수 불러오기 
+		//RendManager::GetInstance()->Rend(hMemdc, _hWnd);
+
+		for (int i = 0; i < EOBJECT_OBJNUM; i++)
 		{
-			// 백터 내부에 접근하여 Object class 의 내부 함수 (Render) 출력
-			(m_vecRendObj[i])[j]->Render(_hdc, _hWnd);
+			for (int j = 0; j < m_vecRendObj[i].size(); j++)
+			{
+				// 백터 내부에 접근하여 Object class 의 내부 함수 (Render) 출력
+				(m_vecRendObj[i])[j]->Render(hMemdc, _hWnd);
+			}
 		}
+		Rectangle(hdctemp, 100, 200, 500, 600);
+		//BitBlt(_hdc, 0, 0, m_recClient.right, m_recClient.bottom, hMemdc, 0, 0, SRCCOPY);
+
+		SelectObject(hMemdc, oldmembit);
+
+		DeleteDC(hMemdc);
+		DeleteObject(hmembit);
+		EndPaint(_hWnd, &ps);
 	}
+
+	
 	return;
 };
 

@@ -21,7 +21,6 @@ private:
 	POINT m_pbackgroundposition2;
 	ObjectImage m_obimg1;
 	ObjectImage m_obimg2;
-	HWND m_hWnd;
 
 public:
 	enum backgroundsize
@@ -37,9 +36,8 @@ public:
 
 	// class 선언하려면 public 해야 됨
 	// 생성자
-	Background(HWND _hWnd)
+	Background()
 	{
-		m_hWnd = _hWnd;
 		m_pimagesize = { 0, };
 		m_pimagestartposition = { 0, };
 		m_pbackgroundposition1 = { 0, 0 };

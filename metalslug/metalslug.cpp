@@ -143,7 +143,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
     case WM_CREATE:
         {
-            SetTimer(hWnd, 1, 60, NULL);
+            Mainfrm::SethWnd(hWnd);
+            //SetTimer(hWnd, 1, 60, NULL);
         }
         break;
 
@@ -174,11 +175,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // 윈도우 크기 담을 RECT 변수
             //RECT recClient = { NULL, };
 
-            Game::SethWnd(hWnd);
-            Game::Sethdc(hdc);
-
-            //RendManager::GetInstance()->Rend(hdc,hWnd);
-
             EndPaint(hWnd, &ps);
         }
         break;
@@ -186,13 +182,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_TIMER:
         {
             // 지정 영역 (null)을 갱신. NULL일 경우에 Client 전체를 리셋함 
-            InvalidateRect(hWnd, NULL , false);
+            //InvalidateRect(hWnd, NULL , false);
         }   
         break;
 
     case WM_DESTROY:
         {   
-            KillTimer(hWnd, 1);
+            //KillTimer(hWnd, 1);
             PostQuitMessage(0);
         }
         break;

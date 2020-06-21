@@ -15,17 +15,13 @@ public:
 	{
 
 	}
-	void ObjectProduce();
-	void ObjectRend();
-	void ObjectDestroy();
+	void Create();
+	void Rend();
+	void Destroy();
 
-	void BackgroundProduce();
-	void BackgroundRend();
-	void BackgroundDestroy();
+	//void BackgroundProduce();
+	//void BackgroundRend();
+	//void BackgroundDestroy();
 
-	static void SethWnd(HWND _hWnd);
-	static HWND GethWnd(void);
-	static void Sethdc(HDC _hdc);
-	static HDC Gethdc(void);
 };
 

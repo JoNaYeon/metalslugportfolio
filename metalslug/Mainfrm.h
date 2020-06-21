@@ -4,19 +4,22 @@
 #include "DBManager.h"
 #include "InputManager.h"
 #include "Scene.h"
+#include "Game.h"
 #include "define.h"
 
 class Mainfrm
 {
+private:
+	static void CreateDC();
 protected:
-	Scene* scene;
+	Scene* m_scene;
+	static HWND m_hWnd;
+	static HDC m_hdc;
+	static PAINTSTRUCT m_ps;
 public:
 
 	// 持失切
-	Mainfrm()
-	{
-		scene = NULL;
-	};
+	Mainfrm();
 	// 社瑚切
 	virtual ~Mainfrm()
 	{
@@ -27,8 +30,10 @@ public:
 	void Initialize();
 	void Run();
 	void Destroy();
-	bool SetScene(Scene* _scene);
+	void SetScene(Scene* _scene);
 
-	void BackgroundRun(Scene* _scene);
+	static void SethWnd(HWND _hWnd);
+	static HWND GethWnd(void);
+;
 };
 

@@ -61,7 +61,6 @@ void Background::Render(HDC& _hdc, HWND& _hWnd)
     m_obimg1.SetPosition(m_pbackgroundposition1);
     m_obimg2.SetPosition(m_pbackgroundposition2);
 
-
     // 이미지 로딩하기
     m_obimg1.ImageLoading(_hdc, recClient, himgdc, m_pimagestartposition, m_pimagesize);
     m_obimg2.ImageLoading(_hdc, recClient, himgdc, m_pimagestartposition, m_pimagesize);

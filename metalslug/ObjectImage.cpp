@@ -31,7 +31,7 @@ void ObjectImage::ImageLoading(HDC& _hMemdc, RECT _recClientImgSize, HDC& _hImag
     // 이미지 뿌려주기
     TransparentBlt(_hMemdc, position.x, position.y, _recClientImgSize.right / 0.49, _recClientImgSize.bottom, _hImage,
         _recImageposition.x, _recImageposition.y, _pImagesize.x, _pImagesize.y, RGB(000, 255, 000));
-
+    //Rectangle(_hMemdc, 100, 200, 500, 600);
     return;
 }
 

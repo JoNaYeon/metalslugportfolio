@@ -4,7 +4,6 @@
 
 // static 을 cpp에 NULL로 초기화 해야지 쓸 수 있음.
 HWND Mainfrm::m_hWnd = NULL;
-HDC Mainfrm::m_hdc = NULL;
 PAINTSTRUCT Mainfrm::m_ps;
 
 Mainfrm::Mainfrm()
@@ -19,6 +18,11 @@ void Mainfrm::Create()
 	InputManager::Create();
 	DBManager::Create();
 	RendManager::Create();
+
+	// 영상 재생을 위한 hwnd 와 이름 담는 변수
+	/*HWND hWndAVI = 0;
+	char cAVIFileNmae[] = "MetalSlugOpening.avi";
+	RECT rt = { NULL, };*/
 
 	return;
 }
@@ -42,12 +46,11 @@ void Mainfrm::Initialize()
 
 void Mainfrm::Run()
 {
-	// 임시방편 
-	CreateDC();
-
-	RendManager::GetInstance()->Rend(m_hdc, m_hWnd);
+	
 	DBManager::GetInstance()->Run();
 	InputManager::GetInstance()->Run();
+
+	RendManager::GetInstance()->Rend(m_hWnd);
 
 	return;
 }
@@ -63,12 +66,6 @@ void Mainfrm::Destroy()
 		delete m_scene;
 		m_scene = NULL;
 	}
-	if (m_hdc != NULL)
-	{
-		EndPaint(m_hWnd, &m_ps);
-	}
-	
-
 	return;
 }
 
@@ -100,16 +97,4 @@ HWND Mainfrm::GethWnd(void)
 		return m_hWnd;
 	}
 	return FALSE;
-}
-
-
-void Mainfrm::CreateDC()
-{
-	// dc를 생성 
-	if (m_hdc == NULL)
-	{
-		m_hdc = BeginPaint(m_hWnd, &m_ps);
-	}
-
-	return;
 }

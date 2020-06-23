@@ -38,24 +38,23 @@ void RendManager::Destroy()
 		// 다 쓴 instance (동적할당) 삭제
 		delete m_pinstance;
 		m_pinstance = NULL;
-
 	}
 	return;
 };
 
-void RendManager::Rend(HDC& _hdc, HWND& _hWnd)
+void RendManager::Rend(HWND& _hWnd)
 {
-	if (_hdc != NULL && _hWnd != NULL)
+	if (_hWnd != NULL)
 	{
 		PAINTSTRUCT ps;
-		HDC hdctemp = BeginPaint(_hWnd, &ps);
+		HDC hdc = BeginPaint(_hWnd, &ps);
 
 		// client 화면 크기를 안 받아오고 있으니 화면에 아무것도 안 뜨죠! 
 		GetClientRect(_hWnd, &m_recClient);
 
 		HBITMAP oldmembit;
 		// 더블버퍼링 할 Memdc 생성
-		HDC hMemdc = CreateCompatibleDC(hdctemp);
+		HDC hMemdc = CreateCompatibleDC(hdc);
 		// 오류나서 CreateCompatibleBitmap() 대신 사용하는 커스텀 함수 (한슬표)
 		HBITMAP hmembit = MakeDIBSection(hMemdc, m_recClient.right, m_recClient.bottom);
 		oldmembit = (HBITMAP)SelectObject(hMemdc, hmembit);
@@ -74,17 +73,21 @@ void RendManager::Rend(HDC& _hdc, HWND& _hWnd)
 				(m_vecRendObj[i])[j]->Render(hMemdc, _hWnd);
 			}
 		}
-		Rectangle(hdctemp, 100, 200, 500, 600);
-		//BitBlt(_hdc, 0, 0, m_recClient.right, m_recClient.bottom, hMemdc, 0, 0, SRCCOPY);
+		
+		//Rectangle(hdc, 100, 200, 500, 600);
+		BitBlt(hdc, 0, 0, m_recClient.right, m_recClient.bottom, hMemdc, 0, 0, SRCCOPY);
+		
+		// 지정 영역 (null)을 갱신. NULL일 경우에 Client 전체를 리셋함 
+		InvalidateRect(_hWnd, &m_recClient, false);
 
 		SelectObject(hMemdc, oldmembit);
 
 		DeleteDC(hMemdc);
 		DeleteObject(hmembit);
 		EndPaint(_hWnd, &ps);
-	}
 
-	
+		
+	}
 	return;
 };
 

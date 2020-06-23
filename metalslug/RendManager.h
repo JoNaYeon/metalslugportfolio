@@ -32,7 +32,7 @@ public:
 	static RendManager* GetInstance();
 	static void Create();
 	void Destroy();
-	void Rend(HDC& _hdc, HWND& _hWnd);
+	void Rend(HWND& _hWnd);
 	void SetVector(Object* _object, E_OBJECT _Eobjectkind);
 	RECT GetRect();
 	void SetRect(RECT _recClient);

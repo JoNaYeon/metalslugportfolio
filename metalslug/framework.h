@@ -20,6 +20,8 @@
 #include <time.h>
 #include <random>
 
+
+
 #include "define.h"
 
 // 전역 변수를 다른 클래스에서도 사용할 수 있도록 해주는 키워드

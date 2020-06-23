@@ -1,3 +1,6 @@
-﻿  RendManager.cpp
-D:\Private\Git\metalslug\metalslugportfolio\metalslug\RendManager.cpp(71,22): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-  metalslug.vcxproj -> D:\Private\Git\metalslug\metalslugportfolio\Debug\metalslug.exe
+﻿  Intro.cpp
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\um\combaseapi.h(174,1): warning C4005: 'PURE': 매크로 재정의
+C:\Users\nanna\바탕 화면\Study\과외\metalslug\metalslug\define.h(5): message : 'PURE'의 이전 정의를 참조하십시오.
+  metalslug.cpp
+  코드를 생성하고 있습니다...
+  metalslug.vcxproj -> C:\Users\nanna\바탕 화면\Study\과외\metalslug\Debug\metalslug.exe

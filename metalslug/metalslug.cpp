@@ -6,6 +6,7 @@
 #include "metalslug.h"
 // 메인프레임을 추가시키기 위해 메인프레임 헤더를 포함시킨다. 
 
+
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
@@ -42,24 +43,32 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_METALSLUG));
 
-    MSG msg;
+    MSG msg = {};
 
     // 메세지 루프를 돌기 전에 framework를 생성한다.
     Mainfrm framework;
     framework.Create();
     framework.Initialize();
     
-
     // 기본 메시지 루프입니다:
-    while (GetMessage(&msg, nullptr, 0, 0))
+    while (PeekMessage/*GetMessage*/(&msg, nullptr, 0, 0, PM_REMOVE))
     {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+        //if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+        if (msg.message != WM_QUIT)
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
         // 메세지 루프 안에 들어왔을 때 framework 를 실행한다.
-        framework.Run();
+
+        if (msg.message == WM_QUIT)
+        {
+            break;
+        }
+        else
+        {
+            framework.Run();
+        }
     }
 
     // 메세지 루프 밖을 나오면 framework 를 파괴한다.
@@ -67,7 +76,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     return (int) msg.wParam;
 }
-
 
 
 //
@@ -135,7 +143,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 //
 
-
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 
@@ -147,6 +154,58 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             //SetTimer(hWnd, 1, 60, NULL);
         }
         break;
+
+    /*case WM_LBUTTONDOWN:
+    {
+        if (hWndAVI)
+        {
+            MCIWndClose(hWndAVI);
+            MCIWndDestroy(hWndAVI);
+            hWndAVI = 0;
+        }
+        hWndAVI = MCIWndCreateA(hWnd, hInst,
+            MCIWNDF_NOTIFYANSI | MCIWNDF_NOMENU |
+            MCIWNDF_NOTIFYALL | MCIWNDF_NOPLAYBAR, cAVIFileNmae);
+
+        if (hWndAVI)
+        {
+            GetClientRect(hWnd, &rt);
+            SetWindowPos(hWndAVI, NULL, 0, 0, rt.right, rt.bottom,
+                SWP_NOZORDER | SWP_NOMOVE);
+            MCIWndPlay(hWndAVI);
+        }
+        return 0;
+    }
+    break;
+
+    case MCIWNDM_NOTIFYMODE:
+    {
+        switch (lParam)
+        {
+        case MCI_MODE_PLAY:
+            break;
+        case MCI_MODE_STOP:
+            break;
+        }
+        return 0;
+    }
+    break;
+
+    case MCIWNDM_NOTIFYPOS:
+    {
+        return 0;
+    }
+    break;
+
+    case WM_SIZE:
+    {
+        if (wParam == SIZE_MAXIMIZED || wParam == SIZE_MAXSHOW || wParam == SIZE_RESTORED)
+        {
+            SetWindowPos(hWndAVI, NULL, 0, 0, LOWORD(lParam), HIWORD(lParam), SWP_NOZORDER | SWP_NOMOVE);
+        }
+        return 0;
+    }
+    break;*/
 
     case WM_COMMAND:
         {
@@ -168,21 +227,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     case WM_PAINT:
         {
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hWnd, &ps);
+           // PAINTSTRUCT ps;
+           // HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
 
             // 윈도우 크기 담을 RECT 변수
             //RECT recClient = { NULL, };
 
-            EndPaint(hWnd, &ps);
+            //EndPaint(hWnd, &ps);
         }
         break;
 
     case WM_TIMER:
         {
-            // 지정 영역 (null)을 갱신. NULL일 경우에 Client 전체를 리셋함 
-            //InvalidateRect(hWnd, NULL , false);
+            // 지정 영역 (null)을 갱신. NULL일 경우에 Client 전체를 리셋함
+           // RECT rec_temp = { 10,10,20,20 };
+            //InvalidateRect(hWnd, &rec_temp, false);
         }   
         break;
 

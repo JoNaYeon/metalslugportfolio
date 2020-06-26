@@ -1,6 +1,12 @@
 #include "RendManager.h"
 
-// 초기화
+//#include "define.h"
+//#include "framework.h"
+#include "Object.h"
+//#include <vector>
+#include "Scene.h"
+
+// 초기화`
 RendManager* RendManager::m_pinstance = NULL;
 
 RendManager* RendManager::GetInstance()
@@ -85,10 +91,9 @@ void RendManager::Rend(HWND& _hWnd)
 		DeleteDC(hMemdc);
 		DeleteObject(hmembit);
 		EndPaint(_hWnd, &ps);
-
-		
 	}
 	return;
+
 };
 
 void RendManager::SetVector(Object* _object, E_OBJECT _Eobjectkind)

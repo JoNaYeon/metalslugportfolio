@@ -1,8 +1,7 @@
 #pragma once
+//#include <vector>
+//#include "framework.h"
 #include "define.h"
-#include "framework.h"
-#include "Object.h"
-#include <vector>
 
 
 class Object;
@@ -21,7 +20,7 @@ private:
 	// 持失切
 	RendManager()
 	{
-		m_recClient = { NULL, };
+		m_recClient = { 0, 0, 0, 0 };
 	};
 	// 社瑚切
 	virtual ~RendManager()

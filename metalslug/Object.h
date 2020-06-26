@@ -1,7 +1,7 @@
 #pragma once
 
 #include "define.h"
-#include "framework.h"
+//#include "framework.h"
 
 class Object
 {

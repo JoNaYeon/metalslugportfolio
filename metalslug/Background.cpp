@@ -1,5 +1,11 @@
 #include "Background.h"
 
+#include "Object.h"
+#include "RendManager.h"
+#include "framework.h"
+#include "metalslug.h"
+#include "define.h"
+
 // 오브젝트 초기화
 void Background::Init()
 {

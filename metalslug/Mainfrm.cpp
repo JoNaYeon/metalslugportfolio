@@ -10,6 +10,7 @@ Mainfrm::Mainfrm()
 {
 	m_scene = NULL;
 	//m_hdc = NULL;
+	m_imsg = 0;
 };
 
 void Mainfrm::Create()
@@ -32,11 +33,11 @@ void Mainfrm::Initialize()
 	if (m_scene == NULL)
 	{
 		// 맨 처음 만들 씬 
-		Scene* ptrgame = new Game;
+		Scene* ptrintro = new Intro;
 
-		if (ptrgame != NULL)
+		if (ptrintro != NULL)
 		{
-			SetScene(ptrgame);
+			SetScene(ptrintro);
 			m_scene->Create();
 		}
 	}
@@ -49,8 +50,10 @@ void Mainfrm::Run()
 	
 	DBManager::GetInstance()->Run();
 	InputManager::GetInstance()->Run();
-
-	RendManager::GetInstance()->Rend(m_hWnd);
+	if (m_scene != NULL && m_scene->GetState() != E_SCENESTATE_INTRO)
+	{
+		RendManager::GetInstance()->Rend(m_hWnd);
+	}
 
 	return;
 }
@@ -97,4 +100,10 @@ HWND Mainfrm::GethWnd(void)
 		return m_hWnd;
 	}
 	return FALSE;
+}
+
+
+Scene* Mainfrm::NextScene()
+{
+	return m_scene->Next();
 }

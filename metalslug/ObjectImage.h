@@ -1,8 +1,8 @@
 #pragma once
 #include "Object.h"
-#include "framework.h"
+//#include "framework.h"
 //#include "metalslug.h"
-#include "define.h"
+//#include "define.h"
 
 class ObjectImage :
     public Object

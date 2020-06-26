@@ -1,4 +1,5 @@
 #include "DBManager.h"
+#include "Object.h"
 
 // √ ±‚»≠
 DBManager* DBManager::m_pinstance = NULL;

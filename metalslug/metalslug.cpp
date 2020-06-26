@@ -5,6 +5,7 @@
 
 #include "metalslug.h"
 // 메인프레임을 추가시키기 위해 메인프레임 헤더를 포함시킨다. 
+#include "Mainfrm.h"
 
 
 #define MAX_LOADSTRING 100
@@ -55,6 +56,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     {
         //if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
         if (msg.message != WM_QUIT)
+            // 만약 종료 메세지가 아닐 경우에 메세지 변환 및 윈도우 프로시저에 메세지 전달
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
@@ -62,15 +64,20 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         // 메세지 루프 안에 들어왔을 때 framework 를 실행한다.
 
         if (msg.message == WM_QUIT)
+            // 만약 종료 메세지일 경우 루프 탈출 
         {
             break;
         }
+         else if (msg.message == WM_CHAR && msg.wParam == VK_SPACE)
+        {
+            framework.NextScene();
+        }
         else
+            // 아닐 경우 런 
         {
             framework.Run();
         }
     }
-
     // 메세지 루프 밖을 나오면 framework 를 파괴한다.
     framework.Destroy();
 
@@ -206,6 +213,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         return 0;
     }
     break;*/
+
+    case WM_CHAR:
+        // 키보드를 입력받는 메세지
+    {
+
+    }
 
     case WM_COMMAND:
         {

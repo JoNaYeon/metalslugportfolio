@@ -4,7 +4,7 @@
 #include "DBManager.h"
 #include "InputManager.h"
 #include "Scene.h"
-#include "Game.h"
+#include "Intro.h"
 #include "define.h"
 
 
@@ -14,6 +14,7 @@ protected:
 	Scene* m_scene;
 	static HWND m_hWnd;
 	static PAINTSTRUCT m_ps;
+	int m_imsg;
 public:
 
 	// »ý¼ºÀÚ
@@ -32,6 +33,7 @@ public:
 
 	static void SethWnd(HWND _hWnd);
 	static HWND GethWnd(void);
-;
+	
+	Scene* NextScene();
 };
 

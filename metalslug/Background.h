@@ -1,11 +1,6 @@
 #pragma once
-//#include "Object.h"
 #include "ObjectImage.h"
 //#include "framework.h"
-//#include "metalslug.h"
-//#include "define.h"
-#include "RendManager.h"
-
 
 
 class Background :

@@ -1,11 +1,15 @@
 #include "Game.h"
+#include "Background.h"
+#include "RendManager.h"
 
 
 Game::Game()
 {
+	Scene::m_iscenestate = E_SCENESTATE_GAME;
 	// 게임이 생성될 때 백그라운드 생성될 수 있도록.
 	// 그러면 함수를 쓸 것이 없어짐! 
 	Create();
+
 
 	return;
 }
@@ -32,6 +36,11 @@ void Game::Rend()
 void Game::Destroy()
 {
 	return;
+}
+
+Scene* Game::Next()
+{
+	return 0;
 }
 
 /*void Game::BackgroundProduce()

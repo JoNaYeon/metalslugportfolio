@@ -1,7 +1,5 @@
 #pragma once
 #include "Scene.h"
-#include "Mainfrm.h"
-#include <string.h>
 // 영상 재생을 위한 헤더 
 #include <vfw.h>
 
@@ -15,23 +13,17 @@ private:
 	RECT m_recintro;
 	// Mainfrm 에서 받아온 윈도우의 핸들 넣어주기
 	HWND MainhWnd;
-
-	Intro()
-	{
-		m_hWndAVI = 0;
-	}
+	 
+public:
+	Intro();
 	virtual ~Intro()
 	{
-
+		
 	}
-public:
-	void ObjectProduce();
-	void ObjectRend();
-	void ObjectDestroy();
+	void Create();
+	void Rend();
+	void Destroy();
 
-	void BackgroundProduce();
-	void BackgroundRend();
-	void BackgroundDestroy();
-
+	Scene* Next();
 };
 

@@ -9,6 +9,7 @@ void Player::Init()
 // 오브젝트 움직임 (오버라이딩)
 void Player::Run()
 {
+	
 	return;
 };
 

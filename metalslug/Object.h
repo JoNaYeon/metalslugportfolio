@@ -3,9 +3,12 @@
 #include "define.h"
 //#include "framework.h"
 
+
+
 class Object
 {
 protected:
+	int iobjstate;
 	
 public:
 	// 생성자
@@ -20,12 +23,15 @@ public:
 	};
 
 	// 오브젝트 초기화
-	virtual void Init() PURE
+	virtual void Init() PURE;
 	// 오브젝트 움직임
-	virtual void Run() PURE
+	virtual void Run() PURE;
 	// 오브젝트 출력 
-	virtual void Render(HDC& _hdc, HWND& _hWnd) PURE
+	virtual void Render(HDC& _hdc, HWND& _hWnd) PURE;
 	// 오브젝트 파괴
-	virtual void Destroy() PURE
+	virtual void Destroy() PURE;
+
+	// Object를 움직여줄 애니메이션 
+	void Animation(HDC _hdc, ST_OBJECT _obj, char* _cname);
 };
 

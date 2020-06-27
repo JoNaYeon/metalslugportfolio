@@ -32,5 +32,7 @@ public:
 	void Destroy();
 	void DeleteData();
 	void Run();
+
+	void SetVector(Object* _object, E_OBJECT _Eobjectkind);
 };
 

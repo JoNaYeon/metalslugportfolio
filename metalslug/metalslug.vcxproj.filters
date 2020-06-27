@@ -354,4 +354,7 @@
     </ClCompile>
     <ClCompile Include="generalfunction.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
 </Project>

@@ -1,6 +1,8 @@
 #include "Game.h"
 #include "Background.h"
 #include "RendManager.h"
+#include "DBManager.h"
+#include "PlayerNormal.h"
 
 
 Game::Game()
@@ -17,16 +19,28 @@ Game::Game()
 void Game::Create()
 {
 	static Object* classbgptr = NULL;
+	static Object* classuserptr = NULL;
 
 	if (classbgptr == NULL)
 	{
 		classbgptr = new Background();
 		// 싱글톤을 이용하여 static 으로 선언된 함수인 GetInstance() 로 백터를 저장하는 함수를 불러옴.
 		// 백터 포인터를 RendManager 클래스에 넣음으로서 알아서 오브젝트가 존재하도록 함.
+		// Destroy 할 때에 rend 매니저에서 clear 하고 dm 매니저에서 delete
 		RendManager::GetInstance()->SetVector(classbgptr, EOBJECT_BG);
+		DBManager::GetInstance()->SetVector(classbgptr, EOBJECT_BG);
+	}
+
+	if (classuserptr == NULL)
+	{
+		// 플레이어 생성해주기 
+		classuserptr = new PlayerNormal();
+		RendManager::GetInstance()->SetVector(classuserptr, EOBJECT_BG);
+		DBManager::GetInstance()->SetVector(classuserptr, EOBJECT_BG);
 	}
 
 	Rend();
+
 	return;
 }
 void Game::Rend()

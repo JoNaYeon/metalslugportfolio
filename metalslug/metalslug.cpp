@@ -68,7 +68,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         {
             break;
         }
-         else if (msg.message == WM_CHAR && msg.wParam == VK_SPACE)
+        else if (msg.message == WM_CHAR && msg.wParam == VK_SPACE)
         {
             framework.NextScene();
         }

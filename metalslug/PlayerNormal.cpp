@@ -13,8 +13,24 @@ void PlayerNormal::Run()
 };
 
 // 오브젝트 출력 (오버라이딩)
-void PlayerNormal::Render()
-{
+void PlayerNormal::Render(HDC& _hdc, HWND& _hWnd)
+{ 
+	static ST_OBJECT st_normalplayer;
+	char cimgname[] = "..\\source\\user\\useridle1_1";
+
+	// 구조체 정의
+	//이미지 크기 w - 32px h - 28px / 35px 간격 3px
+	st_normalplayer.iimgheight = 28;
+	st_normalplayer.iimgwitdh = 32;
+
+	switch (iobjstate)
+	{
+		case E_USERSTATE_IDLE:
+		{
+			Animation(_hdc, st_normalplayer, cimgname);
+		}
+		return;
+	}
 	return;
 };
 

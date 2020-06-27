@@ -65,3 +65,11 @@ void DBManager::Run()
 	}
 	return;
 };
+
+void DBManager::SetVector(Object* _object, E_OBJECT _Eobjectkind)
+{
+	// vector ptr 을 넣어서 Rend() 할 수 있도록.
+	m_vecBackObj[_Eobjectkind].push_back(_object);
+
+	return;
+}

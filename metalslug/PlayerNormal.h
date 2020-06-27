@@ -1,5 +1,6 @@
 #pragma once
 #include "Player.h"
+
 class PlayerNormal :
 	public Player
 {
@@ -21,7 +22,7 @@ public:
 	// 오브젝트 움직임 (오버라이딩)
 	void Run();
 	// 오브젝트 출력 (오버라이딩)
-	void Render();
+	void Render(HDC& _hdc, HWND& _hWnd);
 	// 오브젝트 파괴 (오버라이딩)
 	void Destroy();
 
@@ -35,5 +36,6 @@ public:
 	void AttackBomb();
 	// 점프 (오버라이딩)
 	void Jump();
+
 };
 

@@ -52,10 +52,10 @@ void Game::Destroy()
 	return;
 }
 
-Scene* Game::Next()
+/*Scene* Game::Next()
 {
 	return 0;
-}
+}*/
 
 /*void Game::BackgroundProduce()
 {
@@ -118,3 +118,8 @@ void Game::BackgroundDestroy()
 {
 	return;
 }*/
+
+void Game::NextScene()
+{
+	return;
+}

@@ -24,5 +24,7 @@ public:
 	static void Destroy();
 	void DeleteData();
 	void Run();
+
+	void Keyboard();
 };
 

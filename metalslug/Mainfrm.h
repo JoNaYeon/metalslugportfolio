@@ -34,6 +34,10 @@ public:
 	static void SethWnd(HWND _hWnd);
 	static HWND GethWnd(void);
 	
-	Scene* NextScene();
+<<<<<<< HEAD
+	void NextScene();
+=======
+	void NextScene(Scene* _scene);
+>>>>>>> c4b6101c5499d62d22223c1428cc6798c773b7bb
 };
 

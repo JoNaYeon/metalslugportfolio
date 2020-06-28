@@ -1,4 +1,5 @@
 #include "InputManager.h"
+#include <stdio.h>
 
 // ÃÊ±âÈ­
 InputManager* InputManager::m_pinstance = NULL;
@@ -40,3 +41,12 @@ void InputManager::Run()
 {
 	return;
 };
+
+
+void InputManager::Keyboard()
+{
+	
+
+
+	return;
+}

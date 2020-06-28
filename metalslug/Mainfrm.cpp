@@ -1,4 +1,6 @@
 #include "Mainfrm.h"
+#include <stdio.h>
+#include <iostream>
 
 // 깃허브 추가
 
@@ -103,7 +105,28 @@ HWND Mainfrm::GethWnd(void)
 }
 
 
-Scene* Mainfrm::NextScene()
+<<<<<<< HEAD
+void Mainfrm::NextScene()
 {
-	return m_scene->Next();
+
+=======
+void Mainfrm::NextScene(Scene* _scene)
+{
+	// 입력 받으면
+
+	Scene* mainfrmnextscene = Scene::GetNext();
+
+	if (mainfrmnextscene != NULL)
+	{
+		delete mainfrmnextscene;
+		mainfrmnextscene = NULL;
+	}
+	else
+	{
+		// 다음 씬 생성
+		_scene->NextScene();
+	}
+>>>>>>> c4b6101c5499d62d22223c1428cc6798c773b7bb
+
+	return;
 }

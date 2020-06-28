@@ -76,7 +76,7 @@ void Intro::Destroy()
 	return;
 }
 
-Scene* Intro::Next()
+/*Scene* Intro::Next()
 {
 	// 만약 intro 에서 넘어오는 경우 첫 scene 처리 
 	if (m_iscenestate == E_SCENESTATE_INTRO)
@@ -89,18 +89,37 @@ Scene* Intro::Next()
 		m_nextscene = new Game;
 	}
 
-	// 다음 씬으로 넘어갈 수 있도록 처리.
-	/*if (m_nextscene != NULL)
-	{
-		m_iscenestate = E_SCENESTATE_GAME;
-
-		delete m_nextscene;
-		m_nextscene = NULL;
-
-		m_nextscene = new Game;
-	}*/
-
 	Destroy();
 
 	return m_nextscene;
+}*/
+
+
+/*Scene* Intro::Next()
+{
+	if (Scene::m_nextscene != NULL)
+	{
+		delete Scene::m_nextscene;
+		Scene::m_nextscene = NULL;
+	}
+	else
+	{
+		Scene::m_nextscene = new Game;
+	}
+
+	return 0;
+}*/
+
+void Intro::NextScene()
+{
+	if (m_nextscene != NULL)
+	{
+		delete m_nextscene;
+		m_nextscene = NULL;
+	}
+	else
+	{
+		m_nextscene = new Game;
+	}
+	return;
 }

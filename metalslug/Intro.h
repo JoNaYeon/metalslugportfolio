@@ -24,6 +24,6 @@ public:
 	void Rend();
 	void Destroy();
 
-	Scene* Next();
+	void NextScene();
 };
 

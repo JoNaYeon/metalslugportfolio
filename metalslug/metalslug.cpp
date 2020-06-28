@@ -62,16 +62,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             DispatchMessage(&msg);
         }
         // 메세지 루프 안에 들어왔을 때 framework 를 실행한다.
-
+        
         if (msg.message == WM_QUIT)
             // 만약 종료 메세지일 경우 루프 탈출 
         {
             break;
         }
-        else if (msg.message == WM_CHAR && msg.wParam == VK_SPACE)
+        /*else if (msg.message == WM_CHAR && msg.wParam == VK_SPACE)
         {
             framework.NextScene();
-        }
+        }*/
         else
             // 아닐 경우 런 
         {

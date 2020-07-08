@@ -27,5 +27,6 @@ public:
 	void Destroy();
 
 	void StateBullet();
+	void ItemState();
 };
 

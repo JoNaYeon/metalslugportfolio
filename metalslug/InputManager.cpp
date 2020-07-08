@@ -1,8 +1,17 @@
 #include "InputManager.h"
 #include <stdio.h>
+#include "Mainfrm.h"
 
 // 초기화
 InputManager* InputManager::m_pinstance = NULL;
+
+
+
+
+InputManager::InputManager()
+{
+	m_bkeyboard = true;
+};
 
 InputManager* InputManager::GetInstance()
 {
@@ -38,15 +47,104 @@ void InputManager::DeleteData()
 };
 
 void InputManager::Run()
-{
+{ 
+	// 키를 받는지 계속 체크
+	//Keyboard();
 	return;
 };
 
 
-void InputManager::Keyboard()
+bool InputManager::Keyboard(E_KEY _E_KEY)
 {
-	
+	// 스페이스 받을 경우 넘어가기
+	switch (_E_KEY)
+	{
+		case E_KEYSPACE:
+		{
+			if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		break;
+		case E_KEYLEFT:
+		{
+			if (GetAsyncKeyState(VK_LEFT) & 0x8000)
+			{
+				if (m_bkeyboard)
+				{
+					m_bkeyboard = false;
+				}
+				return true;
+			}
+			else
+			{
+				m_bkeyboard = true;
+				return false;
+			}
+		}
+		break;
+		case E_KEYRIGHT:
+		{
+			if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
+			{
+				if (m_bkeyboard)
+				{
+					m_bkeyboard = false;
+				}
+				return true;
+			}
+			else
+			{
+				m_bkeyboard = true;
+				return false;
+			}
+		}
+		break;
+		case E_KEYJUMP:
+		{
+			// 0x44 = D
+			if (GetAsyncKeyState(0x44) & 0x8000)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		break;
+		case E_KEYFIRE:
+		{
+			// 0x41 = A
+			if (GetAsyncKeyState(0x41) & 0x8000)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		break;
+		case E_KEYBOMB:
+		{
+			// 0x53 = S
+			if (GetAsyncKeyState(0x53) & 0x8000)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		break;
+	}
 
-
-	return;
+	return false;
 }

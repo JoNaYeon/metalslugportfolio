@@ -16,7 +16,7 @@ private:
 	std::vector<Object*> m_vecRendObj[EOBJECT_OBJNUM];
 	// 윈도우 크기 담을 RECT 변수
 	RECT m_recClient;
-
+	 
 	// 생성자
 	RendManager()
 	{
@@ -38,4 +38,3 @@ public:
 	// 특정 vector에 들어있는 값 동적할당 해제하여 Object 지워주기
 	void DeleteVector(E_OBJECT e_obj);
 };
-

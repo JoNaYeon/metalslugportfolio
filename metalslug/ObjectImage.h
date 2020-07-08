@@ -9,13 +9,13 @@ class ObjectImage :
 {
 private:
     // 좌표를 가질 POINT 변수
-    POINT position;
+    POINT m_position;
 
 public:
     ObjectImage()
     {
-        position.x = 0;
-        position.y = 0;
+        m_position.x = 0;
+        m_position.y = 0;
     }
     ~ObjectImage()
     {

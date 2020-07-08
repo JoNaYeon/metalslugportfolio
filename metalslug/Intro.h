@@ -24,10 +24,6 @@ public:
 	void Rend();
 	void Destroy();
 
-<<<<<<< HEAD
-	//Scene* Next();
-=======
 	void NextScene();
->>>>>>> c4b6101c5499d62d22223c1428cc6798c773b7bb
 };
 

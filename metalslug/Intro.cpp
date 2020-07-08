@@ -56,6 +56,13 @@ void Intro::Create()
 
 void Intro::Rend()
 {
+	if (m_hWndAVI && Scene::m_iscenestate == E_SCENESTATE_INTRO)
+	{
+		GetClientRect(MainhWnd, &m_recintro);
+		// rect 크기만큼 avi 실행 
+		SetWindowPos(m_hWndAVI, NULL, 0, 0, m_recintro.right, m_recintro.bottom, SWP_NOZORDER | SWP_NOMOVE);
+		MCIWndPlay(m_hWndAVI);
+	}
 	return;
 }
 
@@ -76,41 +83,6 @@ void Intro::Destroy()
 	return;
 }
 
-/*Scene* Intro::Next()
-{
-	// 만약 intro 에서 넘어오는 경우 첫 scene 처리 
-	if (m_iscenestate == E_SCENESTATE_INTRO)
-	{
-		m_iscenestate = E_SCENESTATE_GAME;
-
-		delete m_nextscene;
-		m_nextscene = NULL;
-
-		m_nextscene = new Game;
-	}
-
-	Destroy();
-
-	return m_nextscene;
-}*/
-<<<<<<< HEAD
-=======
-
-
-/*Scene* Intro::Next()
-{
-	if (Scene::m_nextscene != NULL)
-	{
-		delete Scene::m_nextscene;
-		Scene::m_nextscene = NULL;
-	}
-	else
-	{
-		Scene::m_nextscene = new Game;
-	}
-
-	return 0;
-}*/
 
 void Intro::NextScene()
 {
@@ -121,8 +93,9 @@ void Intro::NextScene()
 	}
 	else
 	{
+		// 게임 실행하기 
 		m_nextscene = new Game;
+		m_iscenestate = E_SCENESTATE_GAME;
 	}
 	return;
 }
->>>>>>> c4b6101c5499d62d22223c1428cc6798c773b7bb

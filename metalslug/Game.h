@@ -1,11 +1,14 @@
 #pragma once
 #include "Scene.h"
+#include "Object.h"
 //#include "generalfunction.h"
 
 class Game :
     public Scene
 {
 private:
+	bool m_bmakebullet;
+	Object* m_classobjptr;
 public:
 	Game();
 
@@ -17,10 +20,6 @@ public:
 	void Rend();
 	void Destroy();
 
-<<<<<<< HEAD
-	//Scene* Next();
-=======
 	void NextScene();
->>>>>>> c4b6101c5499d62d22223c1428cc6798c773b7bb
 };
 

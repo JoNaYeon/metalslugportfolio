@@ -8,9 +8,19 @@
 #include <iostream>
 #include <vector>
 #include "resource.h"
+// 타이머 사용 가능하도록 포함하는 라이브러리
+#pragma comment(lib, "winmm.lib")
+
 
 #define PURE = 0;
-#define BACKGROUNDMOVE 5
+#define BACKGROUNDMOVE 10
+#define USERDMOVE 1
+#define BULLETMOVE 30
+#define BULLETSIZE 30
+#define PLAYERWANIMATION 35
+#define PLAYERHANIMATION 36
+
+extern HINSTANCE hInst;
 
 enum E_OBJECT
 {
@@ -38,7 +48,25 @@ enum E_SCENESTATE
 // 플레이어 이미지의 상태를 표시
 enum E_USERSTATE
 {
-	E_USERSTATE_IDLE = 0
+	E_USERSTATE_IDLE = 0,
+	E_USERSTATE_LWALK,
+	E_USERSTATE_RWALK ,
+	E_USERSTATE_JUMP
+};
+
+enum E_GUNSTATE
+{
+	E_GUNSTATE_NORMAL = 100
+};
+
+enum E_KEY
+{
+	E_KEYSPACE = 0,
+	E_KEYLEFT,
+	E_KEYRIGHT,
+	E_KEYJUMP,
+	E_KEYFIRE,
+	E_KEYBOMB
 };
 
 
@@ -48,17 +76,28 @@ enum E_USERSTATE
 // 오브젝트 특징 담은 구조체 
 typedef struct st_object
 {
-	int iimgwitdh;
-	int iimgheight;
-	POINT imgpos;
-	POINT imgstartpos;
+	// 이미지의 출력 사이즈
+	//RECT rec_imgprintsize;
+	RECT recSrc;
+	// 이미지의 시작 위치
+	//POINT imgstartpos;
+	POINT poriginSrc;
+	// 이미지의 크기
+	//RECT recimg;
+	RECT recDest;
+	// 이미지의 위치
+	POINT posoriginDest;
 
 	st_object()
 	{
-		iimgwitdh = 0;
-		iimgheight = 0;
-		imgpos = { 0,0 };
-		imgstartpos = { 0,0 };
+		recSrc = { 0,0, 0, 0 };
+		poriginSrc = { 0,0 };
+		recDest = { 0,0,0,0 };
+		posoriginDest = { 0,0 };
+	}
+	~st_object()
+	{
+
 	}
 } ST_OBJECT;
 

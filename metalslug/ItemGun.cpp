@@ -30,3 +30,9 @@ void ItemGun::StateBullet()
 {
 	return;
 };
+
+
+void ItemGun::ItemState()
+{
+	return;
+}

@@ -5,6 +5,7 @@
 #include "Object.h"
 //#include <vector>
 #include "Scene.h"
+#include "InputManager.h"
 
 // 초기화`
 RendManager* RendManager::m_pinstance = NULL;
@@ -26,6 +27,8 @@ void RendManager::Create(void)
 	{
 		m_pinstance = new RendManager;
 	}
+
+
 	return;
 };
 
@@ -45,6 +48,8 @@ void RendManager::Destroy()
 		delete m_pinstance;
 		m_pinstance = NULL;
 	}
+
+
 	return;
 };
 
@@ -69,8 +74,6 @@ void RendManager::Rend(HWND& _hWnd)
 
 		// 바꿔야함 mainfrm에서 진행하니 backgr 불러와야함
 		// 오브젝트 그려줄 함수 불러오기 
-		//RendManager::GetInstance()->Rend(hMemdc, _hWnd);
-
 		for (int i = 0; i < EOBJECT_OBJNUM; i++)
 		{
 			for (int j = 0; j < m_vecRendObj[i].size(); j++)
@@ -80,7 +83,6 @@ void RendManager::Rend(HWND& _hWnd)
 			}
 		}
 		
-		//Rectangle(hdc, 100, 200, 500, 600);
 		BitBlt(hdc, 0, 0, m_recClient.right, m_recClient.bottom, hMemdc, 0, 0, SRCCOPY);
 		
 		// 지정 영역 (null)을 갱신. NULL일 경우에 Client 전체를 리셋함 

@@ -2,8 +2,7 @@
 
 #include "Object.h"
 #include "RendManager.h"
-#include "framework.h"
-#include "metalslug.h"
+//#include "metalslug.h"
 #include "define.h"
 
 // 오브젝트 초기화
@@ -40,7 +39,7 @@ void Background::Render(HDC& _hdc, HWND& _hWnd)
     // 이미지의 좌표를 지정해줄 변수
 
     // 비트맵을 hBIt에 뿌려주기
-    himgBit = (HBITMAP)LoadBitmap(hInst, MAKEINTRESOURCE(IDB_BACKGROUND1));
+    himgBit = (HBITMAP)LoadBitmap(hInst, MAKEINTRESOURCE(IDB_BITMAP6));
 
     // himgdc 에 hBit을 저장하고 hOldBit에 himgdc가 가지고 있던 도화지를 바꿔서 저장해둠
     // 이미지를 가지고 있을 도구 + 도화지
@@ -51,7 +50,7 @@ void Background::Render(HDC& _hdc, HWND& _hWnd)
     // 이미지 2의 포지션을 왼쪽으로 BACKGROUNDMOVE씩 이동
     m_pbackgroundposition2.x -= BACKGROUNDMOVE;
 
-    if (m_pbackgroundposition1.x <= -(2*BACKGROUNDX + recClient.right))
+    if (m_pbackgroundposition1.x <= -(2 * BACKGROUNDX + recClient.right))
     {
         // 좌표 초기화
         m_pbackgroundposition1.x = recClient.right;

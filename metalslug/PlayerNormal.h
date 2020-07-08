@@ -1,16 +1,23 @@
 #pragma once
 #include "Player.h"
+#include "ObjectImage.h"
 
 class PlayerNormal :
 	public Player
 {
 protected:
+	ObjectImage m_playerimg;
+	// object 담을 구조체
+	ST_OBJECT m_normalplayertop;
+	ST_OBJECT m_normalplayerbottom;
+	// 이미지 비트맵을 담을 변수
+	int m_itopBitmapImg;
+	int m_ibottomBitmapImg;
+	bool m_bleftright;
+
 public:
 	// 생성자
-	PlayerNormal()
-	{
-
-	};
+	PlayerNormal();
 	// 소멸자
 	virtual ~PlayerNormal()
 	{
@@ -37,5 +44,7 @@ public:
 	// 점프 (오버라이딩)
 	void Jump();
 
+	//void Animation(HDC& _hdc, ST_OBJECT& _obj, char* _cname);
+	//void Animation(HDC& _hdc, ST_OBJECT& _obj, int _iobjstate, float& _ftimer);
 };
 

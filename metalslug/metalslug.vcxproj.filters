@@ -242,6 +242,30 @@
     <Image Include="..\source\background\metalslug_background1.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="..\source\background\bitmap2.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\source\user\UserIdle_Top1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\source\user\UserIdle_Top2.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\source\user\UserIdle_Bottom1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\source\user\UserIdle_Bottom2.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\source\user\UserRun_Bottom1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\source\user\UserRun_Bottom2.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\source\weapon\bullet1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="metalslug.cpp">
@@ -356,5 +380,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
+    <None Include="ClassDiagram3.cd" />
   </ItemGroup>
 </Project>

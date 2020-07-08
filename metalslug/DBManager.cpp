@@ -57,7 +57,7 @@ void DBManager::Run()
 {
 	for (int i = 0; i < EOBJECT_OBJNUM; i++)
 	{
-		for (int j = 0; j < m_vecBackObj[i].size(); j++)
+ 		for (int j = 0; j < m_vecBackObj[i].size(); j++)
 		{
 			// 백터 내부에 접근하여 Object class 의 내부 함수 (Run) 출력
 			(m_vecBackObj[i])[j]->Run();

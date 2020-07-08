@@ -8,7 +8,7 @@ protected:
 	// 상태 머신, 패턴 
 	int m_iscenestate;
 	// 다음 씬을 담을 변수
-	static Scene* m_nextscene;
+	Scene* m_nextscene;
 
 public:
 
@@ -21,7 +21,7 @@ public:
 	virtual ~Scene()
 	{
 
-	} 
+	}
 
 	virtual void Create() PURE;
 	virtual void Rend() PURE;
@@ -32,11 +32,9 @@ public:
 		return m_iscenestate;
 	}
 
-<<<<<<< HEAD
-	//virtual Scene* Next() PURE;
+	Scene* GetNextScene() { return m_nextscene; };
+	void SetNextScene(Scene* _scene) { m_nextscene = _scene; return; };
 
-=======
 	virtual void NextScene() PURE;
-	static Scene* GetNext() { return m_nextscene; };
->>>>>>> c4b6101c5499d62d22223c1428cc6798c773b7bb
+	//static Scene* GetNext() { return m_nextscene; };
 };

@@ -1,18 +1,21 @@
 #include "Mainfrm.h"
 #include <stdio.h>
 #include <iostream>
+#include "InputManager.h"
 
 // 깃허브 추가
 
+
 // static 을 cpp에 NULL로 초기화 해야지 쓸 수 있음.
 HWND Mainfrm::m_hWnd = NULL;
-PAINTSTRUCT Mainfrm::m_ps;
+Scene* Mainfrm::m_scene = NULL;
+
+
 
 Mainfrm::Mainfrm()
 {
 	m_scene = NULL;
-	//m_hdc = NULL;
-	m_imsg = 0;
+	m_msg = NULL;
 };
 
 void Mainfrm::Create()
@@ -21,11 +24,6 @@ void Mainfrm::Create()
 	InputManager::Create();
 	DBManager::Create();
 	RendManager::Create();
-
-	// 영상 재생을 위한 hwnd 와 이름 담는 변수
-	/*HWND hWndAVI = 0;
-	char cAVIFileNmae[] = "MetalSlugOpening.avi";
-	RECT rt = { NULL, };*/
 
 	return;
 }
@@ -49,12 +47,17 @@ void Mainfrm::Initialize()
 
 void Mainfrm::Run()
 {
-	
 	DBManager::GetInstance()->Run();
 	InputManager::GetInstance()->Run();
+
 	if (m_scene != NULL && m_scene->GetState() != E_SCENESTATE_INTRO)
 	{
 		RendManager::GetInstance()->Rend(m_hWnd);
+	}
+
+	if (InputManager::GetInstance()->Keyboard(E_KEYSPACE) == true && m_scene->GetState() == E_SCENESTATE_INTRO)
+	{
+		NextScene();
 	}
 
 	return;
@@ -71,6 +74,7 @@ void Mainfrm::Destroy()
 		delete m_scene;
 		m_scene = NULL;
 	}
+
 	return;
 }
 
@@ -89,7 +93,6 @@ void Mainfrm::SethWnd(HWND hWnd)
 	if (hWnd != NULL)
 	{
 		m_hWnd = hWnd;
-		//CreateDC();
 	}
 	return;
 }
@@ -101,32 +104,51 @@ HWND Mainfrm::GethWnd(void)
 	{
 		return m_hWnd;
 	}
-	return FALSE;
+	return FALSE; 
+}
+
+// 메세지 받아오는 함수
+void Mainfrm::SetMsg(MSG* _msg)
+{
+	m_msg = _msg;
+	return;
+}
+
+// 메세지 내보내는 함수
+MSG* Mainfrm::GetMsg()
+{
+	return m_msg;
 }
 
 
-<<<<<<< HEAD
+// 다음 씬으로 넘기기
 void Mainfrm::NextScene()
-{
-
-=======
-void Mainfrm::NextScene(Scene* _scene)
-{
-	// 입력 받으면
-
-	Scene* mainfrmnextscene = Scene::GetNext();
-
-	if (mainfrmnextscene != NULL)
+{	
+	if (m_scene != NULL)
 	{
-		delete mainfrmnextscene;
-		mainfrmnextscene = NULL;
-	}
-	else
-	{
-		// 다음 씬 생성
-		_scene->NextScene();
-	}
->>>>>>> c4b6101c5499d62d22223c1428cc6798c773b7bb
+		if (m_scene->GetNextScene() == NULL)
+		{
+			// 다음 씬 생성
+			m_scene->NextScene();
 
+			// 다음 nextscene 가져오기 
+			Scene* tempscene = m_scene->GetNextScene();
+
+			// 현재 씬 파괴
+			m_scene->Destroy();
+			if (m_scene != NULL)
+			{
+				// Scene에 있던 것 청소 
+				delete m_scene;
+				m_scene = NULL;
+			}
+
+			// scene 에 nextscene 넣기
+			m_scene = tempscene;
+
+			// nextscene 청소
+			m_scene->SetNextScene(NULL);
+		}
+	}
 	return;
 }

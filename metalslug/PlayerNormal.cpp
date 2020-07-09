@@ -3,6 +3,7 @@
 #include "InputManager.h"
 #include "define.h"
 #include "Mainfrm.h"
+#include "Bullet.h"
 
 MSG* Mainfrm::m_msg;
 
@@ -23,6 +24,7 @@ PlayerNormal::PlayerNormal()
 
 	m_bleftright = true;
 
+
 	return;
 }
 
@@ -38,10 +40,48 @@ void PlayerNormal::Run()
 {
 	// 키보드 입력 받기
 	// 키보드 입력은 정리해서 판정에 우선순위를 구분할 것 
+	// 점프할 때 
 	if (InputManager::GetInstance()->Keyboard(E_KEYJUMP) == true)
 	{
 
 	}
+	// 총을 쏠 때 
+	if (InputManager::GetInstance()->Keyboard(E_KEYFIRE) == true)
+	{
+		if (m_bleftright == true)
+		{
+			m_iobjstate = E_USERSTATE_IDLE;
+			m_itopBitmapImg = USERIDLETOP0;
+			m_ibottomBitmapImg = USERIDLEBOTTOM1;
+			// 총알 객체 생성 
+			Object* objbullet = new Bullet;
+			m_vbullet.push_back(objbullet);
+
+
+			// 총알 객체 vector 에 넣어주기 
+			for (int i = 0; i < m_vbullet.size(); i++)
+			{
+				RendManager::GetInstance()->SetVector(m_vbullet[i], EOBJECT_OBJ);
+				DBManager::GetInstance()->SetVector(m_vbullet[i], EOBJECT_OBJ);
+			}
+		}
+		else
+		{
+			m_iobjstate = E_USERSTATE_IDLE;
+			m_itopBitmapImg = USERIDLETOP2;
+			m_ibottomBitmapImg = USERIDLEBOTTOM2;
+			// 총알 객체 생성 
+			Object* objbullet = new Bullet;
+			m_vbullet.push_back(objbullet);
+
+			for (int i = 0; i < m_vbullet.size(); i++)
+			{
+				RendManager::GetInstance()->SetVector(m_vbullet[i], EOBJECT_OBJ);
+				DBManager::GetInstance()->SetVector(m_vbullet[i], EOBJECT_OBJ);
+			}
+		}
+	}
+	// 왼쪽 
 	else if (InputManager::GetInstance()->Keyboard(E_KEYLEFT) == true)
 	{
 		m_iobjstate = E_USERSTATE_LWALK;
@@ -49,6 +89,7 @@ void PlayerNormal::Run()
 		m_ibottomBitmapImg = USERRUNBOTTOM2;
 		m_bleftright = false;
 	}
+	// 오른쪽
 	else if (InputManager::GetInstance()->Keyboard(E_KEYRIGHT) == true)
 	{
 		m_iobjstate = E_USERSTATE_RWALK;
@@ -56,6 +97,7 @@ void PlayerNormal::Run()
 		m_ibottomBitmapImg = USERRUNBOTTOM1;
 		m_bleftright = true;
 	}
+	// 아무것도 아닐 때 
 	else
 	{
 		// bool 변수 혹은 enum 으로 좌우 위치 확인해주기
@@ -129,12 +171,24 @@ void PlayerNormal::Render(HDC& _hdc, HWND& _hWnd)
 		m_normalplayertop.recSrc.right, m_normalplayertop.recSrc.bottom, RGB(255, 255, 255));
 	
 
-	// object 상태 움직임 변경 
-	Animation(_hdc, m_normalplayertop, m_normalplayerbottom, m_iobjstate);
+	// 시간을 받아옴
+	m_dcurTime = timeGetTime();
+
+	// 만약 이전 시간에서 현재 시간이 0.1float 지났을 때 
+	if (m_dcurTime - m_dPrevTime >= 0.1f * m_fdelay)
+	{
+		// object 상태 움직임 변경 
+		Animation(_hdc, m_normalplayertop, m_iobjstate);
+		Animation(_hdc, m_normalplayerbottom, m_iobjstate);
+
+		// 이전 시간을 현재 시간으로 대체
+		m_dPrevTime = m_dcurTime;
+	}
 
 
 	// oldbit로 바꿔주기
 	SelectObject(hobjdc, holdBit);
+
 
 	DeleteDC(hobjdc);
 	DeleteObject(htopobjBit);
@@ -146,6 +200,12 @@ void PlayerNormal::Render(HDC& _hdc, HWND& _hWnd)
 // 오브젝트 파괴 (오버라이딩)
 void PlayerNormal::Destroy()
 {
+	for (int i = 0; i < m_vbullet.size(); i++)
+	{
+		m_vbullet[i] = NULL;
+	}
+	m_vbullet.clear();
+
 	return;
 };
 

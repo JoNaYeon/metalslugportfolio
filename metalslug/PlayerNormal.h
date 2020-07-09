@@ -1,6 +1,7 @@
 #pragma once
 #include "Player.h"
 #include "ObjectImage.h"
+#include <vector>
 
 class PlayerNormal :
 	public Player
@@ -14,6 +15,7 @@ protected:
 	int m_itopBitmapImg;
 	int m_ibottomBitmapImg;
 	bool m_bleftright;
+	std::vector<Object*> m_vbullet;
 
 public:
 	// 생성자
@@ -43,8 +45,7 @@ public:
 	void AttackBomb();
 	// 점프 (오버라이딩)
 	void Jump();
-
-	//void Animation(HDC& _hdc, ST_OBJECT& _obj, char* _cname);
-	//void Animation(HDC& _hdc, ST_OBJECT& _obj, int _iobjstate, float& _ftimer);
+	
+	std::vector<Object*> Getbulletvec() { return m_vbullet; };
 };
 

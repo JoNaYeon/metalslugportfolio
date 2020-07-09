@@ -4,7 +4,6 @@
 #include "InputManager.h"
 #include "DBManager.h"
 #include "PlayerNormal.h"
-#include "Bullet.h"
 
 
 Game::Game()
@@ -15,7 +14,6 @@ Game::Game()
 	Create();
 
 	m_bmakebullet = false;
-	m_classobjptr = NULL;
 
 
 	return;
@@ -23,8 +21,8 @@ Game::Game()
 
 void Game::Create()
 {
-	static Object* classbgptr = NULL;
-	static Object* classuserptr = NULL;
+	Object* classbgptr = NULL;
+	Object* classuserptr = NULL;
 
 	if (classbgptr == NULL)
 	{
@@ -44,20 +42,10 @@ void Game::Create()
 		DBManager::GetInstance()->SetVector(classuserptr, EOBJECT_OBJ);
 	}
 
-
 	return;
 }
 void Game::Rend()
 {
-	if (InputManager::GetInstance()->Keyboard(E_KEYFIRE) == true && m_classobjptr == NULL)
-	{
-		m_classobjptr = new Bullet();
-
-		m_classobjptr->Setobjstate(E_GUNSTATE_NORMAL);
-		RendManager::GetInstance()->SetVector(m_classobjptr, EOBJECT_OBJ);
-		DBManager::GetInstance()->SetVector(m_classobjptr, EOBJECT_OBJ);
-
-	}
 
 	return;
 }

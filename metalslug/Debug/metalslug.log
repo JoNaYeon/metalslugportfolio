@@ -1,4 +1,9 @@
-﻿  Game.cpp
+﻿  Bullet.cpp
+  Game.cpp
+  Player.cpp
   PlayerNormal.cpp
+D:\Private\Git\metalslug\metalslugportfolio\metalslug\PlayerNormal.cpp(62,22): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+D:\Private\Git\metalslug\metalslugportfolio\metalslug\PlayerNormal.cpp(77,22): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+D:\Private\Git\metalslug\metalslugportfolio\metalslug\PlayerNormal.cpp(203,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
   코드를 생성하고 있습니다...
   metalslug.vcxproj -> D:\Private\Git\metalslug\metalslugportfolio\Debug\metalslug.exe

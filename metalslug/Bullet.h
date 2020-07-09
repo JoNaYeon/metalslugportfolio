@@ -26,5 +26,7 @@ public:
 	// 총알 닿으면
 	void Hit();
 	void ItemState();
+	// recclient 밖으로 나가면 
+	bool BulletOut();
 };
 

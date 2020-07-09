@@ -8,7 +8,6 @@ class Game :
 {
 private:
 	bool m_bmakebullet;
-	Object* m_classobjptr;
 public:
 	Game();
 

@@ -34,7 +34,7 @@ public:
 	virtual void Destroy() PURE;
 
 	// Object를 움직여줄 애니메이션 
-	void Animation(HDC& _hdc, ST_OBJECT& _objtop, ST_OBJECT& _objbottom, int& _iobjstate);
+	void Animation(HDC& _hdc, ST_OBJECT& _obj, int& _iobjstate);
 	// dbject를 움직여줄 애니메이션에 추가된 함수
 	void Aniimage(ST_OBJECT& _objtop);
 	void hitbox(RECT _rec1, RECT _rec2);

@@ -31,7 +31,91 @@ void Object::Aniimage(ST_OBJECT& _obj)
 	}
 }
 
-void Object::Animation(HDC& _hdc, ST_OBJECT& _objtop, ST_OBJECT& _objbottom, int& _iobjstate)
+void Object::Animation(HDC& _hdc, ST_OBJECT& _obj, int& _iobjstate)
+{
+	switch (_iobjstate)
+	{
+		// 멈춤 상태
+	case E_USERSTATE_IDLE:
+	{
+		// 이미지 움직이는 함수 
+		Aniimage(_obj);
+	}
+	break;
+	case E_USERSTATE_RWALK:
+	{
+		// 오른쪽 버튼 눌렀을 때 반응
+		RECT recclient;
+		GetClientRect(Mainfrm::GethWnd(), &recclient);
+
+		// 이미지 움직이는 함수 
+		Aniimage(_obj);
+
+		if (_obj.posoriginDest.x >= (recclient.right - (_obj.recDest.right * 4)))
+		// 만약 개체가 client 이상 가면 나갈 수 없도록 함 
+		{
+			break;
+		}
+
+		if (InputManager::GetInstance()->Getbkeyboard() == false)
+		{
+			_obj.posoriginDest.x += USERDMOVE;
+		}
+	}
+	break;
+	case E_USERSTATE_LWALK:
+	{
+		// 왼쪽 버튼 눌렀을 때 반응
+		RECT recclient;
+		GetClientRect(Mainfrm::GethWnd(), &recclient);
+
+		// 이미지 움직이는 함수 
+		Aniimage(_obj);
+
+		if (_obj.posoriginDest.x <= recclient.left)
+		// 만약 개체가 client 이상 가면 갈 수 없도록 함 
+		{
+			break;
+		}
+
+		if (InputManager::GetInstance()->Getbkeyboard() == false)
+		{
+			_obj.posoriginDest.x -= USERDMOVE;
+		}
+	}
+	break;
+	case E_USERSTATE_JUMP:
+	{
+		// 이미지 움직이는 함수 
+		Aniimage(_obj);
+	}
+	break;
+	case E_GUNSTATE_NORMAL:
+	{
+		// 발사 버튼 눌렀을 때의 함수 
+		RECT recclient;
+		GetClientRect(Mainfrm::GethWnd(), &recclient);
+
+		if (_obj.posoriginDest.x <= recclient.left + BULLETSIZE)
+		// 만약 개체가 client + 총알 사이즈 보다 클 경우, 개체 파괴
+		{
+			// 파괴해주기 
+			break;
+		}
+
+		// 이미지 움직이는 함수 
+		Aniimage(_obj);
+
+		_obj.posoriginDest.x -= BULLETMOVE;
+	}
+	break;
+	}
+
+	return;
+}
+
+
+/*void Object::Animation(HDC& _hdc, ST_OBJECT& _objtop, ST_OBJECT& _objbottom, int& _iobjstate)
 {
 	// 애니메이션 - ST_OBJECT 를 하나만 받아서 쓸 수 있도록 변경 
 
@@ -129,7 +213,7 @@ void Object::Animation(HDC& _hdc, ST_OBJECT& _objtop, ST_OBJECT& _objbottom, int
 	}
 
 	return;
-}
+}*/
 
 void Object::hitbox(RECT _rec1, RECT _rec2)
 {

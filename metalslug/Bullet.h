@@ -4,7 +4,6 @@ class Bullet :
 	public ItemGun
 {
 protected:
-	ST_OBJECT m_bullet;
 public:
 	// 생성자
 	Bullet();
@@ -27,6 +26,7 @@ public:
 	void Hit();
 	void ItemState();
 	// recclient 밖으로 나가면 
-	bool BulletOut();
+	//void ObjectOut();
+	ST_OBJECT GetStruct() { return m_bullet; };
 };
 

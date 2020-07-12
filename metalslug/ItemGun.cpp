@@ -24,7 +24,6 @@ void ItemGun::Destroy()
 	return;
 };
 
-
 // ÃÑ¾Ë ´êÀ¸¸é
 void ItemGun::StateBullet()
 {

@@ -239,12 +239,6 @@
     <Image Include="metalslug.ico">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="..\source\background\metalslug_background1.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\source\background\bitmap2.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
     <Image Include="..\source\user\UserIdle_Top1.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
@@ -261,6 +255,15 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="..\source\user\UserRun_Bottom2.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\source\monster\zombie1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\source\user\bitmap6.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\source\background\background1.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="..\source\weapon\bullet1.bmp">
@@ -377,11 +380,5 @@
       <Filter>Scene\Game</Filter>
     </ClCompile>
     <ClCompile Include="generalfunction.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
-    <None Include="ClassDiagram3.cd" />
   </ItemGroup>
 </Project>

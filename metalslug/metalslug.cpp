@@ -165,58 +165,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
 
-    /*case WM_LBUTTONDOWN:
-    {
-        if (hWndAVI)
-        {
-            MCIWndClose(hWndAVI);
-            MCIWndDestroy(hWndAVI);
-            hWndAVI = 0;
-        }
-        hWndAVI = MCIWndCreateA(hWnd, hInst,
-            MCIWNDF_NOTIFYANSI | MCIWNDF_NOMENU |
-            MCIWNDF_NOTIFYALL | MCIWNDF_NOPLAYBAR, cAVIFileNmae);
-
-        if (hWndAVI)
-        {
-            GetClientRect(hWnd, &rt);
-            SetWindowPos(hWndAVI, NULL, 0, 0, rt.right, rt.bottom,
-                SWP_NOZORDER | SWP_NOMOVE);
-            MCIWndPlay(hWndAVI);
-        }
-        return 0;
-    }
-    break;
-
-    case MCIWNDM_NOTIFYMODE:
-    {
-        switch (lParam)
-        {
-        case MCI_MODE_PLAY:
-            break;
-        case MCI_MODE_STOP:
-            break;
-        }
-        return 0;
-    }
-    break;
-
-    case MCIWNDM_NOTIFYPOS:
-    {
-        return 0;
-    }
-    break;
-
-    case WM_SIZE:
-    {
-        if (wParam == SIZE_MAXIMIZED || wParam == SIZE_MAXSHOW || wParam == SIZE_RESTORED)
-        {
-            SetWindowPos(hWndAVI, NULL, 0, 0, LOWORD(lParam), HIWORD(lParam), SWP_NOZORDER | SWP_NOMOVE);
-        }
-        return 0;
-    }
-    break;*/
-
     case WM_CHAR:
         // 키보드를 입력받는 메세지
     {

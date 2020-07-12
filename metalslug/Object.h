@@ -14,6 +14,21 @@ protected:
 	DWORD m_dcurTime;
 	static DWORD m_dPrevTime;
 	float m_fdelay;
+
+	// 총알 구조체
+	ST_OBJECT m_bullet;
+	// 플레이어 구조체
+	ST_OBJECT m_normalplayertop;
+	ST_OBJECT m_normalplayerbottom;
+	// 몬스터 구조체
+	ST_OBJECT m_Monster;
+	// 배경화면 구조체
+	ST_OBJECT m_BG1;
+	ST_OBJECT m_BG2;
+
+
+	//  objcet의 vector를 담을 iter
+	std::vector<Object*>::iterator m_objiter;
 	
 public:
 	// 생성자
@@ -32,6 +47,8 @@ public:
 	virtual void Render(HDC& _hdc, HWND& _hWnd) PURE;
 	// 오브젝트 파괴
 	virtual void Destroy() PURE;
+	// struct 내보내기 
+	//virtual ST_OBJECT GetStruct() PURE;
 
 	// Object를 움직여줄 애니메이션 
 	void Animation(HDC& _hdc, ST_OBJECT& _obj, int& _iobjstate);
@@ -41,5 +58,11 @@ public:
 
 	int Getobjstate() { return m_iobjstate; };
 	void Setobjstate(int _objstate) { m_iobjstate = _objstate; };
+	// iter 에 vector 넣기
+	bool GetIter(std::vector<Object*>& _obj);
+	// object가 화면 밖으로 나가면
+	void ObjectOut(Object& _obj, std::vector<Object*>& _vecobj);
+	ST_OBJECT GetStruct(int _iobjstate);
+
 };
 

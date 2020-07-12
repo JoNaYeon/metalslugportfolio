@@ -10,17 +10,28 @@ MSG* Mainfrm::m_msg;
 PlayerNormal::PlayerNormal()
 {
 	m_iobjstate = E_USERSTATE_IDLE;
+
 	// 상체 구조체 정의
 	m_normalplayertop.recSrc = { 0, 0, PLAYERWANIMATION, PLAYERHANIMATION };
-	m_normalplayertop.poriginSrc = { 100,100 };
+	m_normalplayertop.poriginSrc = { 0,0 };
 	m_normalplayertop.recDest = { 0, 0, PLAYERWANIMATION, PLAYERHANIMATION };
+	m_normalplayertop.posoriginDest = { 0, 500 };
+	m_normalplayertop.iobjmove = USERDMOVE;
+	m_normalplayertop.iWidthnum = PLAYERWNUM;
+	m_normalplayertop.iHightnum = PLAYERHNUM;
 	// 하체 구조체 정의
 	m_normalplayerbottom.recSrc = { 0, 0, PLAYERWANIMATION, PLAYERHANIMATION };
-	m_normalplayerbottom.poriginSrc = { 100,100 };
+	m_normalplayerbottom.poriginSrc = { 0,0 };
 	m_normalplayerbottom.recDest = { 0, 0, PLAYERWANIMATION, PLAYERHANIMATION };
+	m_normalplayerbottom.posoriginDest = { 0, 500 };
+	m_normalplayerbottom.iobjmove = USERDMOVE;
+	m_normalplayerbottom.iWidthnum = PLAYERWNUM;
+	m_normalplayerbottom.iHightnum = PLAYERHNUM;
 
 	m_itopBitmapImg = USERIDLETOP0;
 	m_ibottomBitmapImg = USERIDLEBOTTOM1;
+	m_fdelay = 1;
+
 
 	m_bleftright = true;
 
@@ -55,15 +66,21 @@ void PlayerNormal::Run()
 			m_ibottomBitmapImg = USERIDLEBOTTOM1;
 			// 총알 객체 생성 
 			Object* objbullet = new Bullet;
+
+			// 총알의 위치를 player 의 위치로 조정시켜주기
+			objbullet->GetStruct(E_OBJECTKIND_BULLET).posoriginDest.x;
+			m_bullet.posoriginDest.x = m_normalplayertop.posoriginDest.x;
+			m_bullet.posoriginDest.y = m_normalplayertop.posoriginDest.y;
+			
 			m_vbullet.push_back(objbullet);
 
 
 			// 총알 객체 vector 에 넣어주기 
-			for (int i = 0; i < m_vbullet.size(); i++)
+			/*for (int i = 0; i < m_vbullet.size(); i++)
 			{
 				RendManager::GetInstance()->SetVector(m_vbullet[i], EOBJECT_OBJ);
 				DBManager::GetInstance()->SetVector(m_vbullet[i], EOBJECT_OBJ);
-			}
+			}*/
 		}
 		else
 		{
@@ -74,11 +91,11 @@ void PlayerNormal::Run()
 			Object* objbullet = new Bullet;
 			m_vbullet.push_back(objbullet);
 
-			for (int i = 0; i < m_vbullet.size(); i++)
+			/*for (int i = 0; i < m_vbullet.size(); i++)
 			{
 				RendManager::GetInstance()->SetVector(m_vbullet[i], EOBJECT_OBJ);
 				DBManager::GetInstance()->SetVector(m_vbullet[i], EOBJECT_OBJ);
-			}
+			}*/
 		}
 	}
 	// 왼쪽 
@@ -153,8 +170,8 @@ void PlayerNormal::Render(HDC& _hdc, HWND& _hWnd)
 
 	// 하체 이미지 출력
 	TransparentBlt(_hdc, m_normalplayerbottom.posoriginDest.x, m_normalplayerbottom.posoriginDest.y,
-		m_normalplayerbottom.recSrc.right * 4, m_normalplayerbottom.recSrc.bottom * 4,
-		hobjdc, m_normalplayerbottom.recDest.left, m_normalplayerbottom.recDest.top,
+		m_normalplayerbottom.recDest.right * 4, m_normalplayerbottom.recDest.bottom * 4,
+		hobjdc, m_normalplayerbottom.poriginSrc.x, m_normalplayerbottom.poriginSrc.y,
 		m_normalplayerbottom.recSrc.right, m_normalplayerbottom.recSrc.bottom, RGB(255, 255, 255));
 
 
@@ -166,8 +183,8 @@ void PlayerNormal::Render(HDC& _hdc, HWND& _hWnd)
 
 	// 상체 이미지 출력
 	TransparentBlt(_hdc, m_normalplayertop.posoriginDest.x, m_normalplayertop.posoriginDest.y,
-		m_normalplayertop.recSrc.right * 4, m_normalplayertop.recSrc.bottom * 4,
-		hobjdc, m_normalplayertop.recDest.left, m_normalplayertop.recDest.top,
+		m_normalplayertop.recDest.right * 4, m_normalplayertop.recDest.bottom * 4,
+		hobjdc, m_normalplayertop.poriginSrc.x, m_normalplayertop.poriginSrc.y,
 		m_normalplayertop.recSrc.right, m_normalplayertop.recSrc.bottom, RGB(255, 255, 255));
 	
 
@@ -185,6 +202,12 @@ void PlayerNormal::Render(HDC& _hdc, HWND& _hWnd)
 		m_dPrevTime = m_dcurTime;
 	}
 
+	// bullet 파괴해주기 
+	for (int i = 0; i < m_vbullet.size(); i++)
+	{
+		// client 밖으로 나가면 파괴해주기 
+		m_vbullet[i]->ObjectOut(*m_vbullet[i], m_vbullet);
+	}
 
 	// oldbit로 바꿔주기
 	SelectObject(hobjdc, holdBit);

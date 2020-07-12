@@ -25,6 +25,8 @@ public:
 	void Render();
 	// 오브젝트 파괴
 	void Destroy();
+	// struct 내보내기 
+	//ST_OBJECT GetStruct();
 
 	void StateBullet();
 	void ItemState();

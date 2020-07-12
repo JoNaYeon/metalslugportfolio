@@ -1,8 +1,6 @@
 #pragma once
 #include "define.h"
-/*#include "framework.h"
-#include "Object.h"
-#include <vector>*/
+
 
 class Object;
 

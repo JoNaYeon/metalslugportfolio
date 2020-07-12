@@ -37,6 +37,8 @@ public:
     void Render(HDC& _hdc, HWND& _hWnd);
     // 오브젝트 파괴
     void Destroy();
+    // struct 내보내는 함수
+    //ST_OBJECT GetStruct();
 
     // 좌표를 내보낼 함수
     POINT GetPosition();

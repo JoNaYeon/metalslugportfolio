@@ -4,6 +4,7 @@
 #include "InputManager.h"
 #include "DBManager.h"
 #include "PlayerNormal.h"
+#include "MonsterZombieMan.h"
 
 
 Game::Game()
@@ -23,6 +24,7 @@ void Game::Create()
 {
 	Object* classbgptr = NULL;
 	Object* classuserptr = NULL;
+	Object* classmonsterptr = NULL;
 
 	if (classbgptr == NULL)
 	{
@@ -40,6 +42,14 @@ void Game::Create()
 		classuserptr = new PlayerNormal();
 		RendManager::GetInstance()->SetVector(classuserptr, EOBJECT_OBJ);
 		DBManager::GetInstance()->SetVector(classuserptr, EOBJECT_OBJ);
+	}
+
+	if (classmonsterptr == NULL)
+	{
+		// 플레이어 생성해주기 
+		classmonsterptr = new MonsterZombieMan();
+		RendManager::GetInstance()->SetVector(classmonsterptr, EOBJECT_OBJ);
+		DBManager::GetInstance()->SetVector(classmonsterptr, EOBJECT_OBJ);
 	}
 
 	return;

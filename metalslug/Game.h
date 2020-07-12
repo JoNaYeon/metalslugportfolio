@@ -18,6 +18,7 @@ public:
 	void Create();
 	void Rend();
 	void Destroy();
+	//virtual ST_OBJECT GetStruct() PURE;
 
 	void NextScene();
 };

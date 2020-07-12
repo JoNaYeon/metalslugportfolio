@@ -13,12 +13,44 @@
 
 
 #define PURE = 0;
+
+// 배경 object 구조체에 들어갈 define
 #define BACKGROUNDMOVE 10
-#define USERDMOVE 1
-#define BULLETMOVE 1
-#define BULLETSIZE 30
+#define BGWSIZE 753
+#define BGHSIZE 224
+#define BGADD 4.5
+
+// 플레이어 object 구조체에 들어갈 define
+// object가 움직이는 거리
+#define USERDMOVE 10
+// object 이미지의 가로 길이
 #define PLAYERWANIMATION 35
+// object 이미지의 세로 길이
 #define PLAYERHANIMATION 36
+// object 이미지의 가로 칸 수
+#define PLAYERWNUM 4
+// object 이미지의 세로 칸 수
+#define PLAYERHNUM 4
+
+// 몬스터 object 구조체에 들어갈 define
+// object가 움직이는 거리
+#define MONSTERMOVE 10
+// object 이미지의 가로 길이
+#define MONSTERWANIMATION 36
+// object 이미지의 세로 길이
+#define MONSTERHANIMATION 42
+// object 이미지의 가로 칸 수
+#define MONSTERWNUM 10
+// object 이미지의 세로 칸 수
+#define MONSTERHNUM 2
+
+// 총알 object 구조체에 들어갈 define
+// 총알이 움직이는 길이
+#define BULLETMOVE 30
+// 총알이 움직이는 가로세로 사이즈
+#define BULLETSIZE 30
+#define BULLETWNUM 4
+#define BULLETHNUM 4
 
 extern HINSTANCE hInst;
 
@@ -69,6 +101,15 @@ enum E_KEY
 	E_KEYBOMB
 };
 
+enum E_OBJECTKIND
+{
+	E_OBJECTKIND_PLAYERTOP = 0,
+	E_OBJECTKIND_PLAYERBOTTOM,
+	E_OBJECTKIND_BULLET,
+	E_OBJECTKIND_BG1,
+	E_OBJECTKIND_BG2
+
+};
 
 
 
@@ -77,16 +118,16 @@ enum E_KEY
 typedef struct st_object
 {
 	// 이미지의 출력 사이즈
-	//RECT rec_imgprintsize;
 	RECT recSrc;
 	// 이미지의 시작 위치
-	//POINT imgstartpos;
 	POINT poriginSrc;
 	// 이미지의 크기
-	//RECT recimg;
 	RECT recDest;
 	// 이미지의 위치
 	POINT posoriginDest;
+	int iobjmove;
+	int iWidthnum;
+	int iHightnum;
 
 	st_object()
 	{
@@ -94,6 +135,9 @@ typedef struct st_object
 		poriginSrc = { 0,0 };
 		recDest = { 0,0,0,0 };
 		posoriginDest = { 0,0 };
+		iobjmove = 0;
+		iWidthnum = 0;
+		iHightnum = 0;
 	}
 	~st_object()
 	{

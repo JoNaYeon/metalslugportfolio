@@ -67,22 +67,9 @@ void PlayerNormal::Run()
 			// 총알 객체 생성 
 			Object* objbullet = new Bullet;
 
-			// 총알의 위치를 player 의 위치로 조정시켜주기
-			objbullet->GetStruct(E_OBJECTKIND_BULLET).posoriginDest.x;
-			m_bullet.posoriginDest.x = m_normalplayertop.posoriginDest.x;
-			m_bullet.posoriginDest.y = m_normalplayertop.posoriginDest.y;
-			
 			m_vbullet.push_back(objbullet);
-
-
-			// 총알 객체 vector 에 넣어주기 
-			/*for (int i = 0; i < m_vbullet.size(); i++)
-			{
-				RendManager::GetInstance()->SetVector(m_vbullet[i], EOBJECT_OBJ);
-				DBManager::GetInstance()->SetVector(m_vbullet[i], EOBJECT_OBJ);
-			}*/
 		}
-		else
+		/*else
 		{
 			m_iobjstate = E_USERSTATE_IDLE;
 			m_itopBitmapImg = USERIDLETOP2;
@@ -91,12 +78,18 @@ void PlayerNormal::Run()
 			Object* objbullet = new Bullet;
 			m_vbullet.push_back(objbullet);
 
-			/*for (int i = 0; i < m_vbullet.size(); i++)
+			
+			for (int i = 0; i < m_vbullet.size(); i++)
 			{
 				RendManager::GetInstance()->SetVector(m_vbullet[i], EOBJECT_OBJ);
 				DBManager::GetInstance()->SetVector(m_vbullet[i], EOBJECT_OBJ);
-			}*/
-		}
+			}
+			RendManager::GetInstance()->SetVector(objbullet, EOBJECT_OBJ);
+			DBManager::GetInstance()->SetVector(objbullet, EOBJECT_OBJ);
+			
+
+		}*/
+
 	}
 	// 왼쪽 
 	else if (InputManager::GetInstance()->Keyboard(E_KEYLEFT) == true)

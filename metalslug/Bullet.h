@@ -4,6 +4,8 @@ class Bullet :
 	public ItemGun
 {
 protected:
+	// 총알 구조체
+	ST_OBJECT m_bullet;
 public:
 	// 생성자
 	Bullet();

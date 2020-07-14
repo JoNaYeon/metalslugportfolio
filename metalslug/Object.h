@@ -16,7 +16,7 @@ protected:
 	float m_fdelay;
 
 	// 총알 구조체
-	ST_OBJECT m_bullet;
+	//ST_OBJECT m_bullet;
 	// 플레이어 구조체
 	ST_OBJECT m_normalplayertop;
 	ST_OBJECT m_normalplayerbottom;
@@ -29,6 +29,9 @@ protected:
 
 	//  objcet의 vector를 담을 iter
 	std::vector<Object*>::iterator m_objiter;
+
+	// 총알을 담을 vector
+	std::vector<Object*> m_vbullet;
 	
 public:
 	// 생성자

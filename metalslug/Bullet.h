@@ -30,5 +30,7 @@ public:
 	// recclient 밖으로 나가면 
 	//void ObjectOut();
 	ST_OBJECT GetStruct() { return m_bullet; };
+	// 총알 사망 여부 반환
+	bool bObjDead();
 };
 

@@ -12,8 +12,6 @@ protected:
 	int m_itopBitmapImg;
 	int m_ibottomBitmapImg;
 	bool m_bleftright;
-	// 총알을 담을 vector
-	std::vector<Object*> m_vbullet;
 
 public:
 	// 생성자
@@ -44,6 +42,7 @@ public:
 	void AttackBomb();
 	// 점프 (오버라이딩)
 	void Jump();
+	bool bObjDead();
 	
 	std::vector<Object*> Getbulletvec() { return m_vbullet; };
 };

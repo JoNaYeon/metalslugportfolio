@@ -44,5 +44,7 @@ public:
     POINT GetPosition();
     // 좌표를 받을 함수
     void SetPosition(POINT _pposition);
+
+    bool bObjDead();
 };
 

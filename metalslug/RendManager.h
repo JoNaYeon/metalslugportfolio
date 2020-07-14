@@ -16,6 +16,9 @@ private:
 	std::vector<Object*> m_vecRendObj[EOBJECT_OBJNUM];
 	// 윈도우 크기 담을 RECT 변수
 	RECT m_recClient;
+
+	//  objcet의 vector를 담을 iter
+	std::vector<Object*>::iterator m_Rendobjiter;
 	 
 	// 생성자
 	RendManager()

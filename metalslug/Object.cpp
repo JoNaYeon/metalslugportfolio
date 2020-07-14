@@ -10,6 +10,8 @@ Object::Object()
 	m_iobjstate = -1;
 	m_dcurTime = timeGetTime();
 	m_fdelay = 1;
+
+	m_bdead = false;
 };
 
 void Object::Aniimage(ST_OBJECT& _obj)
@@ -126,7 +128,7 @@ bool Object::GetIter(std::vector<Object*>& _obj)
 
 
 // object가 화면 밖으로 나가면
-void Object::ObjectOut(Object& _obj, std::vector<Object*>& _vecobj)
+/*void Object::ObjectOut(Object& _obj, std::vector<Object*>& _vecobj)
 {
 	if (_obj.m_bullet.posoriginDest.x >= RendManager::GetInstance()->GetRect().right)
 	{
@@ -151,9 +153,9 @@ void Object::ObjectOut(Object& _obj, std::vector<Object*>& _vecobj)
 		}
 	}
 	return;
-}
+}*/
 
-ST_OBJECT Object::GetStruct(int _iobjkind)
+/*ST_OBJECT Object::GetStruct(int _iobjkind)
 {
 	switch (_iobjkind)
 	{
@@ -182,4 +184,10 @@ ST_OBJECT Object::GetStruct(int _iobjkind)
 		}
 		break;
 	}
-}
+}*/
+
+// 현 오브젝트의 사망 여부 알려주는 함수 
+/*bool Object::bObjDead()
+{
+	return false;
+}*/

@@ -57,10 +57,24 @@ void DBManager::Run()
 {
 	for (int i = 0; i < EOBJECT_OBJNUM; i++)
 	{
+		m_DBobjiter = m_vecBackObj[i].begin();
+
  		for (int j = 0; j < m_vecBackObj[i].size(); j++)
 		{
-			// 백터 내부에 접근하여 Object class 의 내부 함수 (Run) 출력
-			(m_vecBackObj[i])[j]->Run();
+			m_DBobjiter++;
+
+			// 백터 내부에 있는 bobjdead 가 true일 경우 내부 정보 삭제 및 백터 삭제 
+			if ((m_vecBackObj[i])[j]->bObjDead() == true)
+			{
+				delete (m_vecBackObj[i])[j];
+				(m_vecBackObj[i])[j] = NULL;
+				(m_vecBackObj[i]).erase(m_DBobjiter);
+			}
+			else
+			{
+				// 백터 내부에 접근하여 Object class 의 내부 함수 (Run) 출력
+				(m_vecBackObj[i])[j]->Run();
+			}
 		}
 	}
 	return;

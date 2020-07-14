@@ -56,3 +56,9 @@ void ObjectImage::SetPosition(POINT _pposition)
     m_position = _pposition;
     return;
 }
+
+
+bool ObjectImage::bObjDead()
+{
+    return false;
+}

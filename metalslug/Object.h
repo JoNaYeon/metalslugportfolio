@@ -26,9 +26,11 @@ protected:
 	ST_OBJECT m_BG1;
 	ST_OBJECT m_BG2;
 
+	bool m_bdead;
+
 
 	//  objcet의 vector를 담을 iter
-	std::vector<Object*>::iterator m_objiter;
+	//std::vector<Object*>::iterator m_objiter;
 
 	// 총알을 담을 vector
 	std::vector<Object*> m_vbullet;
@@ -64,8 +66,11 @@ public:
 	// iter 에 vector 넣기
 	bool GetIter(std::vector<Object*>& _obj);
 	// object가 화면 밖으로 나가면
-	void ObjectOut(Object& _obj, std::vector<Object*>& _vecobj);
-	ST_OBJECT GetStruct(int _iobjstate);
+	//void ObjectOut(Object& _obj, std::vector<Object*>& _vecobj);
+	//ST_OBJECT GetStruct(int _iobjstate);
+
+	// object의 사망여부 함수
+	virtual bool bObjDead() PURE;
 
 };
 

@@ -56,6 +56,7 @@ void PlayerNormal::Run()
 	{
 
 	}
+
 	// ÃÑÀ» ½ò ¶§ 
 	if (InputManager::GetInstance()->Keyboard(E_KEYFIRE) == true)
 	{
@@ -67,9 +68,10 @@ void PlayerNormal::Run()
 			// ÃÑ¾Ë °´Ã¼ »ý¼º 
 			Object* objbullet = new Bullet;
 
-			m_vbullet.push_back(objbullet);
+			RendManager::GetInstance()->SetVector(objbullet, EOBJECT_BULLET);
+			DBManager::GetInstance()->SetVector(objbullet, EOBJECT_BULLET);
 		}
-		/*else
+		else
 		{
 			m_iobjstate = E_USERSTATE_IDLE;
 			m_itopBitmapImg = USERIDLETOP2;
@@ -78,17 +80,15 @@ void PlayerNormal::Run()
 			Object* objbullet = new Bullet;
 			m_vbullet.push_back(objbullet);
 
+			RendManager::GetInstance()->SetVector(objbullet, EOBJECT_BULLET);
+			DBManager::GetInstance()->SetVector(objbullet, EOBJECT_BULLET);
 			
-			for (int i = 0; i < m_vbullet.size(); i++)
+			/*for (int i = 0; i < m_vbullet.size(); i++)
 			{
-				RendManager::GetInstance()->SetVector(m_vbullet[i], EOBJECT_OBJ);
-				DBManager::GetInstance()->SetVector(m_vbullet[i], EOBJECT_OBJ);
-			}
-			RendManager::GetInstance()->SetVector(objbullet, EOBJECT_OBJ);
-			DBManager::GetInstance()->SetVector(objbullet, EOBJECT_OBJ);
-			
-
-		}*/
+				RendManager::GetInstance()->SetVector(m_vbullet[i], EOBJECT_BULLET);
+				DBManager::GetInstance()->SetVector(m_vbullet[i], EOBJECT_BULLET);
+			}*/
+		}
 
 	}
 	// ¿ÞÂÊ 
@@ -195,13 +195,6 @@ void PlayerNormal::Render(HDC& _hdc, HWND& _hWnd)
 		m_dPrevTime = m_dcurTime;
 	}
 
-	// bullet ÆÄ±«ÇØÁÖ±â 
-	for (int i = 0; i < m_vbullet.size(); i++)
-	{
-		// client ¹ÛÀ¸·Î ³ª°¡¸é ÆÄ±«ÇØÁÖ±â 
-		m_vbullet[i]->ObjectOut(*m_vbullet[i], m_vbullet);
-	}
-
 	// oldbit·Î ¹Ù²ãÁÖ±â
 	SelectObject(hobjdc, holdBit);
 
@@ -255,3 +248,8 @@ void PlayerNormal::Jump()
 	return;
 };
 
+
+bool PlayerNormal::bObjDead()
+{
+	return false;
+}

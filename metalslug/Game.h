@@ -21,5 +21,6 @@ public:
 	//virtual ST_OBJECT GetStruct() PURE;
 
 	void NextScene();
+	bool bObjDead();
 };
 

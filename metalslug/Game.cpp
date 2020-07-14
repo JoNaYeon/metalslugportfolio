@@ -69,3 +69,8 @@ void Game::NextScene()
 {
 	return;
 }
+
+bool Game::bObjDead()
+{
+	return false;
+}

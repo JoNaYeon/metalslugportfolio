@@ -107,3 +107,24 @@ void Bullet::ItemState()
 	return;
 }
 
+bool Bullet::bObjDead()
+{
+	// client 밖으로 나가면 
+	if (this->m_bullet.posoriginDest.x > RendManager::GetInstance()->GetRect().right
+		/*|| this->m_bullet.posoriginDest.x < RendManager::GetInstance()->GetRect().left
+		|| this->m_bullet.posoriginDest.y > RendManager::GetInstance()->GetRect().bottom
+		|| this->m_bullet.posoriginDest.y < RendManager::GetInstance()->GetRect().bottom*/)
+	{
+		m_bdead = true;
+	}
+	// 어딘가에 부딫히면 (intercetcRect())
+	/*else if (Hit() == true)
+	{
+		m_bdead = true;
+	}*/
+	else
+	{
+		m_bdead = false;
+	}
+	return m_bdead;
+}

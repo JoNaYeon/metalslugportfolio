@@ -39,6 +39,8 @@ public:
 	// 타일을 깔아 줄 함수
 	void BackgroundTile(HDC _hdc, int _itilemove);
 	POINT GetRatio(int iwidth, int iheight);
+
+	bool bObjDead();
 };
 
  

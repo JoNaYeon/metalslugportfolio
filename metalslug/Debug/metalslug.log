@@ -1,4 +1,7 @@
-﻿  PlayerNormal.cpp
-D:\Private\Git\metalslug\metalslugportfolio\metalslug\PlayerNormal.cpp(215,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-D:\Private\Git\metalslug\metalslugportfolio\metalslug\PlayerNormal.cpp(235,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-  metalslug.vcxproj -> D:\Private\Git\metalslug\metalslugportfolio\Debug\metalslug.exe
+﻿  DBManager.cpp
+C:\Users\nanna\바탕 화면\Git\metalslug\metalslugportfolio\metalslug\DBManager.cpp(46,22): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\nanna\바탕 화면\Git\metalslug\metalslugportfolio\metalslug\DBManager.cpp(62,22): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  RendManager.cpp
+C:\Users\nanna\바탕 화면\Git\metalslug\metalslugportfolio\metalslug\RendManager.cpp(81,22): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  코드를 생성하고 있습니다...
+  metalslug.vcxproj -> C:\Users\nanna\바탕 화면\Git\metalslug\metalslugportfolio\Debug\metalslug.exe

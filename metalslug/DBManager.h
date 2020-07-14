@@ -13,6 +13,9 @@ private:
 	// 오브젝트를 종류별로 담을 백터
 	std::vector<Object*> m_vecBackObj[EOBJECT_OBJNUM];
 
+	//  objcet의 vector를 담을 iter
+	std::vector<Object*>::iterator m_DBobjiter;
+
 	// 생성자
 	DBManager()
 	{

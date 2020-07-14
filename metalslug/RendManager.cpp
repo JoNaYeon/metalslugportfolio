@@ -76,10 +76,21 @@ void RendManager::Rend(HWND& _hWnd)
 		// 오브젝트 그려줄 함수 불러오기 
 		for (int i = 0; i < EOBJECT_OBJNUM; i++)
 		{
+			m_Rendobjiter = m_vecRendObj[i].begin();
+
 			for (int j = 0; j < m_vecRendObj[i].size(); j++)
 			{
-				// 백터 내부에 접근하여 Object class 의 내부 함수 (Render) 출력
-				(m_vecRendObj[i])[j]->Render(hMemdc, _hWnd);
+				m_Rendobjiter++;
+
+				if (((m_vecRendObj[i])[j]) == NULL)
+				{
+					(m_vecRendObj[i]).erase(m_Rendobjiter);
+				}
+				else
+				{
+					// 백터 내부에 접근하여 Object class 의 내부 함수 (Render) 출력
+					(m_vecRendObj[i])[j]->Render(hMemdc, _hWnd);
+				}
 			}
 		}
 		

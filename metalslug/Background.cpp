@@ -273,3 +273,8 @@ POINT Background::GetRatio(int iwidth, int iheight)
 
     return proit;
 }
+
+bool Background::bObjDead()
+{
+    return false;
+}

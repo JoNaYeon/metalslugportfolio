@@ -103,3 +103,8 @@ void MonsterZombieMan::Attack()
 {
 	return;
 };
+
+bool MonsterZombieMan::bObjDead()
+{
+	return false;
+}

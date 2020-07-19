@@ -121,9 +121,6 @@
     <ClInclude Include="InputManager.h">
       <Filter>02. Manager\Input</Filter>
     </ClInclude>
-    <ClInclude Include="DBManager.h">
-      <Filter>02. Manager\DB</Filter>
-    </ClInclude>
     <ClInclude Include="RendManager.h">
       <Filter>02. Manager\Rend</Filter>
     </ClInclude>
@@ -226,6 +223,9 @@
     <ClInclude Include="BossStage.h">
       <Filter>Scene\Game</Filter>
     </ClInclude>
+    <ClInclude Include="ObjManager.h">
+      <Filter>02. Manager\DB</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="metalslug.rc">
@@ -269,6 +269,15 @@
     <Image Include="..\source\weapon\bullet1.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="..\source\user\usertopfire.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\source\user\userbottomfire.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\source\background\background2.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="metalslug.cpp">
@@ -276,9 +285,6 @@
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>02. Manager\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="DBManager.cpp">
-      <Filter>02. Manager\DB</Filter>
     </ClCompile>
     <ClCompile Include="RendManager.cpp">
       <Filter>02. Manager\Rend</Filter>
@@ -380,5 +386,8 @@
       <Filter>Scene\Game</Filter>
     </ClCompile>
     <ClCompile Include="generalfunction.h" />
+    <ClCompile Include="ObjManager.cpp">
+      <Filter>02. Manager\DB</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

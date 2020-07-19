@@ -12,11 +12,18 @@ Object::Object()
 	m_fdelay = 1;
 
 	m_bdead = false;
+	m_bfire = false;
 };
 
 void Object::Aniimage(ST_OBJECT& _obj)
 {
-	// top 반응
+	// state가 달라지면 originsrc를 0,0부터 시작하여 잘려보이는 현상 없애기
+	if (m_iobjstatetemp != m_iobjstate)
+	{
+		m_iobjstatetemp = m_iobjstate;
+		_obj.poriginSrc = { 0,0 };
+	}
+
 	if (_obj.poriginSrc.x < _obj.recSrc.right * (_obj.iWidthnum - 1))
 	{
 		_obj.poriginSrc.x += _obj.recSrc.right;
@@ -29,86 +36,16 @@ void Object::Aniimage(ST_OBJECT& _obj)
 		if (_obj.poriginSrc.y >= _obj.recSrc.bottom * (_obj.iHightnum - 1))
 		{
 			_obj.poriginSrc.y = 0;
+			m_bfire = false;
 		}
 	}
 }
 
 void Object::Animation(HDC& _hdc, ST_OBJECT& _obj, int& _iobjstate)
 {
-	switch (_iobjstate)
-	{
-		// 멈춤 상태
-	case E_USERSTATE_IDLE:
-	{
-		// 이미지 움직이는 함수 
-		Aniimage(_obj);
-	}
-	break;
-	case E_USERSTATE_RWALK:
-	{
-		// 오른쪽 버튼 눌렀을 때 반응
-		RECT recclient;
-		GetClientRect(Mainfrm::GethWnd(), &recclient);
-
-		// 이미지 움직이는 함수 
-		Aniimage(_obj);
-
-		if (_obj.posoriginDest.x >= (recclient.right - (_obj.recDest.right * _obj.iWidthnum)))
-		// 만약 개체가 client 이상 가면 나갈 수 없도록 함 
-		{
-			break;
-		}
-
-		if (InputManager::GetInstance()->Getbkeyboard() == false)
-		{
-			_obj.posoriginDest.x += _obj.iobjmove;
-		}
-	}
-	break;
-	case E_USERSTATE_LWALK:
-	{
-		// 왼쪽 버튼 눌렀을 때 반응
-		RECT recclient;
-		GetClientRect(Mainfrm::GethWnd(), &recclient);
-
-		// 이미지 움직이는 함수 
-		Aniimage(_obj);
-
-		if (_obj.posoriginDest.x <= recclient.left)
-		// 만약 개체가 client 이상 가면 갈 수 없도록 함 
-		{
-			break;
-		}
-
-		if (InputManager::GetInstance()->Getbkeyboard() == false)
-		{
-			_obj.posoriginDest.x -= _obj.iobjmove;
-		}
-	}
-	break;
-	case E_USERSTATE_JUMP:
-	{
-		// 이미지 움직이는 함수 
-		Aniimage(_obj);
-	}
-	break;
-	case E_GUNSTATE_NORMAL:
-	{
-		// 발사 버튼 눌렀을 때의 함수 
-		RECT recclient;
-		GetClientRect(Mainfrm::GethWnd(), &recclient);
-
-		// 이미지 움직이는 함수 
-		Aniimage(_obj);
-
-		_obj.posoriginDest.x += _obj.iobjmove;
-	}
-	break;
-	}
 
 	return;
 }
-
 
 
 void Object::hitbox(RECT _rec1, RECT _rec2)
@@ -127,67 +64,25 @@ bool Object::GetIter(std::vector<Object*>& _obj)
 };
 
 
-// object가 화면 밖으로 나가면
-/*void Object::ObjectOut(Object& _obj, std::vector<Object*>& _vecobj)
+void Object::SetObjStruct(ST_OBJECT& _obj, int _recSrcright, int _recSrcbottom, int _poriginSrcx, int _poriginSrcy,
+	int _recDestright, int _recDestbottom, int _posoriginDestx, int _posoriginDesty,
+	int _iobjmove, int _iWidthnum, int _iHightnum)
 {
-	if (_obj.m_bullet.posoriginDest.x >= RendManager::GetInstance()->GetRect().right)
-	{
-		m_objiter = _vecobj.begin();
+	_obj.iobjmove = _iobjmove;
+	_obj.iHightnum = _iHightnum;
+	_obj.iWidthnum = _iWidthnum;
 
-		// for 문을 bullet vector 의 사이즈만큼 돌면서 iter을 하나씩 증가.
-		for (int i = 0; i < _vecobj.size(); i++)
-		{
-			// 만약 i번째 bullet vector 가 현재의 bullet과 같다면 
-			//현재 iter가 가리키는 bullet을 삭제하고 다음 iter를 가리키게 함
-			if (_vecobj[i] == &_obj)
-			{
-				_vecobj[i]->Destroy();
-				m_objiter = _vecobj.erase(m_objiter);
-			}
-			else
-			{
-				// iter 가 가리키는 부분 하나씩 옮기기
-				++m_objiter;
-			}
+	_obj.recDest.right = _recSrcright;
+	_obj.recDest.bottom = _recSrcbottom;
 
-		}
-	}
+	_obj.recSrc.right = _recDestright;
+	_obj.recSrc.bottom = _recDestbottom;
+
+	_obj.posoriginDest.x = _posoriginDestx;
+	_obj.posoriginDest.y = _posoriginDesty;
+	
+	_obj.poriginSrc.x = _poriginSrcx;
+	_obj.poriginSrc.y = _poriginSrcy;
+
 	return;
-}*/
-
-/*ST_OBJECT Object::GetStruct(int _iobjkind)
-{
-	switch (_iobjkind)
-	{
-		case E_OBJECTKIND_PLAYERTOP:
-		{
-			return m_normalplayertop;
-		}
-		break;
-		case E_OBJECTKIND_PLAYERBOTTOM:
-		{
-			return m_normalplayerbottom;
-		}
-		break;
-		case E_OBJECTKIND_BULLET:
-		{
-			return m_bullet;
-		}
-		break;
-		case E_OBJECTKIND_BG1:
-		{
-			return m_BG1;
-		}
-		case E_OBJECTKIND_BG2:
-		{
-			return m_BG2;
-		}
-		break;
-	}
-}*/
-
-// 현 오브젝트의 사망 여부 알려주는 함수 
-/*bool Object::bObjDead()
-{
-	return false;
-}*/
+}

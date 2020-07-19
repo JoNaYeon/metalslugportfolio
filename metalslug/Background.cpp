@@ -1,7 +1,7 @@
 #include "Background.h"
 
 #include "Object.h"
-#include "RendManager.h"
+#include "ObjManager.h"
 //#include "metalslug.h"
 #include "define.h"
 
@@ -49,15 +49,15 @@ void Background::Render(HDC& _hdc, HWND& _hWnd)
     //이미지를 들고 있을 메모리 dc
     HDC himgdc;
     // 이미지를 저장할 HBITMAP
-    HBITMAP himgBit1;
-    HBITMAP himgBit2;
+    HBITMAP himgBit1 = NULL;
+    HBITMAP himgBit2 = NULL;
     // 이전 도화지 저장해줄 변수
     HBITMAP hOldBit_img = NULL;
 
 
 
-    // RendManager 에 있던 것을 가져오기 
-    RECT recClient = RendManager::GetInstance()->GetRect();
+    // ObjManager 에 있던 것을 가져오기 
+    RECT recClient = ObjManager::GetInstance()->GetRect();
     // client 화면 크기를 안 받아오고 있으니 화면에 아무것도 안 뜨죠! 
     GetClientRect(_hWnd, &recClient);
 
@@ -82,8 +82,8 @@ void Background::Render(HDC& _hdc, HWND& _hWnd)
 
 
     // 각각의 배경 HBITMAP에 배경 이미지 넣기
-    himgBit1 = CreateCompatibleBitmap(_hdc, m_BG1.recSrc.right, m_BG1.recSrc.bottom);
-    himgBit2 = CreateCompatibleBitmap(_hdc, m_BG2.recSrc.right, m_BG2.recSrc.bottom);
+    //himgBit1 = CreateCompatibleBitmap(_hdc, m_BG1.recSrc.right, m_BG1.recSrc.bottom);
+    //himgBit2 = CreateCompatibleBitmap(_hdc, m_BG2.recSrc.right, m_BG2.recSrc.bottom);
 
 
 
@@ -142,44 +142,8 @@ void Background::Render(HDC& _hdc, HWND& _hWnd)
     }
 
 
-
-    /*if (m_BG1.posoriginDest.x <= recClient.right && m_BG1.posoriginDest.x >= -(m_BG1.recDest.right))
-    {
-        // 이미지 1의 포지션을 왼쪽으로 BACKGROUNDMOVE 씩 이동
-        m_BG1.posoriginDest.x -= BACKGROUNDMOVE;
-        if (m_BG1.posoriginDest.x <= - (m_BG1.recDest.right + m_BG2.recDest.right - recClient.right))
-        {
-            m_BG1.posoriginDest.x = recClient.right;
-        }
-    }
-    else if (m_BG2.posoriginDest.x <= recClient.right && m_BG2.posoriginDest.x >= -(m_BG2.recDest.right))
-    {
-        // 이미지 2의 포지션을 왼쪽으로 BACKGROUNDMOVE씩 이동
-        m_BG2.posoriginDest.x -= BACKGROUNDMOVE; 
-        if (m_BG2.posoriginDest.x <= - (m_BG2.recDest.right + m_BG1.recDest.right - recClient.right))
-        {
-            m_BG2.posoriginDest.x = recClient.right;
-        }
-    }*/
-
-    /*// 첫번째 배경의 시작점이 client의 left로부터 배경 크기만큼 작을 때 
-    if (m_BG1.posoriginDest.x < - (m_BG1.recDest.right - recClient.right))
-    {
-        // 좌표 초기화
-        m_BG2.posoriginDest.x = recClient.right;
-    }
-    // 두번째 배경의 시작점이 client의 left로부터 배경 크기만큼 작을 때
-    if (m_BG2.posoriginDest.x < - (m_BG2.recDest.right - recClient.right))
-    {
-        // 좌표 초기화
-        m_BG1.posoriginDest.x = recClient.right;
-        m_BG2.posoriginDest.x = m_BG1.recDest.right;
-    }*/
-
-
-
     // 배경 타일 깔아주는 함수
-    BackgroundTile(_hdc, BACKGROUNDMOVE);
+    //BackgroundTile(_hdc, BACKGROUNDMOVE);
 
     // 다시 hOldBit 으로 갈아주기
     SelectObject(himgdc, hOldBit_img);
@@ -235,7 +199,7 @@ POINT Background::GetRatio(int iwidth, int iheight)
     int igcd = 0;
     int itemp = 0;
 
-    RECT rectemp = RendManager::GetInstance()->GetRect();
+    RECT rectemp = ObjManager::GetInstance()->GetRect();
 
     POINT proit = { 0,0 };
 

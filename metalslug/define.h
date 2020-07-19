@@ -19,18 +19,31 @@
 #define BGWSIZE 753
 #define BGHSIZE 224
 #define BGADD 4.5
+#define PLAYERSIZE 4
 
-// 플레이어 object 구조체에 들어갈 define
+// 플레이어 RUN / IDEL object 구조체에 들어갈 define
 // object가 움직이는 거리
-#define USERDMOVE 10
+#define IDLEUSERDMOVE 10
 // object 이미지의 가로 길이
-#define PLAYERWANIMATION 35
+#define IDLEPLAYERWANIMATION 35
 // object 이미지의 세로 길이
-#define PLAYERHANIMATION 36
+#define IDLEPLAYERHANIMATION 36
 // object 이미지의 가로 칸 수
-#define PLAYERWNUM 4
+#define IDLEPLAYERWNUM 4
 // object 이미지의 세로 칸 수
-#define PLAYERHNUM 4
+#define IDLEPLAYERHNUM 4
+
+// 플레이어 FIRE object 구조체에 들어갈 define
+// object가 움직이는 거리
+#define FIREUSERDMOVE 10
+// object 이미지의 가로 길이
+#define FIREPLAYERWANIMATION 59
+// object 이미지의 세로 길이
+#define FIREPLAYERHANIMATION 36
+// object 이미지의 가로 칸 수
+#define FIREPLAYERWNUM 5
+// object 이미지의 세로 칸 수
+#define FIREPLAYERHNUM 3
 
 // 몬스터 object 구조체에 들어갈 define
 // object가 움직이는 거리
@@ -58,9 +71,9 @@ enum E_OBJECT
 {
 	EOBJECT_BG = 0,
 	EOBJECT_TERRAIN,
-	EOBJECT_OBJ,
 	EOBJECT_BULLET,
 	EOBJECT_MONSTER,
+	EOBJECT_OBJ,
 	EOBJECT_UI,
 	// 오브젝트의 갯수를 마지막에 넣어서 담아야 할 오브젝트의 갯수 자동 지정
 	EOBJECT_OBJNUM,
@@ -85,7 +98,8 @@ enum E_USERSTATE
 	E_USERSTATE_IDLE = 0,
 	E_USERSTATE_LWALK,
 	E_USERSTATE_RWALK ,
-	E_USERSTATE_JUMP
+	E_USERSTATE_JUMP,
+	E_USERSTATE_FIRE
 };
 
 enum E_GUNSTATE

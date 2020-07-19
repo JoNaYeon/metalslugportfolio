@@ -1,5 +1,5 @@
 #include "MonsterZombieMan.h"
-#include "RendManager.h"
+#include "ObjManager.h"
 #include "define.h"
 #include "Mainfrm.h"
 
@@ -43,7 +43,7 @@ void MonsterZombieMan::Render(HDC& _hdc, HWND& _hWnd)
 	HBITMAP holdBit;
 
 	// 범위 리셋 
-	RECT recClient = RendManager::GetInstance()->GetRect();
+	RECT recClient = ObjManager::GetInstance()->GetRect();
 	GetClientRect(_hWnd, &recClient);
 
 	// 이미지 출력할 hdc 출력 
@@ -51,7 +51,7 @@ void MonsterZombieMan::Render(HDC& _hdc, HWND& _hWnd)
 
 
 	// 상체 이미지를 저장할 HBITMAP
-	hMonsterobjBit = CreateCompatibleBitmap(_hdc, m_Monster.recSrc.right, m_Monster.recSrc.bottom);
+	//hMonsterobjBit = CreateCompatibleBitmap(_hdc, m_Monster.recSrc.right, m_Monster.recSrc.bottom);
 
 
 	// 비트맵을 hBIt에 뿌려주기

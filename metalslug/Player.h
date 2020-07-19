@@ -16,7 +16,7 @@ protected:
 
 	Object* m_classobjptr;
 	// 총알을 담을 vector
-	std::vector<Object*> m_vbullet;
+	//std::vector<Object*> m_vbullet;
 
 public:
 	// 생성자

@@ -1,4 +1,4 @@
-#include "RendManager.h"
+/*#include "ObjManager.h"
 
 //#include "define.h"
 //#include "framework.h"
@@ -8,31 +8,31 @@
 #include "InputManager.h"
 
 // 초기화`
-RendManager* RendManager::m_pinstance = NULL;
+ObjManager* ObjManager::m_pinstance = NULL;
 
-RendManager* RendManager::GetInstance()
+ObjManager* ObjManager::GetInstance()
 {
 	// create 를 하지 않았을 경우, 예외처리
 	if (m_pinstance == NULL)
 	{
-		m_pinstance = new RendManager;
+		m_pinstance = new ObjManager;
 	}
 	return m_pinstance;
 };
 
-void RendManager::Create(void)
+void ObjManager::Create(void)
 {
 	// m_pinstance 에 아무것도 들어있지 않을 때 생성하기
 	if (m_pinstance == NULL)
 	{
-		m_pinstance = new RendManager;
+		m_pinstance = new ObjManager;
 	}
 
 
 	return;
 };
 
-void RendManager::Destroy()
+void ObjManager::Destroy()
 {
 	// m_pinstance 에 뭔가 들어있을 경우, delete
 	if (m_pinstance != NULL)
@@ -53,7 +53,7 @@ void RendManager::Destroy()
 	return;
 };
 
-void RendManager::Rend(HWND& _hWnd)
+void ObjManager::Rend(HWND& _hWnd)
 {
 	if (_hWnd != NULL)
 	{
@@ -109,7 +109,7 @@ void RendManager::Rend(HWND& _hWnd)
 
 };
 
-void RendManager::SetVector(Object* _object, E_OBJECT _Eobjectkind)
+void ObjManager::SetVector(Object* _object, E_OBJECT _Eobjectkind)
 {
 	// vector ptr 을 넣어서 Rend() 할 수 있도록.
 	// enum 자료형으로 사용
@@ -119,19 +119,19 @@ void RendManager::SetVector(Object* _object, E_OBJECT _Eobjectkind)
 	return;
 }
 
-RECT RendManager::GetRect()
+RECT ObjManager::GetRect()
 {
 	return m_recClient;
 }
 
-void RendManager::SetRect(RECT _recClient)
+void ObjManager::SetRect(RECT _recClient)
 {
 	m_recClient = _recClient;
 	return;
 }
 
 
-void RendManager::DeleteVector(E_OBJECT e_obj)
+void ObjManager::DeleteVector(E_OBJECT e_obj)
 {
 	std::vector<Object*>::iterator obj_iter = m_vecRendObj[e_obj].begin();
 
@@ -146,3 +146,4 @@ void RendManager::DeleteVector(E_OBJECT e_obj)
 
 	return;
 }
+*/

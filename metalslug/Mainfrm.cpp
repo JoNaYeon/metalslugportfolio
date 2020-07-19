@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <iostream>
 #include "InputManager.h"
+// intro 임시 막아놓기용 header
+#include "Game.h"
 
 // 깃허브 추가
 
@@ -22,8 +24,7 @@ void Mainfrm::Create()
 {
 	// Create 에 매니저 생성해주기 
 	InputManager::Create();
-	DBManager::Create();
-	RendManager::Create();
+	ObjManager::Create();
 
 	return;
 }
@@ -33,7 +34,8 @@ void Mainfrm::Initialize()
 	if (m_scene == NULL)
 	{
 		// 맨 처음 만들 씬 
-		Scene* ptrintro = new Intro;
+		// intro 막아놓기 
+		Scene* ptrintro = new Game;
 
 		if (ptrintro != NULL)
 		{
@@ -47,12 +49,12 @@ void Mainfrm::Initialize()
 
 void Mainfrm::Run()
 {
-	DBManager::GetInstance()->Run();
+	ObjManager::GetInstance()->Run();
 	InputManager::GetInstance()->Run();
 
 	if (m_scene != NULL && m_scene->GetState() != E_SCENESTATE_INTRO)
 	{
-		RendManager::GetInstance()->Rend(m_hWnd);
+		ObjManager::GetInstance()->Rend(m_hWnd);
 	}
 
 	if (InputManager::GetInstance()->Keyboard(E_KEYSPACE) == true && m_scene->GetState() == E_SCENESTATE_INTRO)
@@ -65,8 +67,7 @@ void Mainfrm::Run()
 
 void Mainfrm::Destroy()
 {
-	RendManager::GetInstance()->Destroy();
-	DBManager::GetInstance()->Destroy();
+	ObjManager::GetInstance()->Destroy();
 	InputManager::GetInstance()->Destroy();
 
 	if (m_scene != NULL)

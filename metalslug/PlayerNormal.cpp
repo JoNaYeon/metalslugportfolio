@@ -1,5 +1,5 @@
 #include "PlayerNormal.h"
-#include "RendManager.h"
+#include "ObjManager.h"
 #include "InputManager.h"
 #include "define.h"
 #include "Mainfrm.h"
@@ -12,32 +12,312 @@ PlayerNormal::PlayerNormal()
 	m_iobjstate = E_USERSTATE_IDLE;
 
 	// 상체 구조체 정의
-	m_normalplayertop.recSrc = { 0, 0, PLAYERWANIMATION, PLAYERHANIMATION };
-	m_normalplayertop.poriginSrc = { 0,0 };
-	m_normalplayertop.recDest = { 0, 0, PLAYERWANIMATION, PLAYERHANIMATION };
+	m_normalplayertop.recSrc = { 0, 0, IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION };
+	m_normalplayertop.poriginSrc = { 0, 0 };
+	m_normalplayertop.recDest = { 0, 0, IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION };
 	m_normalplayertop.posoriginDest = { 0, 500 };
-	m_normalplayertop.iobjmove = USERDMOVE;
-	m_normalplayertop.iWidthnum = PLAYERWNUM;
-	m_normalplayertop.iHightnum = PLAYERHNUM;
+	m_normalplayertop.iobjmove = IDLEUSERDMOVE;
+	m_normalplayertop.iWidthnum = IDLEPLAYERWNUM;
+	m_normalplayertop.iHightnum = IDLEPLAYERHNUM;
 	// 하체 구조체 정의
-	m_normalplayerbottom.recSrc = { 0, 0, PLAYERWANIMATION, PLAYERHANIMATION };
-	m_normalplayerbottom.poriginSrc = { 0,0 };
-	m_normalplayerbottom.recDest = { 0, 0, PLAYERWANIMATION, PLAYERHANIMATION };
+	m_normalplayerbottom.recSrc = { 0, 0, IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION };
+	m_normalplayerbottom.poriginSrc = { 0, 0 };
+	m_normalplayerbottom.recDest = { 0, 0, IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION };
 	m_normalplayerbottom.posoriginDest = { 0, 500 };
-	m_normalplayerbottom.iobjmove = USERDMOVE;
-	m_normalplayerbottom.iWidthnum = PLAYERWNUM;
-	m_normalplayerbottom.iHightnum = PLAYERHNUM;
+	m_normalplayerbottom.iobjmove = IDLEUSERDMOVE;
+	m_normalplayerbottom.iWidthnum = IDLEPLAYERWNUM;
+	m_normalplayerbottom.iHightnum = IDLEPLAYERHNUM;
 
 	m_itopBitmapImg = USERIDLETOP0;
 	m_ibottomBitmapImg = USERIDLEBOTTOM1;
 	m_fdelay = 1;
 
-
 	m_bleftright = true;
-
 
 	return;
 }
+
+
+
+void PlayerNormal::AnimationStateCheck()
+{
+	// bottom 반응
+	// 점프할 때 
+	if (InputManager::GetInstance()->Keyboard(E_KEYJUMP) == true)
+	{
+
+	}
+	else if (InputManager::GetInstance()->Keyboard(E_KEYLEFT) == true)
+	{
+		m_iobjstate = E_USERSTATE_LWALK;
+		m_ibottomBitmapImg = USERRUNBOTTOM2;
+		m_bleftright = false;
+
+		SetObjStruct(m_normalplayerbottom, IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayerbottom.poriginSrc.x, m_normalplayerbottom.poriginSrc.y,
+			IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayerbottom.posoriginDest.x, m_normalplayerbottom.posoriginDest.y, IDLEUSERDMOVE,
+			IDLEPLAYERWNUM, IDLEPLAYERHNUM);
+	}
+	// 오른쪽
+	else if (InputManager::GetInstance()->Keyboard(E_KEYRIGHT) == true)
+	{
+		m_iobjstate = E_USERSTATE_RWALK;
+		m_ibottomBitmapImg = USERRUNBOTTOM1;
+		m_bleftright = true;
+
+		SetObjStruct(m_normalplayerbottom, IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayerbottom.poriginSrc.x, m_normalplayerbottom.poriginSrc.y,
+			IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayerbottom.posoriginDest.x, m_normalplayerbottom.posoriginDest.y, IDLEUSERDMOVE,
+			IDLEPLAYERWNUM, IDLEPLAYERHNUM);
+	}
+	// 아무것도 아닐 때 
+	else
+	{
+		// bool 변수 혹은 enum 으로 좌우 위치 확인해주기
+		if (m_bleftright == true)
+		{
+			m_iobjstate = E_USERSTATE_IDLE;
+			m_ibottomBitmapImg = USERIDLEBOTTOM1;
+
+			SetObjStruct(m_normalplayerbottom, IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayerbottom.poriginSrc.x, m_normalplayerbottom.poriginSrc.y,
+				IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayerbottom.posoriginDest.x, m_normalplayerbottom.posoriginDest.y, IDLEUSERDMOVE,
+				IDLEPLAYERWNUM, IDLEPLAYERHNUM);
+		}
+		else
+		{
+			m_iobjstate = E_USERSTATE_IDLE;
+			m_ibottomBitmapImg = USERIDLEBOTTOM2;
+
+			SetObjStruct(m_normalplayerbottom, IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayerbottom.poriginSrc.x, m_normalplayerbottom.poriginSrc.y,
+				IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayerbottom.posoriginDest.x, m_normalplayerbottom.posoriginDest.y, IDLEUSERDMOVE,
+				IDLEPLAYERWNUM, IDLEPLAYERHNUM);
+		}
+	}
+
+
+	// top 반응
+	// 총을 쏠 때 
+	if (InputManager::GetInstance()->Keyboard(E_KEYFIRE) == true)
+	{
+		// 오른쪽 방향으로 발사 
+		if (m_bleftright == true)
+		{
+			m_iobjstate = E_USERSTATE_FIRE;
+			m_itopBitmapImg = USERFIRETOP1;
+
+			// struct에 자료 삽입해주는 함수
+			SetObjStruct(m_normalplayertop, FIREPLAYERWANIMATION, FIREPLAYERHANIMATION, m_normalplayertop.poriginSrc.x, m_normalplayertop.poriginSrc.y,
+				FIREPLAYERWANIMATION, FIREPLAYERHANIMATION, m_normalplayertop.posoriginDest.x, m_normalplayertop.posoriginDest.y, FIREUSERDMOVE,
+				FIREPLAYERWNUM, FIREPLAYERHNUM);
+		}
+		// 왼쪽 방향으로 발사 
+		else
+		{
+			m_iobjstate = E_USERSTATE_FIRE;
+			m_itopBitmapImg = USERFIRETOP1;
+
+			SetObjStruct(m_normalplayertop, FIREPLAYERWANIMATION, FIREPLAYERHANIMATION, m_normalplayertop.poriginSrc.x, m_normalplayertop.poriginSrc.y,
+				FIREPLAYERWANIMATION, FIREPLAYERHANIMATION, m_normalplayertop.posoriginDest.x, m_normalplayertop.posoriginDest.y, FIREUSERDMOVE,
+				FIREPLAYERWNUM, FIREPLAYERHNUM);
+		}
+	}
+	// 점프할 때 
+	else if (InputManager::GetInstance()->Keyboard(E_KEYJUMP) == true)
+	{
+
+	}
+	// 왼쪽
+	else if (InputManager::GetInstance()->Keyboard(E_KEYLEFT) == true)
+	{
+		m_iobjstate = E_USERSTATE_LWALK;
+		m_itopBitmapImg = USERIDLETOP2;
+		m_bleftright = false;
+
+		SetObjStruct(m_normalplayertop, IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayertop.poriginSrc.x, m_normalplayertop.poriginSrc.y,
+			IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayertop.posoriginDest.x, m_normalplayertop.posoriginDest.y, IDLEUSERDMOVE,
+			IDLEPLAYERWNUM, IDLEPLAYERHNUM);
+	}
+	// 오른쪽
+	else if (InputManager::GetInstance()->Keyboard(E_KEYRIGHT) == true)
+	{
+		m_iobjstate = E_USERSTATE_RWALK;
+		m_itopBitmapImg = USERIDLETOP0;
+		m_bleftright = true;
+
+		SetObjStruct(m_normalplayertop, IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayertop.poriginSrc.x, m_normalplayertop.poriginSrc.y,
+			IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayertop.posoriginDest.x, m_normalplayertop.posoriginDest.y, IDLEUSERDMOVE,
+			IDLEPLAYERWNUM, IDLEPLAYERHNUM);
+	}
+	// 아무것도 아닐 때 
+	else
+	{
+		// bool 변수 혹은 enum 으로 좌우 위치 확인해주기
+		if (m_bleftright == true)
+		{
+			m_iobjstate = E_USERSTATE_IDLE;
+			m_itopBitmapImg = USERIDLETOP0;
+
+			SetObjStruct(m_normalplayertop, IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayertop.poriginSrc.x, m_normalplayertop.poriginSrc.y,
+				IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayertop.posoriginDest.x, m_normalplayertop.posoriginDest.y, IDLEUSERDMOVE,
+				IDLEPLAYERWNUM, IDLEPLAYERHNUM);
+		}
+		else
+		{
+			m_iobjstate = E_USERSTATE_IDLE;
+			m_itopBitmapImg = USERIDLETOP2;
+
+			SetObjStruct(m_normalplayertop, IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayertop.poriginSrc.x, m_normalplayertop.poriginSrc.y,
+				IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayertop.posoriginDest.x, m_normalplayertop.posoriginDest.y, IDLEUSERDMOVE,
+				IDLEPLAYERWNUM, IDLEPLAYERHNUM);
+
+		}
+	}
+
+	return;
+}
+
+
+
+
+void PlayerNormal::AnimationStateMove()
+{
+	RECT recclient;
+	GetClientRect(Mainfrm::GethWnd(), &recclient);
+
+
+	// top 
+	switch (m_iobjstate)
+		{
+			// 멈춤 상태
+		case E_USERSTATE_IDLE:
+		{
+			// 이미지 움직이는 함수 
+			Aniimage(m_normalplayertop);
+		}
+		break;
+		case E_USERSTATE_RWALK:
+		{
+			// 오른쪽 버튼 눌렀을 때 반응
+			// 이미지 움직이는 함수 
+			Aniimage(m_normalplayertop);
+
+			if (m_normalplayertop.posoriginDest.x >= (recclient.right - (m_normalplayertop.recDest.right * m_normalplayertop.iWidthnum)))
+				// 만약 개체가 client 이상 가면 나갈 수 없도록 함 
+			{
+				break;
+			}
+			else
+			{
+				if (InputManager::GetInstance()->Getbkeyboard() == false)
+				{
+					m_normalplayertop.posoriginDest.x += m_normalplayertop.iobjmove;
+				}
+			}
+		}
+		break;
+		case E_USERSTATE_LWALK:
+		{
+			// 왼쪽 버튼 눌렀을 때 반응
+			// 이미지 움직이는 함수 
+			Aniimage(m_normalplayertop);
+
+			if (m_normalplayertop.posoriginDest.x <= recclient.left)
+				// 만약 개체가 client 이상 가면 갈 수 없도록 함 
+			{
+				break;
+			}
+			else
+			{
+				if (InputManager::GetInstance()->Getbkeyboard() == false)
+				{
+					m_normalplayertop.posoriginDest.x -= m_normalplayertop.iobjmove;
+				}
+			}
+		}
+		break;
+		case E_USERSTATE_JUMP:
+		{
+			// 이미지 움직이는 함수 
+			Aniimage(m_normalplayertop);
+		}
+		break;
+		case E_USERSTATE_FIRE:
+		{
+			// 이미지 움직이는 함수 
+			Aniimage(m_normalplayertop);
+
+			// 총알 객체 생성 
+			Object* objbullet = new Bullet(m_normalplayertop.posoriginDest);
+			ObjManager::GetInstance()->SetVector(objbullet, EOBJECT_BULLET);
+
+		}
+		break;
+	}
+
+
+	// bottom
+	switch (m_iobjstate)
+		{
+			// 멈춤 상태
+		case E_USERSTATE_IDLE:
+		{
+			// 이미지 움직이는 함수 
+			Aniimage(m_normalplayerbottom);
+		}
+		break;
+		case E_USERSTATE_RWALK:
+		{
+			// 오른쪽 버튼 눌렀을 때 반응
+			// 이미지 움직이는 함수 
+			Aniimage(m_normalplayerbottom);
+
+			if (m_normalplayerbottom.posoriginDest.x >= (recclient.right - (m_normalplayerbottom.recDest.right * m_normalplayerbottom.iWidthnum)))
+				// 만약 개체가 client 이상 가면 나갈 수 없도록 함 
+			{
+				break;
+			}else
+			{
+				if (InputManager::GetInstance()->Getbkeyboard() == false)
+				{
+					m_normalplayerbottom.posoriginDest.x += m_normalplayerbottom.iobjmove;
+				}
+			}
+
+		}
+		break;
+		case E_USERSTATE_LWALK:
+		{
+			// 이미지 움직이는 함수 
+			Aniimage(m_normalplayerbottom);
+
+			if (m_normalplayerbottom.posoriginDest.x <= recclient.left)
+				// 만약 개체가 client 이상 가면 갈 수 없도록 함 
+			{
+				break;
+			}
+			else
+			{
+				if (InputManager::GetInstance()->Getbkeyboard() == false)
+				{
+					m_normalplayerbottom.posoriginDest.x -= m_normalplayerbottom.iobjmove;
+				}
+			}
+
+		}
+		break;
+		case E_USERSTATE_JUMP:
+		{
+			// 이미지 움직이는 함수 
+			Aniimage(m_normalplayerbottom);
+		}
+		break;
+	}
+
+	return;
+}
+
+
+
+
+
 
 
 // 오브젝트 초기화 (오버라이딩)
@@ -51,79 +331,11 @@ void PlayerNormal::Run()
 {
 	// 키보드 입력 받기
 	// 키보드 입력은 정리해서 판정에 우선순위를 구분할 것 
-	// 점프할 때 
-	if (InputManager::GetInstance()->Keyboard(E_KEYJUMP) == true)
-	{
 
-	}
 
-	// 총을 쏠 때 
-	if (InputManager::GetInstance()->Keyboard(E_KEYFIRE) == true)
-	{
-		if (m_bleftright == true)
-		{
-			m_iobjstate = E_USERSTATE_IDLE;
-			m_itopBitmapImg = USERIDLETOP0;
-			m_ibottomBitmapImg = USERIDLEBOTTOM1;
-			// 총알 객체 생성 
-			Object* objbullet = new Bullet;
+	AnimationStateCheck();
+	AnimationStateMove();
 
-			RendManager::GetInstance()->SetVector(objbullet, EOBJECT_BULLET);
-			DBManager::GetInstance()->SetVector(objbullet, EOBJECT_BULLET);
-		}
-		else
-		{
-			m_iobjstate = E_USERSTATE_IDLE;
-			m_itopBitmapImg = USERIDLETOP2;
-			m_ibottomBitmapImg = USERIDLEBOTTOM2;
-			// 총알 객체 생성 
-			Object* objbullet = new Bullet;
-			m_vbullet.push_back(objbullet);
-
-			RendManager::GetInstance()->SetVector(objbullet, EOBJECT_BULLET);
-			DBManager::GetInstance()->SetVector(objbullet, EOBJECT_BULLET);
-			
-			/*for (int i = 0; i < m_vbullet.size(); i++)
-			{
-				RendManager::GetInstance()->SetVector(m_vbullet[i], EOBJECT_BULLET);
-				DBManager::GetInstance()->SetVector(m_vbullet[i], EOBJECT_BULLET);
-			}*/
-		}
-
-	}
-	// 왼쪽 
-	else if (InputManager::GetInstance()->Keyboard(E_KEYLEFT) == true)
-	{
-		m_iobjstate = E_USERSTATE_LWALK;
-		m_itopBitmapImg = USERIDLETOP2;
-		m_ibottomBitmapImg = USERRUNBOTTOM2;
-		m_bleftright = false;
-	}
-	// 오른쪽
-	else if (InputManager::GetInstance()->Keyboard(E_KEYRIGHT) == true)
-	{
-		m_iobjstate = E_USERSTATE_RWALK;
-		m_itopBitmapImg = USERIDLETOP0;
-		m_ibottomBitmapImg = USERRUNBOTTOM1;
-		m_bleftright = true;
-	}
-	// 아무것도 아닐 때 
-	else
-	{
-		// bool 변수 혹은 enum 으로 좌우 위치 확인해주기
-		if (m_bleftright == true)
-		{
-			m_iobjstate = E_USERSTATE_IDLE;
-			m_itopBitmapImg = USERIDLETOP0;
-			m_ibottomBitmapImg = USERIDLEBOTTOM1;
-		}
-		else
-		{
-			m_iobjstate = E_USERSTATE_IDLE;
-			m_itopBitmapImg = USERIDLETOP2;
-			m_ibottomBitmapImg = USERIDLEBOTTOM2;
-		}
-	}
 
 	return;
 };
@@ -140,19 +352,11 @@ void PlayerNormal::Render(HDC& _hdc, HWND& _hWnd)
 	HBITMAP holdBit;
 	
 	// 범위 리셋 
-	RECT recClient = RendManager::GetInstance()->GetRect();
+	RECT recClient = ObjManager::GetInstance()->GetRect();
 	GetClientRect(_hWnd, &recClient);
 
 	// 이미지 출력할 hdc 출력 
 	hobjdc = CreateCompatibleDC(_hdc);
-
-
-	// 하체 이미지를 저장할 HBITMAP
-	hbottomobjBit = CreateCompatibleBitmap(_hdc,
-		m_normalplayerbottom.recSrc.right, m_normalplayerbottom.recSrc.bottom);
-	// 상체 이미지를 저장할 HBITMAP
-	htopobjBit = CreateCompatibleBitmap(_hdc,
-		m_normalplayertop.recSrc.right, m_normalplayertop.recSrc.bottom);
 
 
 	// 비트맵을 hBIt에 뿌려주기
@@ -163,7 +367,7 @@ void PlayerNormal::Render(HDC& _hdc, HWND& _hWnd)
 
 	// 하체 이미지 출력
 	TransparentBlt(_hdc, m_normalplayerbottom.posoriginDest.x, m_normalplayerbottom.posoriginDest.y,
-		m_normalplayerbottom.recDest.right * 4, m_normalplayerbottom.recDest.bottom * 4,
+		m_normalplayerbottom.recDest.right * PLAYERSIZE, m_normalplayerbottom.recDest.bottom * PLAYERSIZE,
 		hobjdc, m_normalplayerbottom.poriginSrc.x, m_normalplayerbottom.poriginSrc.y,
 		m_normalplayerbottom.recSrc.right, m_normalplayerbottom.recSrc.bottom, RGB(255, 255, 255));
 
@@ -209,12 +413,6 @@ void PlayerNormal::Render(HDC& _hdc, HWND& _hWnd)
 // 오브젝트 파괴 (오버라이딩)
 void PlayerNormal::Destroy()
 {
-	for (int i = 0; i < m_vbullet.size(); i++)
-	{
-		m_vbullet[i] = NULL;
-	}
-	m_vbullet.clear();
-
 	return;
 };
 
@@ -253,3 +451,4 @@ bool PlayerNormal::bObjDead()
 {
 	return false;
 }
+

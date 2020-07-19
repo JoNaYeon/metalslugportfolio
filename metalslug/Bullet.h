@@ -8,7 +8,7 @@ protected:
 	ST_OBJECT m_bullet;
 public:
 	// 생성자
-	Bullet();
+	Bullet(POINT _playerpos);
 	// 소멸자
 	virtual ~Bullet()
 	{
@@ -25,7 +25,7 @@ public:
 	void Destroy();
 
 	// 총알 닿으면
-	void Hit();
+	bool Hit();
 	void ItemState();
 	// recclient 밖으로 나가면 
 	//void ObjectOut();

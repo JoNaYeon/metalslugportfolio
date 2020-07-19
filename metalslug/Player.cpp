@@ -1,7 +1,6 @@
 #include "Player.h"
-#include "DBManager.h"
 #include "InputManager.h"
-#include "RendManager.h"
+#include "ObjManager.h"
 #include "Bullet.h"
 
 
@@ -30,15 +29,6 @@ void Player::Init()
 // 오브젝트 움직임 (오버라이딩)
 void Player::Run()
 {
-	/*if (InputManager::GetInstance()->Keyboard(E_KEYFIRE) == true && m_classobjptr == NULL)
-	{
-		m_classobjptr = new Bullet();
-
-		m_classobjptr->Setobjstate(E_GUNSTATE_NORMAL);
-		RendManager::GetInstance()->SetVector(m_classobjptr, EOBJECT_BULLET);
-		DBManager::GetInstance()->SetVector(m_classobjptr, EOBJECT_BULLET);
-	}*/
-
 	return;
 };
 

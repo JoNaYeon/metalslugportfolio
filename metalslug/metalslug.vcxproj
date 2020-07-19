@@ -156,7 +156,7 @@
     <ClInclude Include="BossTomb.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="CharactorSelect.h" />
-    <ClInclude Include="DBManager.h" />
+    <ClInclude Include="ObjManager.h" />
     <ClInclude Include="define.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="firstRound.h" />
@@ -198,7 +198,7 @@
     <ClCompile Include="BossTomb.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CharactorSelect.cpp" />
-    <ClCompile Include="DBManager.cpp" />
+    <ClCompile Include="ObjManager.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="firstRound.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -234,14 +234,17 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\source\background\background1.bmp" />
+    <Image Include="..\source\background\background2.bmp" />
     <Image Include="..\source\monster\zombie1.bmp" />
     <Image Include="..\source\user\bitmap6.bmp" />
+    <Image Include="..\source\user\userbottomfire.bmp" />
     <Image Include="..\source\user\UserIdle_Bottom1.bmp" />
     <Image Include="..\source\user\UserIdle_Bottom2.bmp" />
     <Image Include="..\source\user\UserIdle_Top1.bmp" />
     <Image Include="..\source\user\UserIdle_Top2.bmp" />
     <Image Include="..\source\user\UserRun_Bottom1.bmp" />
     <Image Include="..\source\user\UserRun_Bottom2.bmp" />
+    <Image Include="..\source\user\usertopfire.bmp" />
     <Image Include="..\source\weapon\bullet1.bmp" />
     <Image Include="metalslug.ico" />
     <Image Include="small.ico" />

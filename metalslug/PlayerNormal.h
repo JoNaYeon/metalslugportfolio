@@ -42,8 +42,12 @@ public:
 	void AttackBomb();
 	// 점프 (오버라이딩)
 	void Jump();
-	bool bObjDead();
 	
-	std::vector<Object*> Getbulletvec() { return m_vbullet; };
+	
+	bool bObjDead();
+	void AnimationStateCheck();
+	void AnimationStateMove();
+	
+	//std::vector<Object*> Getbulletvec() { return m_vbullet; };
 };
 

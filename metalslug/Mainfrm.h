@@ -1,7 +1,6 @@
 #pragma once
 #include "framework.h"
-#include "RendManager.h"
-#include "DBManager.h"
+#include "ObjManager.h"
 #include "InputManager.h"
 #include "Scene.h"
 #include "Intro.h"

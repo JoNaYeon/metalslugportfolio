@@ -9,6 +9,7 @@ class Object
 {
 protected:
 	int m_iobjstate;
+	int m_iobjstatetemp;
 
 	// 시간을 통제할 변수
 	DWORD m_dcurTime;
@@ -27,13 +28,14 @@ protected:
 	ST_OBJECT m_BG2;
 
 	bool m_bdead;
+	bool m_bfire;
 
 
 	//  objcet의 vector를 담을 iter
 	//std::vector<Object*>::iterator m_objiter;
 
 	// 총알을 담을 vector
-	std::vector<Object*> m_vbullet;
+	//std::vector<Object*> m_vbullet;
 	
 public:
 	// 생성자
@@ -71,6 +73,11 @@ public:
 
 	// object의 사망여부 함수
 	virtual bool bObjDead() PURE;
+
+	// struct 채우는 함수 
+	void SetObjStruct(ST_OBJECT& _obj, int _recSrcright, int _recSrcbottom, int _poriginSrcx, int _poriginSrcy,
+		int _recDestright, int _recDestbottom, int _posoriginDestx, int _posoriginDesty, 
+		int _iobjmove, int _iWidthnum, int _iHightnum);
 
 };
 

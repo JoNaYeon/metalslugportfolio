@@ -9,10 +9,10 @@ class Background :
 private:
 	ObjectImage m_obimg1;
 	ObjectImage m_obimg2;
-	POINT pBGsize;
+	//POINT pBGsize;
 
-	int m_ibgTile1;
-	int m_ibgTile2;
+	//int m_ibgTile1;
+	//int m_ibgTile2;
 
 public:
 
@@ -38,7 +38,7 @@ public:
 	void Destroy();
 	// 타일을 깔아 줄 함수
 	void BackgroundTile(HDC _hdc, int _itilemove);
-	POINT GetRatio(int iwidth, int iheight);
+	//POINT GetRatio(int iwidth, int iheight);
 
 	bool bObjDead();
 };

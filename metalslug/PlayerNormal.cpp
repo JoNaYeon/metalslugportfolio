@@ -39,6 +39,7 @@ PlayerNormal::PlayerNormal()
 
 
 
+// 어떤 애니메이션이 들어가는지 체크해주는 함수
 void PlayerNormal::AnimationStateCheck()
 {
 	// bottom 반응
@@ -47,6 +48,7 @@ void PlayerNormal::AnimationStateCheck()
 	{
 
 	}
+	// 왼쪽 
 	else if (InputManager::GetInstance()->Keyboard(E_KEYLEFT) == true)
 	{
 		m_iobjstate = E_USERSTATE_LWALK;
@@ -177,6 +179,7 @@ void PlayerNormal::AnimationStateCheck()
 
 
 
+// 애니메이션의 움직임을 실행해주는 함수
 void PlayerNormal::AnimationStateMove()
 {
 	RECT recclient;
@@ -186,7 +189,7 @@ void PlayerNormal::AnimationStateMove()
 	// top 
 	switch (m_iobjstate)
 		{
-			// 멈춤 상태
+		// 멈춤 상태
 		case E_USERSTATE_IDLE:
 		{
 			// 이미지 움직이는 함수 
@@ -199,10 +202,18 @@ void PlayerNormal::AnimationStateMove()
 			// 이미지 움직이는 함수 
 			Aniimage(m_normalplayertop);
 
-			if (m_normalplayertop.posoriginDest.x >= (recclient.right - (m_normalplayertop.recDest.right * m_normalplayertop.iWidthnum)))
-				// 만약 개체가 client 이상 가면 나갈 수 없도록 함 
+			if (m_normalplayertop.posoriginDest.x >= (recclient.right / 2) - ((m_normalplayerbottom.recDest.right * m_normalplayerbottom.iWidthnum) / 2))
+			// 만약 개체가 client의 중앙위치 이상이면 나갈 수 없도록 함
 			{
-				break;
+				if (m_BG1.recSrc.right >= BGEND)
+				{
+					break;
+				}
+				else
+				{
+					m_BG1.poriginSrc.x += BACKGROUNDMOVE;
+					m_BG2.poriginSrc.x += BACKGROUNDMOVE;
+				}
 			}
 			else
 			{
@@ -220,7 +231,7 @@ void PlayerNormal::AnimationStateMove()
 			Aniimage(m_normalplayertop);
 
 			if (m_normalplayertop.posoriginDest.x <= recclient.left)
-				// 만약 개체가 client 이상 가면 갈 수 없도록 함 
+			// 만약 개체가 client 이상 가면 갈 수 없도록 함 
 			{
 				break;
 			}
@@ -269,8 +280,8 @@ void PlayerNormal::AnimationStateMove()
 			// 이미지 움직이는 함수 
 			Aniimage(m_normalplayerbottom);
 
-			if (m_normalplayerbottom.posoriginDest.x >= (recclient.right - (m_normalplayerbottom.recDest.right * m_normalplayerbottom.iWidthnum)))
-				// 만약 개체가 client 이상 가면 나갈 수 없도록 함 
+			if (m_normalplayerbottom.posoriginDest.x >= (recclient.right / 2) - ((m_normalplayerbottom.recDest.right * m_normalplayerbottom.iWidthnum) / 2))
+			// 만약 개체가 client의 중앙위치 이상이면 나갈 수 없도록 함
 			{
 				break;
 			}else
@@ -289,7 +300,7 @@ void PlayerNormal::AnimationStateMove()
 			Aniimage(m_normalplayerbottom);
 
 			if (m_normalplayerbottom.posoriginDest.x <= recclient.left)
-				// 만약 개체가 client 이상 가면 갈 수 없도록 함 
+			// 만약 개체가 client 이상 가면 갈 수 없도록 함 
 			{
 				break;
 			}
@@ -389,7 +400,7 @@ void PlayerNormal::Render(HDC& _hdc, HWND& _hWnd)
 	m_dcurTime = timeGetTime();
 
 	// 만약 이전 시간에서 현재 시간이 0.1float 지났을 때 
-	if (m_dcurTime - m_dPrevTime >= 0.1f * m_fdelay)
+	/*if (m_dcurTime - m_dPrevTime >= 0.1f * m_fdelay)
 	{
 		// object 상태 움직임 변경 
 		Animation(_hdc, m_normalplayertop, m_iobjstate);
@@ -397,7 +408,7 @@ void PlayerNormal::Render(HDC& _hdc, HWND& _hWnd)
 
 		// 이전 시간을 현재 시간으로 대체
 		m_dPrevTime = m_dcurTime;
-	}
+	}*/
 
 	// oldbit로 바꿔주기
 	SelectObject(hobjdc, holdBit);

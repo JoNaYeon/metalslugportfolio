@@ -1,2 +1,6 @@
-﻿  PlayerNormal.cpp
-  metalslug.vcxproj -> D:\Private\Git\metalslug\metalslugportfolio\Debug\metalslug.exe
+﻿  Background.cpp
+C:\Users\nanna\바탕 화면\Git\metalslug\metalslugportfolio\metalslug\Background.cpp(32,117): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\nanna\바탕 화면\Git\metalslug\metalslugportfolio\metalslug\Background.cpp(32,94): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\nanna\바탕 화면\Git\metalslug\metalslugportfolio\metalslug\Background.cpp(35,117): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\nanna\바탕 화면\Git\metalslug\metalslugportfolio\metalslug\Background.cpp(35,94): warning C4244: '인수': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  metalslug.vcxproj -> C:\Users\nanna\바탕 화면\Git\metalslug\metalslugportfolio\Debug\metalslug.exe

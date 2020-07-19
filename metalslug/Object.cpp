@@ -41,11 +41,11 @@ void Object::Aniimage(ST_OBJECT& _obj)
 	}
 }
 
-void Object::Animation(HDC& _hdc, ST_OBJECT& _obj, int& _iobjstate)
+/*void Object::Animation(HDC& _hdc, ST_OBJECT& _obj, int& _iobjstate)
 {
 
 	return;
-}
+}*/
 
 
 void Object::hitbox(RECT _rec1, RECT _rec2)
@@ -72,11 +72,11 @@ void Object::SetObjStruct(ST_OBJECT& _obj, int _recSrcright, int _recSrcbottom, 
 	_obj.iHightnum = _iHightnum;
 	_obj.iWidthnum = _iWidthnum;
 
-	_obj.recDest.right = _recSrcright;
-	_obj.recDest.bottom = _recSrcbottom;
+	_obj.recDest.right = _recDestright;
+	_obj.recDest.bottom = _recDestbottom;
 
-	_obj.recSrc.right = _recDestright;
-	_obj.recSrc.bottom = _recDestbottom;
+	_obj.recSrc.right = _recSrcright; 
+	_obj.recSrc.bottom = _recSrcbottom; 
 
 	_obj.posoriginDest.x = _posoriginDestx;
 	_obj.posoriginDest.y = _posoriginDesty;

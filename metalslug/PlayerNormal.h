@@ -43,9 +43,11 @@ public:
 	// 점프 (오버라이딩)
 	void Jump();
 	
-	
+	// Object가 살아있는지 죽었는지 체크해주는 함수
 	bool bObjDead();
+	// 어떤 애니메이션이 들어가는지 체크해주는 함수
 	void AnimationStateCheck();
+	// 애니메이션의 움직임을 실행해주는 함수
 	void AnimationStateMove();
 	
 	//std::vector<Object*> Getbulletvec() { return m_vbullet; };

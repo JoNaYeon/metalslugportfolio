@@ -72,14 +72,14 @@ void MonsterZombieMan::Render(HDC& _hdc, HWND& _hWnd)
 	m_dcurTime = timeGetTime();
 
 	// 만약 이전 시간에서 현재 시간이 0.1float 지났을 때 
-	if (m_dcurTime - m_dPrevTime >= 0.1f * m_fdelay)
+	/*if (m_dcurTime - m_dPrevTime >= 0.1f * m_fdelay)
 	{
 		// object 상태 움직임 변경 
 		Animation(_hdc, m_Monster, m_iobjstate);
 
 		// 이전 시간을 현재 시간으로 대체
 		m_dPrevTime = m_dcurTime;
-	}
+	}*/
 
 	// oldbit로 바꿔주기
 	SelectObject(hobjdc, holdBit);

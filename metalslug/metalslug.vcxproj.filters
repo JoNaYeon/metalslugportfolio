@@ -20,9 +20,6 @@
     <Filter Include="02. Manager\DB">
       <UniqueIdentifier>{68648247-235a-4029-b359-452cf2d0019e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Manager\Rend">
-      <UniqueIdentifier>{ecf3d7f1-d367-4034-829c-8d7825ae3537}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Object">
       <UniqueIdentifier>{f4231651-82b2-45d4-951c-9b81f928c097}</UniqueIdentifier>
     </Filter>
@@ -120,9 +117,6 @@
     </ClInclude>
     <ClInclude Include="InputManager.h">
       <Filter>02. Manager\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="RendManager.h">
-      <Filter>02. Manager\Rend</Filter>
     </ClInclude>
     <ClInclude Include="Object.h">
       <Filter>03. Object</Filter>
@@ -285,9 +279,6 @@
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>02. Manager\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="RendManager.cpp">
-      <Filter>02. Manager\Rend</Filter>
     </ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>03. Object</Filter>

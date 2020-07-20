@@ -182,7 +182,6 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerNormal.h" />
     <ClInclude Include="PlayerZombie.h" />
-    <ClInclude Include="RendManager.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Score.h" />
@@ -223,7 +222,6 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerNormal.cpp" />
     <ClCompile Include="PlayerZombie.cpp" />
-    <ClCompile Include="RendManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Score.cpp" />
     <ClCompile Include="secondRound.cpp" />

@@ -16,8 +16,6 @@ protected:
 	static DWORD m_dPrevTime;
 	float m_fdelay;
 
-	// 총알 구조체
-	//ST_OBJECT m_bullet;
 	// 플레이어 구조체
 	ST_OBJECT m_normalplayertop;
 	ST_OBJECT m_normalplayerbottom;
@@ -29,13 +27,6 @@ protected:
 
 	bool m_bdead;
 	bool m_bfire;
-
-
-	//  objcet의 vector를 담을 iter
-	//std::vector<Object*>::iterator m_objiter;
-
-	// 총알을 담을 vector
-	//std::vector<Object*> m_vbullet;
 	
 public:
 	// 생성자
@@ -58,9 +49,9 @@ public:
 	//virtual ST_OBJECT GetStruct() PURE;
 
 	// Object를 움직여줄 애니메이션 
-	void Animation(HDC& _hdc, ST_OBJECT& _obj, int& _iobjstate);
+	//void Animation(HDC& _hdc, ST_OBJECT& _obj, int& _iobjstate);
 	// dbject를 움직여줄 애니메이션에 추가된 함수
-	void Aniimage(ST_OBJECT& _objtop);
+	void Aniimage(ST_OBJECT& _obj);
 	void hitbox(RECT _rec1, RECT _rec2);
 
 	int Getobjstate() { return m_iobjstate; };

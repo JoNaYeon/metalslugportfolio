@@ -15,10 +15,25 @@
 #define PURE = 0;
 
 // 배경 object 구조체에 들어갈 define
+//#define BACKGROUNDMOVE 10
+//#define BGWSIZE 753
+//#define BGHSIZE 224
+#define BGSIZE 4.5
+#define BGEND 5483
+// 배경 움직이는 거리
 #define BACKGROUNDMOVE 10
-#define BGWSIZE 753
-#define BGHSIZE 224
-#define BGADD 4.5
+// 출력될 배경 이미지의 시작부분
+#define BGORIGINSRCX 0
+#define BGORIGINSRCY 186 
+// 배경 이미지의 가로 길이
+#define BGWANIMATION 753
+// 배경 이미지의 세로 길이
+#define BGHANIMATION 224
+// 배경 이미지의 가로 칸 수
+#define BGWNUM 1
+// 배경 이미지의 세로 칸 수
+#define BGHNUM 1
+
 #define PLAYERSIZE 4
 
 // 플레이어 RUN / IDEL object 구조체에 들어갈 define

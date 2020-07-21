@@ -34,7 +34,6 @@ void ObjectImage::ImageLoading(HDC& _hMemdc, RECT _recClientImgSize, HDC& _hImag
     TransparentBlt(_hMemdc, m_position.x, m_position.y, _recClientImgSize.right,
         _recClientImgSize.bottom, _hImage, _recImageposition.x, _recImageposition.y, 
         _pImagesize.x, _pImagesize.y, RGB(000, 255, 000));
-    //Rectangle(_hMemdc, 100, 200, 500, 600);
     return;
 }
 

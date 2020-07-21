@@ -10,24 +10,6 @@
 // 생성자
 Background::Background()
 {
-    /*pBGsize = { 0, 0 };
-
-    m_BG1.iHightnum = 0;
-    m_BG1.iWidthnum = 0;
-    m_BG1.iobjmove = 0;
-    m_BG1.recSrc = { 0, 0, 0, 0 };
-    m_BG1.poriginSrc = { 0, 0 };
-    m_BG1.recDest = { 0, 0, 0, 0 };
-    m_BG1.posoriginDest = { 0, 0 };
-
-    m_BG2.iHightnum = 0;
-    m_BG2.iWidthnum = 0;
-    m_BG2.iobjmove = 0;
-    m_BG2.recSrc = { 0, 0, 0, 0 };
-    m_BG2.poriginSrc = { 0, 0 };
-    m_BG2.recDest = { 0, 0, 0, 0 };
-    m_BG2.posoriginDest = { 0, 0 };*/
-
     // 각 배경 구조체 채워주기
     SetObjStruct(m_BG1, BGWANIMATION, BGHANIMATION, BGORIGINSRCX, BGORIGINSRCY, BGWANIMATION * BGSIZE, BGHANIMATION * BGSIZE, m_BG1.posoriginDest.x, m_BG1.posoriginDest.y,
         BACKGROUNDMOVE, BGWNUM, BGHNUM);
@@ -60,11 +42,6 @@ void Background::Render(HDC& _hdc, HWND& _hWnd)
     HBITMAP himgBit2 = NULL;
     // 이전 도화지 저장해줄 변수
     HBITMAP hOldBit_img = NULL;
-
-    /*// ObjManager 에 있던 것을 가져오기 
-    RECT recClient = ObjManager::GetInstance()->GetRect();
-    // client 화면 크기를 안 받아오고 있으니 화면에 아무것도 안 뜨죠! 
-    GetClientRect(_hWnd, &recClient);*/
 
 
 
@@ -177,15 +154,6 @@ void Background::Destroy()
 
 void Background::BackgroundTile(HDC _hdc, int _itilemove)
 {
-    /*m_ibgTile1 += BACKGROUNDMOVE;
-    m_ibgTile2 += BACKGROUNDMOVE;
-
-    Rectangle(_hdc, 0 - m_ibgTile1, 860, 100 * BGSIZE - m_ibgTile1, 1000);
-    //(_hdc, 113 * BGADD, 860 - (11 * BGADD) , 210 * BGADD, 1000);
-    Rectangle(_hdc, 113 * BGSIZE - m_ibgTile1, 860, 95 * BGSIZE - m_ibgTile1, 1000);
-    Rectangle(_hdc, 262 * BGSIZE - m_ibgTile1, 860, 156 * BGSIZE - m_ibgTile1, 1000);
-    Rectangle(_hdc, 434 * BGSIZE - m_ibgTile1, 860, 91 * BGSIZE - m_ibgTile1, 1000);
-    Rectangle(_hdc, 606 * BGSIZE - m_ibgTile1, 860, 147 * BGSIZE - m_ibgTile1, 1000);*/
 
     return;
 }

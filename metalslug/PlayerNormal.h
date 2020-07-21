@@ -49,7 +49,5 @@ public:
 	void AnimationStateCheck();
 	// 애니메이션의 움직임을 실행해주는 함수
 	void AnimationStateMove();
-	
-	//std::vector<Object*> Getbulletvec() { return m_vbullet; };
 };
 

@@ -24,7 +24,7 @@ Bullet::Bullet(POINT _playerpos)
 	
 	m_iobjstate = E_GUNSTATE_NORMAL;
 };
-
+ 
 
 // 오브젝트 초기화
 void Bullet::Init()
@@ -61,7 +61,7 @@ void Bullet::Render(HDC& _hdc, HWND& _hWnd)
 {
 	// 이미지를 담을 HDC
 	HDC hMemdc = NULL;
-	// 이미지를 담을 hbitmap
+	// 이미지를 담을 hbitmap 
 	HBITMAP hbit = NULL;
 	HBITMAP holdbit = NULL;
 

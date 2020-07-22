@@ -17,6 +17,8 @@ MonsterZombieMan::MonsterZombieMan()
 	m_Monster.iobjmove = MONSTERMOVE;
 	m_Monster.iWidthnum = MONSTERWNUM;
 	m_Monster.iHightnum = MONSTERHNUM;
+
+	m_fdelay = 0.5;
 };
 
 
@@ -29,6 +31,18 @@ void MonsterZombieMan::Init()
 // 오브젝트 움직임 (오버라이딩)
 void MonsterZombieMan::Run()
 {
+	// 시간을 받아옴
+	//m_dcurTime = timeGetTime();
+
+	if (m_dcurTime - m_dPrevTime >= 0.1f * m_fdelay)
+	{
+		// object 상태 움직임 변경 
+		//Animation(_hdc, m_Monster, m_iobjstate);
+		Aniimage(m_Monster);
+
+		// 이전 시간을 현재 시간으로 대체
+		m_dPrevTime = m_dcurTime;
+	}
 	return;
 };
 
@@ -67,19 +81,8 @@ void MonsterZombieMan::Render(HDC& _hdc, HWND& _hWnd)
 		hobjdc, m_Monster.poriginSrc.x, m_Monster.poriginSrc.y,
 		m_Monster.recSrc.right, m_Monster.recSrc.bottom, RGB(255, 255, 255));
 
-
 	// 시간을 받아옴
 	m_dcurTime = timeGetTime();
-
-	// 만약 이전 시간에서 현재 시간이 0.1float 지났을 때 
-	/*if (m_dcurTime - m_dPrevTime >= 0.1f * m_fdelay)
-	{
-		// object 상태 움직임 변경 
-		Animation(_hdc, m_Monster, m_iobjstate);
-
-		// 이전 시간을 현재 시간으로 대체
-		m_dPrevTime = m_dcurTime;
-	}*/
 
 	// oldbit로 바꿔주기
 	SelectObject(hobjdc, holdBit);

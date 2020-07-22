@@ -29,6 +29,26 @@ void Background::Init()
 
 void Background::Run()
 {
+    switch (m_objPosState)
+    {
+        case E_OBJECTMOVEPOS_LEFT:
+        {
+            
+        }
+        break;
+        case E_OBJECTMOVEPOS_MID:
+        {
+            m_BG1.poriginSrc.x += m_BG1.iobjmove;
+            m_BG2.poriginSrc.x += m_BG2.iobjmove;
+        }
+        break;
+        case E_OBJECTMOVEPOS_RIGHT:
+        {
+
+        }
+        break;
+    }
+
     return; 
 }
 
@@ -209,3 +229,4 @@ bool Background::bObjDead()
 {
     return false;
 }
+

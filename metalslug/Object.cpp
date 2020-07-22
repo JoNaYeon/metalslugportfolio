@@ -12,7 +12,7 @@ Object::Object()
 	m_fdelay = 1;
 
 	m_bdead = false;
-	m_bfire = false;
+	m_objPosState = 0;
 };
 
 void Object::Aniimage(ST_OBJECT& _obj)
@@ -36,17 +36,9 @@ void Object::Aniimage(ST_OBJECT& _obj)
 		if (_obj.poriginSrc.y >= _obj.recSrc.bottom * (_obj.iHightnum - 1))
 		{
 			_obj.poriginSrc.y = 0;
-			m_bfire = false;
 		}
 	}
 }
-
-/*void Object::Animation(HDC& _hdc, ST_OBJECT& _obj, int& _iobjstate)
-{
-
-	return;
-}*/
-
 
 void Object::hitbox(RECT _rec1, RECT _rec2)
 {

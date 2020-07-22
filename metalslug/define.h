@@ -143,6 +143,14 @@ enum E_OBJECTKIND
 };
 
 
+enum E_OBJECTMOVEPOS
+{
+	E_OBJECTMOVEPOS_LEFT = 1,
+	E_OBJECTMOVEPOS_MID,
+	E_OBJECTMOVEPOS_RIGHT
+};
+
+
 
 
 // 오브젝트 특징 담은 구조체 

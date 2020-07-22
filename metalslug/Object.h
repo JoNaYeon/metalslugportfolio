@@ -17,16 +17,16 @@ protected:
 	float m_fdelay;
 
 	// 플레이어 구조체
-	ST_OBJECT m_normalplayertop;
-	ST_OBJECT m_normalplayerbottom;
+	//ST_OBJECT m_normalplayertop;
+	//ST_OBJECT m_normalplayerbottom;
 	// 몬스터 구조체
-	ST_OBJECT m_Monster;
+	//ST_OBJECT m_Monster;
 	// 배경화면 구조체
-	ST_OBJECT m_BG1;
-	ST_OBJECT m_BG2;
+	//ST_OBJECT m_BG1;
+	//ST_OBJECT m_BG2;
 
+	// 객체의 존재 여부 확인하는 bool 변수
 	bool m_bdead;
-	bool m_bfire;
 	
 public:
 	// 생성자
@@ -48,8 +48,6 @@ public:
 	// struct 내보내기 
 	//virtual ST_OBJECT GetStruct() PURE;
 
-	// Object를 움직여줄 애니메이션 
-	//void Animation(HDC& _hdc, ST_OBJECT& _obj, int& _iobjstate);
 	// dbject를 움직여줄 애니메이션에 추가된 함수
 	void Aniimage(ST_OBJECT& _obj);
 	void hitbox(RECT _rec1, RECT _rec2);
@@ -58,9 +56,6 @@ public:
 	void Setobjstate(int _objstate) { m_iobjstate = _objstate; };
 	// iter 에 vector 넣기
 	bool GetIter(std::vector<Object*>& _obj);
-	// object가 화면 밖으로 나가면
-	//void ObjectOut(Object& _obj, std::vector<Object*>& _vecobj);
-	//ST_OBJECT GetStruct(int _iobjstate);
 
 	// object의 사망여부 함수
 	virtual bool bObjDead() PURE;

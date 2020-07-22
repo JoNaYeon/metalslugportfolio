@@ -30,7 +30,8 @@ PlayerNormal::PlayerNormal()
 
 	m_itopBitmapImg = USERIDLETOP0;
 	m_ibottomBitmapImg = USERIDLEBOTTOM1;
-	m_fdelay = 1;
+
+	m_fdelay = 0.5;
 
 	m_bleftright = true;
 
@@ -38,11 +39,52 @@ PlayerNormal::PlayerNormal()
 }
 
 
+bool PlayerNormal::PlayerPosStateInClientMid()
+{
+	RECT recclient;
+	GetClientRect(Mainfrm::GethWnd(), &recclient);
+
+	if (m_normalplayertop.posoriginDest.x >= (recclient.right / 2) - ((m_normalplayerbottom.recDest.right * m_normalplayerbottom.iWidthnum) / 2))
+	{
+		return true;
+	}
+	else if (m_normalplayertop.posoriginDest.x < (recclient.right / 2) - ((m_normalplayerbottom.recDest.right * m_normalplayerbottom.iWidthnum) / 2))
+	{
+		return false;
+	}
+	else
+	{
+		return -1;
+	}
+}
+
+void PlayerNormal::ObjectPosCheck()
+{
+	RECT recclient;
+	GetClientRect(Mainfrm::GethWnd(), &recclient);
+
+	/*if (PlayerPosStateInClientMid() == true)
+	// 플레이어가 화면의 중앙에 닿았을 때
+	{
+		// m_iObjState = E_OBJECTMOVEPOS_MID
+	}
+	else if (PlayerPosStateInClientMid() == false)
+	// 플레이어가 0,0 부터 화면의 중앙 이전(안쪽)일 때
+	{
+		// m_iObjState = E_OBJECTMOVEPOS_LEFT
+	}
+	else
+	// 배경이 출력의 끝에 다다랐을 때
+	{
+	}*/
+	return;
+}
+
 
 // 어떤 애니메이션이 들어가는지 체크해주는 함수
 void PlayerNormal::AnimationStateCheck()
 {
-	// bottom 반응
+	//////////////////////////////////// bottom 반응
 	// 점프할 때 
 	if (InputManager::GetInstance()->Keyboard(E_KEYJUMP) == true)
 	{
@@ -95,7 +137,7 @@ void PlayerNormal::AnimationStateCheck()
 	}
 
 
-	// top 반응
+	//////////////////////////////////////// top 반응
 	// 총을 쏠 때 
 	if (InputManager::GetInstance()->Keyboard(E_KEYFIRE) == true)
 	{
@@ -182,38 +224,25 @@ void PlayerNormal::AnimationStateCheck()
 // 애니메이션의 움직임을 실행해주는 함수
 void PlayerNormal::AnimationStateMove()
 {
-	RECT recclient;
-	GetClientRect(Mainfrm::GethWnd(), &recclient);
 
 
-	// top 
+	/////////////////////////////////// top 
 	switch (m_iobjstate)
 		{
 		// 멈춤 상태
 		case E_USERSTATE_IDLE:
 		{
-			// 이미지 움직이는 함수 
-			Aniimage(m_normalplayertop);
 		}
 		break;
 		case E_USERSTATE_RWALK:
 		{
 			// 오른쪽 버튼 눌렀을 때 반응
-			// 이미지 움직이는 함수 
-			Aniimage(m_normalplayertop);
 
-			if (m_normalplayertop.posoriginDest.x >= (recclient.right / 2) - ((m_normalplayerbottom.recDest.right * m_normalplayerbottom.iWidthnum) / 2))
+			if (PlayerPosStateInClientMid() == true)
 			// 만약 개체가 client의 중앙위치 이상이면 나갈 수 없도록 함
 			{
-				if (m_BG1.recSrc.right >= BGEND)
-				{
-					break;
-				}
-				else
-				{
-					m_BG1.poriginSrc.x += BACKGROUNDMOVE;
-					m_BG2.poriginSrc.x += BACKGROUNDMOVE;
-				}
+
+				break;
 			}
 			else
 			{
@@ -227,10 +256,8 @@ void PlayerNormal::AnimationStateMove()
 		case E_USERSTATE_LWALK:
 		{
 			// 왼쪽 버튼 눌렀을 때 반응
-			// 이미지 움직이는 함수 
-			Aniimage(m_normalplayertop);
 
-			if (m_normalplayertop.posoriginDest.x <= recclient.left)
+			if (PlayerPosStateInClientMid() == true)
 			// 만약 개체가 client 이상 가면 갈 수 없도록 함 
 			{
 				break;
@@ -246,14 +273,10 @@ void PlayerNormal::AnimationStateMove()
 		break;
 		case E_USERSTATE_JUMP:
 		{
-			// 이미지 움직이는 함수 
-			Aniimage(m_normalplayertop);
 		}
 		break;
 		case E_USERSTATE_FIRE:
 		{
-			// 이미지 움직이는 함수 
-			Aniimage(m_normalplayertop);
 
 			// 총알 객체 생성 
 			Object* objbullet = new Bullet(m_normalplayertop.posoriginDest);
@@ -264,21 +287,17 @@ void PlayerNormal::AnimationStateMove()
 	}
 
 
-	// bottom
+	/////////////////////////////// bottom
 	switch (m_iobjstate)
 		{
 			// 멈춤 상태
 		case E_USERSTATE_IDLE:
 		{
-			// 이미지 움직이는 함수 
-			Aniimage(m_normalplayerbottom);
 		}
 		break;
 		case E_USERSTATE_RWALK:
 		{
 			// 오른쪽 버튼 눌렀을 때 반응
-			// 이미지 움직이는 함수 
-			Aniimage(m_normalplayerbottom);
 
 			if (m_normalplayerbottom.posoriginDest.x >= (recclient.right / 2) - ((m_normalplayerbottom.recDest.right * m_normalplayerbottom.iWidthnum) / 2))
 			// 만약 개체가 client의 중앙위치 이상이면 나갈 수 없도록 함
@@ -296,9 +315,6 @@ void PlayerNormal::AnimationStateMove()
 		break;
 		case E_USERSTATE_LWALK:
 		{
-			// 이미지 움직이는 함수 
-			Aniimage(m_normalplayerbottom);
-
 			if (m_normalplayerbottom.posoriginDest.x <= recclient.left)
 			// 만약 개체가 client 이상 가면 갈 수 없도록 함 
 			{
@@ -316,10 +332,23 @@ void PlayerNormal::AnimationStateMove()
 		break;
 		case E_USERSTATE_JUMP:
 		{
-			// 이미지 움직이는 함수 
-			Aniimage(m_normalplayerbottom);
 		}
 		break;
+	}
+
+	m_fdelay = 0.5;
+
+	// 시간을 받아옴
+	m_dcurTime = timeGetTime();
+
+	// 만약 이전 시간에서 현재 시간이 0.1float 지났을 때 
+	if (m_dcurTime - m_dPrevTime >= 0.1f * m_fdelay)
+	{
+		Aniimage(m_normalplayertop);
+		Aniimage(m_normalplayerbottom);
+
+		// 이전 시간을 현재 시간으로 대체
+		m_dPrevTime = m_dcurTime;
 	}
 
 	return;
@@ -343,7 +372,7 @@ void PlayerNormal::Run()
 	// 키보드 입력 받기
 	// 키보드 입력은 정리해서 판정에 우선순위를 구분할 것 
 
-
+	ObjectPosCheck();
 	AnimationStateCheck();
 	AnimationStateMove();
 
@@ -395,20 +424,6 @@ void PlayerNormal::Render(HDC& _hdc, HWND& _hWnd)
 		hobjdc, m_normalplayertop.poriginSrc.x, m_normalplayertop.poriginSrc.y,
 		m_normalplayertop.recSrc.right, m_normalplayertop.recSrc.bottom, RGB(255, 255, 255));
 	
-
-	// 시간을 받아옴
-	m_dcurTime = timeGetTime();
-
-	// 만약 이전 시간에서 현재 시간이 0.1float 지났을 때 
-	/*if (m_dcurTime - m_dPrevTime >= 0.1f * m_fdelay)
-	{
-		// object 상태 움직임 변경 
-		Animation(_hdc, m_normalplayertop, m_iobjstate);
-		Animation(_hdc, m_normalplayerbottom, m_iobjstate);
-
-		// 이전 시간을 현재 시간으로 대체
-		m_dPrevTime = m_dcurTime;
-	}*/
 
 	// oldbit로 바꿔주기
 	SelectObject(hobjdc, holdBit);

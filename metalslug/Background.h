@@ -9,10 +9,13 @@ class Background :
 private:
 	ObjectImage m_obimg1;
 	ObjectImage m_obimg2;
-	//POINT pBGsize;
 
-	//int m_ibgTile1;
-	//int m_ibgTile2;
+	// 배경화면 구조체
+	ST_OBJECT m_BG1;
+	ST_OBJECT m_BG2;
+
+	// 객체의 위치 상태를 표시하는 E_OBJECTMOVEPOS enum을 담을 int 변수
+	int m_objPosState;
 
 public:
 
@@ -41,6 +44,7 @@ public:
 	//POINT GetRatio(int iwidth, int iheight);
 
 	bool bObjDead();
+	
 };
 
  

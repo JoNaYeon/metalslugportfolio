@@ -56,6 +56,6 @@ public:
 	void AnimationStateMove();
 	// Player의 위치를 확인하여 m_iobjPosState 에 enum을 박아주는 함수
 	void ObjectPosCheck();
-	bool PlayerPosStateInClientMid();
+	int PlayerPosStateInClientMid(ST_OBJECT _obj);
 };
 

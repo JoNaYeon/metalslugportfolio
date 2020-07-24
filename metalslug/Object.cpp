@@ -12,7 +12,6 @@ Object::Object()
 	m_fdelay = 1;
 
 	m_bdead = false;
-	m_objPosState = 0;
 };
 
 void Object::Aniimage(ST_OBJECT& _obj)

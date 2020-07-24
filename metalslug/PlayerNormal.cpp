@@ -39,18 +39,26 @@ PlayerNormal::PlayerNormal()
 }
 
 
-bool PlayerNormal::PlayerPosStateInClientMid()
+int PlayerNormal::PlayerPosStateInClientMid(ST_OBJECT _obj)
 {
 	RECT recclient;
 	GetClientRect(Mainfrm::GethWnd(), &recclient);
 
-	if (m_normalplayertop.posoriginDest.x >= (recclient.right / 2) - ((m_normalplayerbottom.recDest.right * m_normalplayerbottom.iWidthnum) / 2))
+
+	if (_obj.posoriginDest.x <= (recclient.right / 2))
+	// 개체의 위치가 Client의 중앙에 위치할 때 
 	{
-		return true;
+		return E_OBJECTMOVEPOS_MID;
 	}
-	else if (m_normalplayertop.posoriginDest.x < (recclient.right / 2) - ((m_normalplayerbottom.recDest.right * m_normalplayerbottom.iWidthnum) / 2))
+	else if (_obj.posoriginDest.x < (recclient.right / 2))
+	// 개체의 위치가 Client의 왼쪽에 위치할 때  
 	{
-		return false;
+		return E_OBJECTMOVEPOS_LEFT;
+	}
+	else if (_obj.posoriginDest.x > (recclient.right / 2))
+	// 개체의 위치가 Client의 왼쪽에 위치할 때  
+	{
+		return E_OBJECTMOVEPOS_LEFT;
 	}
 	else
 	{
@@ -224,61 +232,34 @@ void PlayerNormal::AnimationStateCheck()
 // 애니메이션의 움직임을 실행해주는 함수
 void PlayerNormal::AnimationStateMove()
 {
-
-
 	/////////////////////////////////// top 
 	switch (m_iobjstate)
-		{
+	{
 		// 멈춤 상태
 		case E_USERSTATE_IDLE:
 		{
 		}
 		break;
 		case E_USERSTATE_RWALK:
+		// 오른쪽 버튼 눌렀을 때 반응
 		{
-			// 오른쪽 버튼 눌렀을 때 반응
-
-			if (PlayerPosStateInClientMid() == true)
-			// 만약 개체가 client의 중앙위치 이상이면 나갈 수 없도록 함
-			{
-
-				break;
-			}
-			else
-			{
-				if (InputManager::GetInstance()->Getbkeyboard() == false)
-				{
-					m_normalplayertop.posoriginDest.x += m_normalplayertop.iobjmove;
-				}
-			}
+			PlayerPosStateInClientMid(m_normalplayertop)
 		}
 		break;
 		case E_USERSTATE_LWALK:
+		// 왼쪽 버튼 눌렀을 때 반응
 		{
-			// 왼쪽 버튼 눌렀을 때 반응
 
-			if (PlayerPosStateInClientMid() == true)
-			// 만약 개체가 client 이상 가면 갈 수 없도록 함 
-			{
-				break;
-			}
-			else
-			{
-				if (InputManager::GetInstance()->Getbkeyboard() == false)
-				{
-					m_normalplayertop.posoriginDest.x -= m_normalplayertop.iobjmove;
-				}
-			}
 		}
 		break;
 		case E_USERSTATE_JUMP:
+		// 점프
 		{
 		}
 		break;
 		case E_USERSTATE_FIRE:
+		// 총알 발사
 		{
-
-			// 총알 객체 생성 
 			Object* objbullet = new Bullet(m_normalplayertop.posoriginDest);
 			ObjManager::GetInstance()->SetVector(objbullet, EOBJECT_BULLET);
 
@@ -289,48 +270,26 @@ void PlayerNormal::AnimationStateMove()
 
 	/////////////////////////////// bottom
 	switch (m_iobjstate)
-		{
+	{
 			// 멈춤 상태
 		case E_USERSTATE_IDLE:
 		{
 		}
 		break;
 		case E_USERSTATE_RWALK:
+		// 오른쪽 버튼 눌렀을 때 반응
 		{
-			// 오른쪽 버튼 눌렀을 때 반응
-
-			if (m_normalplayerbottom.posoriginDest.x >= (recclient.right / 2) - ((m_normalplayerbottom.recDest.right * m_normalplayerbottom.iWidthnum) / 2))
-			// 만약 개체가 client의 중앙위치 이상이면 나갈 수 없도록 함
-			{
-				break;
-			}else
-			{
-				if (InputManager::GetInstance()->Getbkeyboard() == false)
-				{
-					m_normalplayerbottom.posoriginDest.x += m_normalplayerbottom.iobjmove;
-				}
-			}
 
 		}
 		break;
 		case E_USERSTATE_LWALK:
+		// 왼쪽 버튼 눌렀을 때 반응
 		{
-			if (m_normalplayerbottom.posoriginDest.x <= recclient.left)
-			// 만약 개체가 client 이상 가면 갈 수 없도록 함 
-			{
-				break;
-			}
-			else
-			{
-				if (InputManager::GetInstance()->Getbkeyboard() == false)
-				{
-					m_normalplayerbottom.posoriginDest.x -= m_normalplayerbottom.iobjmove;
-				}
-			}
-
+			
 		}
 		break;
 		case E_USERSTATE_JUMP:
+		// 점프
 		{
 		}
 		break;

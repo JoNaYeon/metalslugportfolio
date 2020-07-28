@@ -172,3 +172,35 @@ void ObjManager::Rend(HWND& _hWnd)
 
 	return;
 };
+
+
+std::vector<Object*> ObjManager::GetVector(E_OBJECT _e_obj)
+{
+	switch (_e_obj)
+	{
+		case EOBJECT_BG:
+		{
+			return m_vecBackObj[EOBJECT_BG];
+		}
+		case EOBJECT_TERRAIN:
+		{
+			return m_vecBackObj[EOBJECT_TERRAIN];
+		}
+		case EOBJECT_BULLET:
+		{
+			return m_vecBackObj[EOBJECT_BULLET];
+		}
+		case EOBJECT_MONSTER:
+		{
+			return m_vecBackObj[EOBJECT_MONSTER];
+		}
+		case EOBJECT_OBJ:
+		{
+			return m_vecBackObj[EOBJECT_OBJ];
+		}
+		case EOBJECT_UI:
+		{
+			return m_vecBackObj[EOBJECT_UI];
+		}
+	}
+}

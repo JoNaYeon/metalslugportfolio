@@ -44,6 +44,9 @@ public:
 	//POINT GetRatio(int iwidth, int iheight);
 
 	bool bObjDead();
+
+	// 배경 이동 함수 
+	void BackgroundMove(E_USERSTATE _e_state);
 	
 };
 

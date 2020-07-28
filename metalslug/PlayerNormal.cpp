@@ -4,6 +4,8 @@
 #include "define.h"
 #include "Mainfrm.h"
 #include "Bullet.h"
+#include "Background.h"
+#include "Monster.h"
 
 MSG* Mainfrm::m_msg;
 
@@ -38,55 +40,6 @@ PlayerNormal::PlayerNormal()
 	return;
 }
 
-
-int PlayerNormal::PlayerPosStateInClientMid(ST_OBJECT _obj)
-{
-	RECT recclient;
-	GetClientRect(Mainfrm::GethWnd(), &recclient);
-
-
-	if (_obj.posoriginDest.x <= (recclient.right / 2))
-	// 개체의 위치가 Client의 중앙에 위치할 때 
-	{
-		return E_OBJECTMOVEPOS_MID;
-	}
-	else if (_obj.posoriginDest.x < (recclient.right / 2))
-	// 개체의 위치가 Client의 왼쪽에 위치할 때  
-	{
-		return E_OBJECTMOVEPOS_LEFT;
-	}
-	else if (_obj.posoriginDest.x > (recclient.right / 2))
-	// 개체의 위치가 Client의 왼쪽에 위치할 때  
-	{
-		return E_OBJECTMOVEPOS_LEFT;
-	}
-	else
-	{
-		return -1;
-	}
-}
-
-void PlayerNormal::ObjectPosCheck()
-{
-	RECT recclient;
-	GetClientRect(Mainfrm::GethWnd(), &recclient);
-
-	/*if (PlayerPosStateInClientMid() == true)
-	// 플레이어가 화면의 중앙에 닿았을 때
-	{
-		// m_iObjState = E_OBJECTMOVEPOS_MID
-	}
-	else if (PlayerPosStateInClientMid() == false)
-	// 플레이어가 0,0 부터 화면의 중앙 이전(안쪽)일 때
-	{
-		// m_iObjState = E_OBJECTMOVEPOS_LEFT
-	}
-	else
-	// 배경이 출력의 끝에 다다랐을 때
-	{
-	}*/
-	return;
-}
 
 
 // 어떤 애니메이션이 들어가는지 체크해주는 함수
@@ -229,6 +182,39 @@ void PlayerNormal::AnimationStateCheck()
 
 
 
+bool PlayerNormal::PlayerPosCheck()
+{
+	RECT recClient = ObjManager::GetInstance()->GetRect();
+
+	bool btemp = false;
+
+	// 좌우 확인 
+	if (m_normalplayertop.posoriginDest.x <= (recClient.right / 2) - (m_normalplayertop.recDest.right * 2))
+	{
+		btemp = false;
+	}
+	/*// client 밖으로 나갔는지 확인 
+	else if (ObjManager::GetInstance()->GetRect().right <= m_normalplayertop.posoriginDest.x)
+	{
+		btemp = false;
+	}
+	else if (ObjManager::GetInstance()->GetRect().left >= m_normalplayertop.posoriginDest.x)
+	{
+		btemp = false;
+	}*/
+	else 
+	{
+		btemp = true;
+	}
+
+	
+
+	return btemp;
+}
+
+
+
+
 // 애니메이션의 움직임을 실행해주는 함수
 void PlayerNormal::AnimationStateMove()
 {
@@ -243,13 +229,42 @@ void PlayerNormal::AnimationStateMove()
 		case E_USERSTATE_RWALK:
 		// 오른쪽 버튼 눌렀을 때 반응
 		{
-			PlayerPosStateInClientMid(m_normalplayertop)
+			if (PlayerPosCheck() == false)
+			{
+				m_normalplayertop.posoriginDest.x += IDLEUSERDMOVE;
+				m_normalplayerbottom.posoriginDest.x += IDLEUSERDMOVE;
+			}
+			// client 밖으로 못 나가도록 
+			else if (ObjManager::GetInstance()->GetRect().right <= ((m_normalplayertop.posoriginDest.x) - m_normalplayertop.recDest.right))
+			{
+				break;
+			}
+			else
+			{
+				std::vector<Object*> vectemp = ObjManager::GetInstance()->GetVector(EOBJECT_BG);
+
+				for (int i = 0; i < vectemp.size(); i++)
+				{
+					Background* bgtemp = (Background*)vectemp[i];
+					Monster* monstertemp = (Monster*)vectemp[i];
+					bgtemp->BackgroundMove(E_USERSTATE_RWALK);
+				}
+			}
 		}
 		break;
 		case E_USERSTATE_LWALK:
 		// 왼쪽 버튼 눌렀을 때 반응
 		{
-
+			// client 밖으로 못 나가도록 
+			if (ObjManager::GetInstance()->GetRect().left >= m_normalplayertop.posoriginDest.x)
+			{
+				break;
+			}
+			else
+			{
+				m_normalplayertop.posoriginDest.x -= IDLEUSERDMOVE;
+				m_normalplayerbottom.posoriginDest.x -= IDLEUSERDMOVE;
+			}
 		}
 		break;
 		case E_USERSTATE_JUMP:
@@ -331,7 +346,6 @@ void PlayerNormal::Run()
 	// 키보드 입력 받기
 	// 키보드 입력은 정리해서 판정에 우선순위를 구분할 것 
 
-	ObjectPosCheck();
 	AnimationStateCheck();
 	AnimationStateMove();
 

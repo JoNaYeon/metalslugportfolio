@@ -1,2 +1,3 @@
 ﻿  PlayerNormal.cpp
-  metalslug.vcxproj -> D:\Private\Git\metalslug\metalslugportfolio\Debug\metalslug.exe
+C:\Users\nanna\바탕 화면\Git\metalslug\metalslugportfolio\metalslug\PlayerNormal.cpp(242,23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  metalslug.vcxproj -> C:\Users\nanna\바탕 화면\Git\metalslug\metalslugportfolio\Debug\metalslug.exe

@@ -43,5 +43,7 @@ public:
 
 	// Rend
 	void Rend(HWND& _hWnd);
+
+	std::vector<Object*> GetVector(E_OBJECT _e_obj);
 };
 

@@ -21,6 +21,27 @@ Background::Background()
     //m_ibgTile2 = 0;
 };
 
+
+void Background::BackgroundMove(E_USERSTATE _e_state)
+{
+    switch (_e_state)
+    {
+        case E_USERSTATE_LWALK:
+        {
+            m_BG1.poriginSrc.x -= BACKGROUNDMOVE;
+            m_BG2.poriginSrc.x -= BACKGROUNDMOVE;
+        }
+        case E_USERSTATE_RWALK:
+        {
+            m_BG1.poriginSrc.x += BACKGROUNDMOVE;
+            m_BG2.poriginSrc.x += BACKGROUNDMOVE;
+        }
+    }
+
+    return;
+}
+
+
 // 오브젝트 초기화
 void Background::Init()
 {
@@ -29,26 +50,6 @@ void Background::Init()
 
 void Background::Run()
 {
-    switch (m_objPosState)
-    {
-        case E_OBJECTMOVEPOS_LEFT:
-        {
-            
-        }
-        break;
-        case E_OBJECTMOVEPOS_MID:
-        {
-            m_BG1.poriginSrc.x += m_BG1.iobjmove;
-            m_BG2.poriginSrc.x += m_BG2.iobjmove;
-        }
-        break;
-        case E_OBJECTMOVEPOS_RIGHT:
-        {
-
-        }
-        break;
-    }
-
     return; 
 }
 
@@ -229,4 +230,3 @@ bool Background::bObjDead()
 {
     return false;
 }
-

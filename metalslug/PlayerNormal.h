@@ -54,8 +54,8 @@ public:
 	void AnimationStateCheck();
 	// 애니메이션의 움직임을 실행해주는 함수
 	void AnimationStateMove();
-	// Player의 위치를 확인하여 m_iobjPosState 에 enum을 박아주는 함수
-	void ObjectPosCheck();
-	int PlayerPosStateInClientMid(ST_OBJECT _obj);
+
+	// 플레이어의 위치 체크해주는 함수
+	bool PlayerPosCheck();
 };
 

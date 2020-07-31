@@ -16,17 +16,18 @@ protected:
 	static DWORD m_dPrevTime;
 	float m_fdelay;
 
-	// 플레이어 구조체
-	//ST_OBJECT m_normalplayertop;
-	//ST_OBJECT m_normalplayerbottom;
-	// 몬스터 구조체
-	//ST_OBJECT m_Monster;
-	// 배경화면 구조체
-	//ST_OBJECT m_BG1;
-	//ST_OBJECT m_BG2;
-
 	// 객체의 존재 여부 확인하는 bool 변수
 	bool m_bdead;
+
+	// 중력을 컨트롤 할 변수들
+	float m_fvelocity;
+	float m_fgravity;
+	bool m_bjump;
+	bool m_bgravity;
+
+	int m_initialt ;  // 물체의 시각
+
+	RECT m_recHitBox;
 	
 public:
 	// 생성자
@@ -50,7 +51,7 @@ public:
 
 	// dbject를 움직여줄 애니메이션에 추가된 함수
 	void Aniimage(ST_OBJECT& _obj);
-	void hitbox(RECT _rec1, RECT _rec2);
+	//void hitbox(RECT _rec1, RECT _rec2);
 
 	int Getobjstate() { return m_iobjstate; };
 	void Setobjstate(int _objstate) { m_iobjstate = _objstate; };
@@ -65,5 +66,9 @@ public:
 		int _recDestright, int _recDestbottom, int _posoriginDestx, int _posoriginDesty, 
 		int _iobjmove, int _iWidthnum, int _iHightnum);
 
+	void Graviy(ST_OBJECT* _obj);
+	bool IntersectRectCheck(RECT* _rec1, RECT* _rec2);
+	// Object들이 배경에 설 수 있도록 해주는 함수 
+	void ObjStand(ST_OBJECT* _obj);
 };
 

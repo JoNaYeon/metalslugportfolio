@@ -45,7 +45,7 @@ void Game::Create()
 	{
 		// 몬스터 생성해주기 
 		classmonsterptr = new MonsterZombieMan();
-		ObjManager::GetInstance()->SetVector(classmonsterptr, EOBJECT_OBJ);
+		ObjManager::GetInstance()->SetVector(classmonsterptr, EOBJECT_MONSTER);
 	}
 
 	return;

@@ -30,8 +30,8 @@ PlayerNormal::PlayerNormal()
 	m_normalplayerbottom.iWidthnum = IDLEPLAYERWNUM;
 	m_normalplayerbottom.iHightnum = IDLEPLAYERHNUM;
 
-	m_itopBitmapImg = USERIDLETOP0;
-	m_ibottomBitmapImg = USERIDLEBOTTOM1;
+	//m_itopBitmapImg = USERIDLETOP0;
+	//m_ibottomBitmapImg = USERIDLEBOTTOM1;
 
 	m_fdelay = 0.5;
 
@@ -49,13 +49,20 @@ void PlayerNormal::AnimationStateCheck()
 	// 점프할 때 
 	if (InputManager::GetInstance()->Keyboard(E_KEYJUMP) == true)
 	{
+		/*m_iobjstate = E_USERSTATE_JUMP;
+		m_strBitmapBottom = "..\\source\\user\\userjunp.bmp";
 
+		SetObjStruct(m_normalplayerbottom, JUMPPLAYERWANIMATION, JUMPPLAYERHANIMATION, m_normalplayerbottom.poriginSrc.x, m_normalplayerbottom.poriginSrc.y,
+			JUMPPLAYERWANIMATION, JUMPPLAYERHANIMATION, m_normalplayerbottom.posoriginDest.x, m_normalplayerbottom.posoriginDest.y, JUMPUSERDMOVE,
+			JUMPPLAYERWNUM, JUMPPLAYERHNUM);*/
+
+		m_bjump = true;
 	}
 	// 왼쪽 
 	else if (InputManager::GetInstance()->Keyboard(E_KEYLEFT) == true)
 	{
 		m_iobjstate = E_USERSTATE_LWALK;
-		m_ibottomBitmapImg = USERRUNBOTTOM2;
+		m_strBitmapBottom = "..\\source\\user\\UserRun_Bottom2.bmp";
 		m_bleftright = false;
 
 		SetObjStruct(m_normalplayerbottom, IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayerbottom.poriginSrc.x, m_normalplayerbottom.poriginSrc.y,
@@ -66,7 +73,8 @@ void PlayerNormal::AnimationStateCheck()
 	else if (InputManager::GetInstance()->Keyboard(E_KEYRIGHT) == true)
 	{
 		m_iobjstate = E_USERSTATE_RWALK;
-		m_ibottomBitmapImg = USERRUNBOTTOM1;
+		//m_ibottomBitmapImg = USERRUNBOTTOM1;
+		m_strBitmapBottom = "..\\source\\user\\UserRun_Bottom1.bmp";
 		m_bleftright = true;
 
 		SetObjStruct(m_normalplayerbottom, IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayerbottom.poriginSrc.x, m_normalplayerbottom.poriginSrc.y,
@@ -80,7 +88,8 @@ void PlayerNormal::AnimationStateCheck()
 		if (m_bleftright == true)
 		{
 			m_iobjstate = E_USERSTATE_IDLE;
-			m_ibottomBitmapImg = USERIDLEBOTTOM1;
+			//m_ibottomBitmapImg = USERIDLEBOTTOM1;
+			m_strBitmapBottom = "..\\source\\user\\UserIdle_Bottom1.bmp";
 
 			SetObjStruct(m_normalplayerbottom, IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayerbottom.poriginSrc.x, m_normalplayerbottom.poriginSrc.y,
 				IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayerbottom.posoriginDest.x, m_normalplayerbottom.posoriginDest.y, IDLEUSERDMOVE,
@@ -89,7 +98,8 @@ void PlayerNormal::AnimationStateCheck()
 		else
 		{
 			m_iobjstate = E_USERSTATE_IDLE;
-			m_ibottomBitmapImg = USERIDLEBOTTOM2;
+			//m_ibottomBitmapImg = USERIDLEBOTTOM2;
+			m_strBitmapBottom = "..\\source\\user\\UserIdle_Bottom2.bmp";
 
 			SetObjStruct(m_normalplayerbottom, IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayerbottom.poriginSrc.x, m_normalplayerbottom.poriginSrc.y,
 				IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayerbottom.posoriginDest.x, m_normalplayerbottom.posoriginDest.y, IDLEUSERDMOVE,
@@ -106,7 +116,8 @@ void PlayerNormal::AnimationStateCheck()
 		if (m_bleftright == true)
 		{
 			m_iobjstate = E_USERSTATE_FIRE;
-			m_itopBitmapImg = USERFIRETOP1;
+			//m_itopBitmapImg = USERFIRETOP1;
+			m_strBitmapTop = "..\\source\\user\\usertopfire.bmp";
 
 			// struct에 자료 삽입해주는 함수
 			SetObjStruct(m_normalplayertop, FIREPLAYERWANIMATION, FIREPLAYERHANIMATION, m_normalplayertop.poriginSrc.x, m_normalplayertop.poriginSrc.y,
@@ -117,7 +128,8 @@ void PlayerNormal::AnimationStateCheck()
 		else
 		{
 			m_iobjstate = E_USERSTATE_FIRE;
-			m_itopBitmapImg = USERFIRETOP1;
+			//m_itopBitmapImg = USERFIRETOP1;
+			m_strBitmapTop = "..\\source\\user\\usertopfire.bmp";
 
 			SetObjStruct(m_normalplayertop, FIREPLAYERWANIMATION, FIREPLAYERHANIMATION, m_normalplayertop.poriginSrc.x, m_normalplayertop.poriginSrc.y,
 				FIREPLAYERWANIMATION, FIREPLAYERHANIMATION, m_normalplayertop.posoriginDest.x, m_normalplayertop.posoriginDest.y, FIREUSERDMOVE,
@@ -127,13 +139,21 @@ void PlayerNormal::AnimationStateCheck()
 	// 점프할 때 
 	else if (InputManager::GetInstance()->Keyboard(E_KEYJUMP) == true)
 	{
+		/*m_iobjstate = E_USERSTATE_JUMP;
+		//m_itopBitmapImg = USERIDLETOP2;
+		m_strBitmapTop = "..\\source\\user\\userjunptop.bmp";
+
+		SetObjStruct(m_normalplayertop, JUMPPLAYERWANIMATION, JUMPPLAYERHANIMATION, m_normalplayertop.poriginSrc.x, m_normalplayertop.poriginSrc.y,
+			JUMPPLAYERWANIMATION, JUMPPLAYERHANIMATION, m_normalplayertop.posoriginDest.x, m_normalplayertop.posoriginDest.y, JUMPUSERDMOVE,
+			JUMPPLAYERWNUM, JUMPPLAYERHNUM);*/
 
 	}
 	// 왼쪽
 	else if (InputManager::GetInstance()->Keyboard(E_KEYLEFT) == true)
 	{
 		m_iobjstate = E_USERSTATE_LWALK;
-		m_itopBitmapImg = USERIDLETOP2;
+		//m_itopBitmapImg = USERIDLETOP2;
+		m_strBitmapTop = "..\\source\\user\\UserIdle_Top2.bmp";
 		m_bleftright = false;
 
 		SetObjStruct(m_normalplayertop, IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayertop.poriginSrc.x, m_normalplayertop.poriginSrc.y,
@@ -144,7 +164,8 @@ void PlayerNormal::AnimationStateCheck()
 	else if (InputManager::GetInstance()->Keyboard(E_KEYRIGHT) == true)
 	{
 		m_iobjstate = E_USERSTATE_RWALK;
-		m_itopBitmapImg = USERIDLETOP0;
+		//m_itopBitmapImg = USERIDLETOP0;
+		m_strBitmapTop = "..\\source\\user\\UserIdle_Top1.bmp";
 		m_bleftright = true;
 
 		SetObjStruct(m_normalplayertop, IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayertop.poriginSrc.x, m_normalplayertop.poriginSrc.y,
@@ -158,7 +179,8 @@ void PlayerNormal::AnimationStateCheck()
 		if (m_bleftright == true)
 		{
 			m_iobjstate = E_USERSTATE_IDLE;
-			m_itopBitmapImg = USERIDLETOP0;
+			//m_itopBitmapImg = USERIDLETOP0;
+			m_strBitmapTop = "..\\source\\user\\UserIdle_Top1.bmp";
 
 			SetObjStruct(m_normalplayertop, IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayertop.poriginSrc.x, m_normalplayertop.poriginSrc.y,
 				IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayertop.posoriginDest.x, m_normalplayertop.posoriginDest.y, IDLEUSERDMOVE,
@@ -167,7 +189,8 @@ void PlayerNormal::AnimationStateCheck()
 		else
 		{
 			m_iobjstate = E_USERSTATE_IDLE;
-			m_itopBitmapImg = USERIDLETOP2;
+			//m_itopBitmapImg = USERIDLETOP2;
+			m_strBitmapTop = "..\\source\\user\\UserIdle_Top2.bmp";
 
 			SetObjStruct(m_normalplayertop, IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayertop.poriginSrc.x, m_normalplayertop.poriginSrc.y,
 				IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION, m_normalplayertop.posoriginDest.x, m_normalplayertop.posoriginDest.y, IDLEUSERDMOVE,
@@ -175,6 +198,10 @@ void PlayerNormal::AnimationStateCheck()
 
 		}
 	}
+
+	m_recHitBox = { m_normalplayertop.posoriginDest.x, m_normalplayertop.posoriginDest.y,
+		m_normalplayertop.posoriginDest.x + m_normalplayertop.recDest.right * PLAYERSIZE,
+		m_normalplayertop.posoriginDest.y + m_normalplayertop.recDest.bottom * PLAYERSIZE };
 
 	return;
 }
@@ -185,23 +212,21 @@ void PlayerNormal::AnimationStateCheck()
 bool PlayerNormal::PlayerPosCheck()
 {
 	RECT recClient = ObjManager::GetInstance()->GetRect();
+	std::vector<Object*> vectemp = ObjManager::GetInstance()->GetVector(EOBJECT_BG);
+
+	Background* bgtemp = (Background*)vectemp[EOBJECT_BG];
 
 	bool btemp = false;
 
 	// 좌우 확인 
-	if (m_normalplayertop.posoriginDest.x <= (recClient.right / 2) - (m_normalplayertop.recDest.right * 2))
+	if (m_normalplayertop.posoriginDest.x <= (recClient.right / 2) - (m_normalplayertop.recDest.right * PLAYERSIZE))
 	{
 		btemp = false;
 	}
-	/*// client 밖으로 나갔는지 확인 
-	else if (ObjManager::GetInstance()->GetRect().right <= m_normalplayertop.posoriginDest.x)
+	else if (bgtemp->GetBG().poriginSrc.x >= BGEND)
 	{
 		btemp = false;
 	}
-	else if (ObjManager::GetInstance()->GetRect().left >= m_normalplayertop.posoriginDest.x)
-	{
-		btemp = false;
-	}*/
 	else 
 	{
 		btemp = true;
@@ -229,25 +254,34 @@ void PlayerNormal::AnimationStateMove()
 		case E_USERSTATE_RWALK:
 		// 오른쪽 버튼 눌렀을 때 반응
 		{
-			if (PlayerPosCheck() == false)
+			if (ObjManager::GetInstance()->GetRect().right - (m_normalplayertop.recSrc.right * PLAYERSIZE) <= (m_normalplayertop.posoriginDest.x))
+			{
+				break;
+			}
+			else if (PlayerPosCheck() == false)
 			{
 				m_normalplayertop.posoriginDest.x += IDLEUSERDMOVE;
 				m_normalplayerbottom.posoriginDest.x += IDLEUSERDMOVE;
 			}
-			// client 밖으로 못 나가도록 
-			else if (ObjManager::GetInstance()->GetRect().right <= ((m_normalplayertop.posoriginDest.x) - m_normalplayertop.recDest.right))
-			{
-				break;
-			}
 			else
 			{
+				// 배경 움직이기
 				std::vector<Object*> vectemp = ObjManager::GetInstance()->GetVector(EOBJECT_BG);
 
 				for (int i = 0; i < vectemp.size(); i++)
 				{
 					Background* bgtemp = (Background*)vectemp[i];
-					Monster* monstertemp = (Monster*)vectemp[i];
+					//Monster* monstertemp = (Monster*)vectemp[i];
 					bgtemp->BackgroundMove(E_USERSTATE_RWALK);
+				}
+
+				// 몬스터 움직이기
+				vectemp = ObjManager::GetInstance()->GetVector(EOBJECT_MONSTER);
+
+				for (int i = 0; i < vectemp.size(); i++)
+				{
+					Monster* Monstertemp = (Monster*)vectemp[i];
+					Monstertemp->MonsterMove(E_USERSTATE_RWALK);
 				}
 			}
 		}
@@ -270,6 +304,7 @@ void PlayerNormal::AnimationStateMove()
 		case E_USERSTATE_JUMP:
 		// 점프
 		{
+			m_bjump = true;
 		}
 		break;
 		case E_USERSTATE_FIRE:
@@ -281,6 +316,7 @@ void PlayerNormal::AnimationStateMove()
 		}
 		break;
 	}
+
 
 
 	/////////////////////////////// bottom
@@ -331,6 +367,23 @@ void PlayerNormal::AnimationStateMove()
 
 
 
+// rect가 부딪힌 것을 확인해주는 함수
+/*bool PlayerNormal::IntersectRectCheck(RECT* _rec1, RECT* _rec2)
+{
+	//bool bInter = IntersectRect(recInter, _rec1, _rec2);
+
+	if ((_rec1->right >= _rec2->left) && (_rec1->left <= _rec2->right))
+	{
+		if ((_rec1->bottom >= _rec2->top) && (_rec1->top <= _rec2->bottom))
+		{
+			return true;
+		}
+	}
+	else
+	{
+		return false;
+	}
+}*/
 
 
 
@@ -349,6 +402,44 @@ void PlayerNormal::Run()
 	AnimationStateCheck();
 	AnimationStateMove();
 
+	if (m_bjump == true)
+	{
+		Jump();
+	}
+
+	/*Graviy(&m_normalplayertop);
+	Graviy(&m_normalplayerbottom);
+
+	// 배경 vector를 가져옴 
+	std::vector<Object*> vectemp = ObjManager::GetInstance()->GetVector(EOBJECT_BG);
+	
+	for (int i = 0; i < vectemp.size(); i++)
+	{
+		// 배경 vector 를 넣어줄 변수
+		Background* bgtemp = (Background*)vectemp[i];
+		// player의 RECT를 넣어줌
+		RECT playerpostemp = { m_normalplayertop.posoriginDest.x, m_normalplayertop.posoriginDest.y, 
+			m_normalplayertop.posoriginDest.x + (m_normalplayertop.recDest.right * PLAYERSIZE), 
+			m_normalplayertop.posoriginDest.y + (m_normalplayertop.recDest.bottom * PLAYERSIZE) };
+		
+		// plater과 background Tile에 충돌이 일어나도록 해줌
+		bool btemp = IntersectRectCheck(&playerpostemp, &bgtemp->BackgroundTile(BACKGROUNDMOVE));
+
+		// 만약 충돌이 일어날 경우
+		if (btemp == true)
+		{
+			// player를 위로 올려주기
+			m_normalplayertop.posoriginDest.y -= m_fvelocity * 0.5f;
+			m_normalplayerbottom.posoriginDest.y -= m_fvelocity * 0.5f;
+		}
+	}*/
+
+	Graviy(&m_normalplayertop);
+	Graviy(&m_normalplayerbottom);
+
+	// 배경 위에 설 수 있게 해주는 함수
+	ObjStand(&m_normalplayertop);
+	ObjStand(&m_normalplayerbottom);
 
 	return;
 };
@@ -374,20 +465,8 @@ void PlayerNormal::Render(HDC& _hdc, HWND& _hWnd)
 
 	// 비트맵을 hBIt에 뿌려주기
 	// hinst를 null로 하지 말자 
-	hbottomobjBit = (HBITMAP)LoadBitmap(hInst, MAKEINTRESOURCE(m_ibottomBitmapImg));
-	// oldbit 에 이미지 저장 
-	holdBit = (HBITMAP)SelectObject(hobjdc, hbottomobjBit);
-
-	// 하체 이미지 출력
-	TransparentBlt(_hdc, m_normalplayerbottom.posoriginDest.x, m_normalplayerbottom.posoriginDest.y,
-		m_normalplayerbottom.recDest.right * PLAYERSIZE, m_normalplayerbottom.recDest.bottom * PLAYERSIZE,
-		hobjdc, m_normalplayerbottom.poriginSrc.x, m_normalplayerbottom.poriginSrc.y,
-		m_normalplayerbottom.recSrc.right, m_normalplayerbottom.recSrc.bottom, RGB(255, 255, 255));
-
-
-	// 비트맵을 hBIt에 뿌려주기
-	// hinst를 null로 하지 말자 
-	htopobjBit = (HBITMAP)LoadBitmap(hInst, MAKEINTRESOURCE(m_itopBitmapImg));
+	//htopobjBit = (HBITMAP)LoadBitmap(hInst, MAKEINTRESOURCE(m_itopBitmapImg));
+	htopobjBit = (HBITMAP)LoadImage(NULL, m_strBitmapBottom, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 	// oldbit 에 상체 이미지 저장 
 	holdBit = (HBITMAP)SelectObject(hobjdc, htopobjBit);
 
@@ -396,7 +475,25 @@ void PlayerNormal::Render(HDC& _hdc, HWND& _hWnd)
 		m_normalplayertop.recDest.right * 4, m_normalplayertop.recDest.bottom * 4,
 		hobjdc, m_normalplayertop.poriginSrc.x, m_normalplayertop.poriginSrc.y,
 		m_normalplayertop.recSrc.right, m_normalplayertop.recSrc.bottom, RGB(255, 255, 255));
+
+
+	// 비트맵을 hBIt에 뿌려주기
+	// hinst를 null로 하지 말자 
+	//hbottomobjBit = (HBITMAP)LoadBitmap(hInst, MAKEINTRESOURCE(m_ibottomBitmapImg));
+	hbottomobjBit = (HBITMAP)LoadImage(NULL, m_strBitmapTop, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+	// oldbit 에 이미지 저장 
+	holdBit = (HBITMAP)SelectObject(hobjdc, hbottomobjBit);
+
+	// 하체 이미지 출력
+	TransparentBlt(_hdc, m_normalplayerbottom.posoriginDest.x, m_normalplayerbottom.posoriginDest.y,
+		m_normalplayerbottom.recDest.right * PLAYERSIZE, m_normalplayerbottom.recDest.bottom * PLAYERSIZE,
+		hobjdc, m_normalplayerbottom.poriginSrc.x, m_normalplayerbottom.poriginSrc.y,
+		m_normalplayerbottom.recSrc.right, m_normalplayerbottom.recSrc.bottom, RGB(255, 255, 255));
 	
+
+	// 히트박스 임시 
+	Rectangle(_hdc, m_recHitBox.left, m_recHitBox.top, m_recHitBox.right, m_recHitBox.bottom);
+
 
 	// oldbit로 바꿔주기
 	SelectObject(hobjdc, holdBit);
@@ -442,6 +539,8 @@ void PlayerNormal::AttackBomb()
 // 점프 (오버라이딩)
 void PlayerNormal::Jump()
 {
+	Player::Jump();
+
 	return;
 };
 

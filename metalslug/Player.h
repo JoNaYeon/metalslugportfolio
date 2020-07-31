@@ -14,9 +14,17 @@ protected:
 	int m_ivirous;
 	bool m_bhuman;
 
+	// player의 이미지 경로를 담을 변수
+	LPCSTR m_strBitmapTop;
+	LPCSTR m_strBitmapBottom;
+
 	Object* m_classobjptr;
 	// 총알을 담을 vector
 	//std::vector<Object*> m_vbullet;
+
+	// 플레이어 구조체
+	ST_OBJECT m_normalplayertop;
+	ST_OBJECT m_normalplayerbottom;
 
 public:
 	// 생성자

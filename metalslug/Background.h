@@ -11,11 +11,12 @@ private:
 	ObjectImage m_obimg2;
 
 	// 배경화면 구조체
-	ST_OBJECT m_BG1;
-	ST_OBJECT m_BG2;
+	ST_OBJECT m_BG;
 
 	// 객체의 위치 상태를 표시하는 E_OBJECTMOVEPOS enum을 담을 int 변수
 	int m_objPosState;
+
+	RECT m_recClient;
 
 public:
 
@@ -40,13 +41,14 @@ public:
 	// 오브젝트 파괴
 	void Destroy();
 	// 타일을 깔아 줄 함수
-	void BackgroundTile(HDC _hdc, int _itilemove);
+	RECT* BackgroundTile(int _itilemove);
 	//POINT GetRatio(int iwidth, int iheight);
 
 	bool bObjDead();
 
 	// 배경 이동 함수 
 	void BackgroundMove(E_USERSTATE _e_state);
+	ST_OBJECT GetBG() { return m_BG; };
 	
 };
 

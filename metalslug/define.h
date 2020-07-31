@@ -14,12 +14,16 @@
 
 #define PURE = 0;
 
+#define GRAVITY 1
+#define VELOCITY 18.f
+#define VELOCITYVALUE 0.9f
+
 // 배경 object 구조체에 들어갈 define
 //#define BACKGROUNDMOVE 10
 //#define BGWSIZE 753
 //#define BGHSIZE 224
 #define BGSIZE 4.5
-#define BGEND 5483
+#define BGEND 5450
 // 배경 움직이는 거리
 #define BACKGROUNDMOVE 10
 // 출력될 배경 이미지의 시작부분
@@ -38,7 +42,7 @@
 
 // 플레이어 RUN / IDEL object 구조체에 들어갈 define
 // object가 움직이는 거리
-#define IDLEUSERDMOVE 10
+#define IDLEUSERDMOVE BACKGROUNDMOVE * PLAYERSIZE
 // object 이미지의 가로 길이
 #define IDLEPLAYERWANIMATION 35
 // object 이미지의 세로 길이
@@ -50,7 +54,7 @@
 
 // 플레이어 FIRE object 구조체에 들어갈 define
 // object가 움직이는 거리
-#define FIREUSERDMOVE 10
+#define FIREUSERDMOVE BACKGROUNDMOVE * PLAYERSIZE
 // object 이미지의 가로 길이
 #define FIREPLAYERWANIMATION 59
 // object 이미지의 세로 길이
@@ -60,9 +64,21 @@
 // object 이미지의 세로 칸 수
 #define FIREPLAYERHNUM 3
 
+// 플레이어 Jump object 구조체에 들어갈 define
+// object가 움직이는 거리
+#define JUMPUSERDMOVE BACKGROUNDMOVE * PLAYERSIZE
+// object 이미지의 가로 길이
+#define JUMPPLAYERWANIMATION 31
+// object 이미지의 세로 길이
+#define JUMPPLAYERHANIMATION 45
+// object 이미지의 가로 칸 수
+#define JUMPPLAYERWNUM 3
+// object 이미지의 세로 칸 수
+#define JUMPPLAYERHNUM 2
+
 // 몬스터 object 구조체에 들어갈 define
 // object가 움직이는 거리
-#define MONSTERMOVE 10
+#define MONSTERMOVE BACKGROUNDMOVE * PLAYERSIZE
 // object 이미지의 가로 길이
 #define MONSTERWANIMATION 36
 // object 이미지의 세로 길이
@@ -74,7 +90,7 @@
 
 // 총알 object 구조체에 들어갈 define
 // 총알이 움직이는 길이
-#define BULLETMOVE 30
+#define BULLETMOVE 30 * 2
 // 총알이 움직이는 가로세로 사이즈
 #define BULLETSIZE 30
 #define BULLETWNUM 4
@@ -114,7 +130,8 @@ enum E_USERSTATE
 	E_USERSTATE_LWALK,
 	E_USERSTATE_RWALK ,
 	E_USERSTATE_JUMP,
-	E_USERSTATE_FIRE
+	E_USERSTATE_FIRE,
+	E_USERSTATE_DROP,
 };
 
 enum E_GUNSTATE

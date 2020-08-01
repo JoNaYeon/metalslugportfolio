@@ -272,6 +272,12 @@
     <Image Include="..\source\background\background2.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="..\source\user\userjunptop.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="..\source\user\userjunp.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="metalslug.cpp">

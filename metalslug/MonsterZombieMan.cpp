@@ -2,6 +2,7 @@
 #include "ObjManager.h"
 #include "define.h"
 #include "Mainfrm.h"
+#include "Background.h"
 
 
 // 생성자
@@ -13,7 +14,7 @@ MonsterZombieMan::MonsterZombieMan()
 	m_Monster.recSrc = { 0, 0, MONSTERWANIMATION, MONSTERHANIMATION };
 	m_Monster.poriginSrc = { 0,0 };
 	m_Monster.recDest = { 0, 0, MONSTERWANIMATION, MONSTERHANIMATION };
-	m_Monster.posoriginDest = { 1000, 500 };
+	m_Monster.posoriginDest = { 1000, 400 };
 	m_Monster.iobjmove = MONSTERMOVE;
 	m_Monster.iWidthnum = MONSTERWNUM;
 	m_Monster.iHightnum = MONSTERHNUM;
@@ -34,6 +35,7 @@ void MonsterZombieMan::Run()
 	// 시간을 받아옴
 	//m_dcurTime = timeGetTime();
 
+
 	if (m_dcurTime - m_dPrevTime >= 0.1f * m_fdelay)
 	{
 		// object 상태 움직임 변경 
@@ -43,6 +45,35 @@ void MonsterZombieMan::Run()
 		// 이전 시간을 현재 시간으로 대체
 		m_dPrevTime = m_dcurTime;
 	}
+
+	/*// 배경 vector를 가져옴 
+	std::vector<Object*> vectemp = ObjManager::GetInstance()->GetVector(EOBJECT_BG);
+
+	for (int i = 0; i < vectemp.size(); i++)
+	{
+		// 배경 vector 를 넣어줄 변수
+		Background* bgtemp = (Background*)vectemp[i];
+		// player의 RECT를 넣어줌
+		RECT Monsterpostemp = { m_Monster.posoriginDest.x, m_Monster.posoriginDest.y,
+			m_Monster.posoriginDest.x + (m_Monster.recDest.right) * PLAYERSIZE,
+			m_Monster.posoriginDest.y + (m_Monster.recDest.bottom) * PLAYERSIZE };
+
+		// plater과 background Tile에 충돌이 일어나도록 해줌
+		bool btemp = IntersectRectCheck(&Monsterpostemp, &bgtemp->BackgroundTile(BACKGROUNDMOVE));
+
+		// 만약 충돌이 일어날 경우
+		if (btemp == true)
+		{
+			m_Monster.posoriginDest.y -= m_fvelocity * 0.5f;
+		}
+	}
+
+	Graviy(&m_Monster);*/
+
+	// 배경 위에 설 수 있게 해주는 함수
+	ObjStand(&m_Monster);
+
+
 	return;
 };
 
@@ -70,7 +101,8 @@ void MonsterZombieMan::Render(HDC& _hdc, HWND& _hWnd)
 
 	// 비트맵을 hBIt에 뿌려주기
 	// hinst를 null로 하지 말자 
-	hMonsterobjBit = (HBITMAP)LoadBitmap(hInst, MAKEINTRESOURCE(ZOMBIEMAN));
+	//hMonsterobjBit = (HBITMAP)LoadBitmap(hInst, MAKEINTRESOURCE(ZOMBIEMAN));
+	hMonsterobjBit = (HBITMAP)LoadImage(NULL, "..\\source\\monster\\zombie1.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 	// oldbit 에 상체 이미지 저장 
 	holdBit = (HBITMAP)SelectObject(hobjdc, hMonsterobjBit);
 

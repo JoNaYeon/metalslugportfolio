@@ -73,7 +73,8 @@ void Bullet::Render(HDC& _hdc, HWND& _hWnd)
 	//hbit = CreateCompatibleBitmap(_hdc, m_bullet.recSrc.right, m_bullet.recSrc.bottom);
 
 	// 이미지 HBITMAP 에 로드하여 넣음 
-	hbit = LoadBitmap(hInst, MAKEINTRESOURCE(BULLET1));
+	//hbit = LoadBitmap(hInst, MAKEINTRESOURCE(BULLET1));
+	hbit = (HBITMAP)LoadImage(NULL, "..\\source\\weapon\\bullet1.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 	holdbit = (HBITMAP)SelectObject(hMemdc, hbit);
 
 

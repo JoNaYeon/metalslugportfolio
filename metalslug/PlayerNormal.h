@@ -9,14 +9,14 @@ class PlayerNormal :
 protected:
 	//ObjectImage m_playerimg;
 	// 이미지 비트맵을 담을 변수
-	int m_itopBitmapImg;
-	int m_ibottomBitmapImg;
+	//int m_itopBitmapImg;
+	//int m_ibottomBitmapImg;
 	// Player가 왼쪽을 보는지 오른쪽을 보는지 확인 할 bool 변수
 	bool m_bleftright;
 
 	// 플레이어 구조체
-	ST_OBJECT m_normalplayertop;
-	ST_OBJECT m_normalplayerbottom;
+	//ST_OBJECT m_normalplayertop;
+	//ST_OBJECT m_normalplayerbottom;
 
 public:
 	// 생성자
@@ -57,5 +57,7 @@ public:
 
 	// 플레이어의 위치 체크해주는 함수
 	bool PlayerPosCheck();
+	// rect가 부딪힌 것을 확인해주는 함수
+	//bool IntersectRectCheck(RECT* _rec1, RECT* _rec2);
 };
 

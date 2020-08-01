@@ -240,6 +240,8 @@
     <Image Include="..\source\user\UserIdle_Bottom2.bmp" />
     <Image Include="..\source\user\UserIdle_Top1.bmp" />
     <Image Include="..\source\user\UserIdle_Top2.bmp" />
+    <Image Include="..\source\user\userjunp.bmp" />
+    <Image Include="..\source\user\userjunptop.bmp" />
     <Image Include="..\source\user\UserRun_Bottom1.bmp" />
     <Image Include="..\source\user\UserRun_Bottom2.bmp" />
     <Image Include="..\source\user\usertopfire.bmp" />

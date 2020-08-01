@@ -4,8 +4,6 @@ class MonsterZombieMan :
 	public Monster
 {
 protected:
-	// 몬스터 구조체
-	ST_OBJECT m_Monster;
 public:
 	// 생성자
 	MonsterZombieMan();

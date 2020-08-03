@@ -16,19 +16,18 @@ Object::Object()
 	m_bgravity = true;
 
 	m_bdead = false;
-
-	m_initialt = 0;
 };
 
-void Object::Graviy(ST_OBJECT* _obj)
+void Object::Gravity(ST_OBJECT* _obj)
 {
 	if (m_bgravity == true)
 	{
+		//_obj->posoriginDest.y += 1.0f;
 		// 모든 object에 대해 중력을 적용한다.
 		//_obj->posoriginDest.y += (m_fvelocity * VELOCITYVALUE * 0.1);
 
-		_obj->posoriginDest.y = 0.5f * 0.4f * m_initialt * m_initialt + m_fvelocity * m_initialt + 0;   // y방향의 위치 결정
-		m_initialt++;
+		//_obj->posoriginDest.y = 0.5f * 0.4f * m_initialt * m_initialt + m_fvelocity * m_initialt + 0;   // y방향의 위치 결정
+		//m_initialt++;
 		// 물체의 시각을 진행한다
 	}   
 
@@ -135,7 +134,6 @@ void Object::ObjStand(ST_OBJECT* _obj)
 			m_bgravity = false;
 			//_obj->posoriginDest.y = bgtemp->BackgroundTile(BACKGROUNDMOVE)->top - (_obj->recDest.bottom * PLAYERSIZE);
 			_obj->posoriginDest.y -= (recttemp.bottom - recttemp.top);
-			m_initialt = _obj->posoriginDest.y;
 		}
 		else
 		{

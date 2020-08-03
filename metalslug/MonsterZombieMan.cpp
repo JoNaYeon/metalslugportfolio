@@ -68,7 +68,7 @@ void MonsterZombieMan::Run()
 		}
 	}
 
-	Graviy(&m_Monster);*/
+	Gravity(&m_Monster);*/
 
 	// 배경 위에 설 수 있게 해주는 함수
 	ObjStand(&m_Monster);

@@ -25,8 +25,6 @@ protected:
 	bool m_bjump;
 	bool m_bgravity;
 
-	int m_initialt ;  // 물체의 시각
-
 	RECT m_recHitBox;
 	
 public:
@@ -66,7 +64,7 @@ public:
 		int _recDestright, int _recDestbottom, int _posoriginDestx, int _posoriginDesty, 
 		int _iobjmove, int _iWidthnum, int _iHightnum);
 
-	void Graviy(ST_OBJECT* _obj);
+	void Gravity(ST_OBJECT* _obj);
 	bool IntersectRectCheck(RECT* _rec1, RECT* _rec2);
 	// Object들이 배경에 설 수 있도록 해주는 함수 
 	void ObjStand(ST_OBJECT* _obj);

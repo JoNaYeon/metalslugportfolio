@@ -18,6 +18,7 @@ Mainfrm::Mainfrm()
 {
 	m_scene = NULL;
 	m_msg = NULL;
+	//AllocConsole();
 };
 
 void Mainfrm::Create()
@@ -76,6 +77,7 @@ void Mainfrm::Destroy()
 		m_scene = NULL;
 	}
 
+	//FreeConsole();
 	return;
 }
 

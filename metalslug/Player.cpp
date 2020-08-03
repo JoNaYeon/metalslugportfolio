@@ -91,16 +91,21 @@ void Player::Jump()
 		JUMPPLAYERWANIMATION, JUMPPLAYERHANIMATION, m_normalplayertop.posoriginDest.x, m_normalplayertop.posoriginDest.y, JUMPUSERDMOVE,
 		JUMPPLAYERWNUM, JUMPPLAYERHNUM);
 
-	/*if (m_fvelocity <= -VELOCITY)
+	static int t = 0;		// 물체의 시각 
+						    // x방향의 위치 결정 
+	// 4.0 < 이게 솟구치는 정도, 속력
+	// 0.4f < 떨어지는 정도. 중력
+	// t : 적분값 -> 정적분 -> 미분 -> 방정식 -> 다항식 -> 미지수(x,y,x) 
+	m_normalplayertop.posoriginDest.y = 0.5f * 0.4f * t * t + (-4.0f) * t + m_normalplayertop.posoriginDest.y;
+	m_normalplayerbottom.posoriginDest.y = 0.5f * 0.4f * t * t + (-4.0f) * t + m_normalplayerbottom.posoriginDest.y;
+
+	t++;										// 물체의 시각을 진행한다 
+	
+	if (m_bgravity == false)
 	{
-		m_fvelocity = VELOCITY;
+		t = 0;
 		m_bjump = false;
 	}
-
-	//m_normalplayertop.posoriginDest.y -= m_fvelocity * 0.9f;
-	//m_normalplayerbottom.posoriginDest.y -= m_fvelocity * 0.9f;
-
-	m_fvelocity -= GRAVITY * VELOCITYVALUE;*/
 
 	return;
 };

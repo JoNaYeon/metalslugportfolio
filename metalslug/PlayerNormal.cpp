@@ -407,39 +407,12 @@ void PlayerNormal::Run()
 		Jump();
 	}
 
-	/*Graviy(&m_normalplayertop);
-	Graviy(&m_normalplayerbottom);
-
-	// 배경 vector를 가져옴 
-	std::vector<Object*> vectemp = ObjManager::GetInstance()->GetVector(EOBJECT_BG);
-	
-	for (int i = 0; i < vectemp.size(); i++)
-	{
-		// 배경 vector 를 넣어줄 변수
-		Background* bgtemp = (Background*)vectemp[i];
-		// player의 RECT를 넣어줌
-		RECT playerpostemp = { m_normalplayertop.posoriginDest.x, m_normalplayertop.posoriginDest.y, 
-			m_normalplayertop.posoriginDest.x + (m_normalplayertop.recDest.right * PLAYERSIZE), 
-			m_normalplayertop.posoriginDest.y + (m_normalplayertop.recDest.bottom * PLAYERSIZE) };
-		
-		// plater과 background Tile에 충돌이 일어나도록 해줌
-		bool btemp = IntersectRectCheck(&playerpostemp, &bgtemp->BackgroundTile(BACKGROUNDMOVE));
-
-		// 만약 충돌이 일어날 경우
-		if (btemp == true)
-		{
-			// player를 위로 올려주기
-			m_normalplayertop.posoriginDest.y -= m_fvelocity * 0.5f;
-			m_normalplayerbottom.posoriginDest.y -= m_fvelocity * 0.5f;
-		}
-	}*/
-
-	Graviy(&m_normalplayertop);
-	Graviy(&m_normalplayerbottom);
+	Gravity(&m_normalplayertop);
+	Gravity(&m_normalplayerbottom);		// 껍데기 함수, 해결방안 고안 해야함 < 한슬이가 해야함
 
 	// 배경 위에 설 수 있게 해주는 함수
 	ObjStand(&m_normalplayertop);
-	ObjStand(&m_normalplayerbottom);
+	ObjStand(&m_normalplayerbottom);	// 하나의 함수로 해결할 수 있도록 하는 것 ☆
 
 	return;
 };
@@ -494,10 +467,8 @@ void PlayerNormal::Render(HDC& _hdc, HWND& _hWnd)
 	// 히트박스 임시 
 	Rectangle(_hdc, m_recHitBox.left, m_recHitBox.top, m_recHitBox.right, m_recHitBox.bottom);
 
-
 	// oldbit로 바꿔주기
 	SelectObject(hobjdc, holdBit);
-
 
 	DeleteDC(hobjdc);
 	DeleteObject(htopobjBit);

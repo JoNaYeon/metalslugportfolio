@@ -16,3 +16,9 @@ void Monster::MonsterMove(E_USERSTATE _e_state)
 
     return;
 }
+
+bool Monster::bObjDead()
+{
+
+    return false;
+}

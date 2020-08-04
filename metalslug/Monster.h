@@ -34,10 +34,12 @@ public:
 	virtual void Render(HDC& _hdc, HWND& _hWnd) PURE;
 	// 오브젝트 파괴 (오버라이딩)
 	virtual void Destroy() PURE;
+	bool bObjDead();
 
 	// 몹 공격 
 	virtual void Attack() PURE;
 
 	void MonsterMove(E_USERSTATE _e_state);
+	ST_OBJECT* GetMonsterObj() { return &m_Monster; };
 };
 

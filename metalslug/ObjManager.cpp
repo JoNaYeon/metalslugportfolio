@@ -11,10 +11,6 @@ ObjManager::ObjManager()
 	m_recClient = { 0, 0, 0, 0 };
 };
 
-
-
-
-
 ObjManager* ObjManager::GetInstance()
 {
 	// m_pinstance 에 아무것도 없을 경우, 생성
@@ -96,7 +92,6 @@ void ObjManager::Run()
 		m_DBobjiter = m_vecBackObj[i].begin();
 
  		for (int j = 0; j < m_vecBackObj[i].size(); j++)
-		//for(m_DBobjiter = m_vecBackObj[i].begin(); m_DBobjiter != m_vecBackObj[i].end(); m_DBobjiter++)
 		{
 			// 백터 내부에 있는 bobjdead 가 true일 경우 내부 정보 삭제 및 백터 삭제 
 			// iter 과 vector의 위치가 같을 때에만 삭제하도록 

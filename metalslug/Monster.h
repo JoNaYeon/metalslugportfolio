@@ -9,7 +9,8 @@ protected:
 	int m_ispeed;
 
 	// 몬스터 구조체
-	ST_OBJECT m_Monster;
+	DISPLAYINFO m_DisMon;
+	IMAGEINFO m_ImgMon;
 
 public:
 	// 생성자
@@ -40,6 +41,5 @@ public:
 	virtual void Attack() PURE;
 
 	void MonsterMove(E_USERSTATE _e_state);
-	ST_OBJECT* GetMonsterObj() { return &m_Monster; };
 };
 

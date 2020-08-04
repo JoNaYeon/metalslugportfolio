@@ -8,18 +8,15 @@
 Bullet::Bullet(POINT _playerpos)
 {
 	// dest = 출력 , src = 원본
-	// 화면 상에서 어디에서부터 이미지를 출력할 것인지 지정 
-	m_bullet.posoriginDest = { _playerpos.x + (FIREPLAYERWANIMATION * 3), _playerpos.y + (FIREPLAYERHANIMATION)};
-	// 화면상에서의 이미지 높이/너비 지정
-	// left top right bottom
-	m_bullet.recDest = { 0, 0, BULLETSIZE, BULLETSIZE };
-	// 이미지 대상에서 어디 좌표에서부터 출력할 것인지 지정
-	m_bullet.poriginSrc = { 0, 0 };
-	// 출력할 이미지를 얼마의 크기로 출력할지 지정
-	m_bullet.recSrc = { 0, 0, BULLETSIZE, BULLETSIZE };
-	m_bullet.iobjmove = BULLETMOVE;
-	m_bullet.iWidthnum = BULLETWNUM;
-	m_bullet.iHightnum = BULLETHNUM;
+	m_DisBullet.ptSrcPos = { 0, 0 };
+	m_DisBullet.ptSrcSize = { BULLETSIZE, BULLETSIZE };
+	m_DisBullet.ptDestPos = { _playerpos.x + (FIREPLAYERWANIMATION * 3), _playerpos.y + (FIREPLAYERHANIMATION) };
+
+	m_iobjmove = BULLETMOVE;
+
+	m_ImgBullet.iWidthnum = BULLETWNUM;
+	m_ImgBullet.iHightnum = BULLETHNUM;
+	m_ImgBullet.ptDestSize = { BULLETSIZE, BULLETSIZE };
 
 	m_fdelay = 0.2;
 	
@@ -42,7 +39,7 @@ void Bullet::Run()
 		case E_GUNSTATE_NORMAL:
 		{
 			// 총알 발사시키기 
-			m_bullet.posoriginDest.x += m_bullet.iobjmove;
+			m_DisBullet.ptDestPos.x += m_iobjmove;
 
 			// 총알 죽을 때 삭제는 ObjManager 에서 해주고 있음. 
 		}
@@ -74,9 +71,10 @@ void Bullet::Render(HDC& _hdc, HWND& _hWnd)
 	// 시간을 받아옴
 	m_dcurTime = timeGetTime();
 
-
-	TransparentBlt(_hdc, m_bullet.posoriginDest.x, m_bullet.posoriginDest.y, m_bullet.recDest.right, m_bullet.recDest.bottom,
-		hMemdc, m_bullet.poriginSrc.x, m_bullet.poriginSrc.y, m_bullet.recSrc.right, m_bullet.recSrc.bottom, RGB(255, 255, 255));
+	TransparentBlt(_hdc, m_DisBullet.ptDestPos.x, m_DisBullet.ptDestPos.y,
+		m_DisBullet.ptSrcSize.x * PLAYERSIZE, m_DisBullet.ptSrcSize.y * PLAYERSIZE,
+		hMemdc, m_DisBullet.ptSrcPos.x, m_DisBullet.ptSrcPos.y,
+		m_DisBullet.ptSrcSize.x, m_DisBullet.ptSrcSize.y, RGB(255, 255, 255));
 
 
 	SelectObject(hMemdc, holdbit);
@@ -96,19 +94,19 @@ void Bullet::Destroy()
 
 
 // 총알 닿으면
-bool Bullet::Hit(ST_OBJECT& _obj)
-{
-	RECT recHit = { 0,0,0,0 };
-	// 부딪히는 obj의 RECT
-	RECT recHitobj = { _obj.posoriginDest.x, _obj.posoriginDest.y,
-		_obj.recDest.right, _obj.recDest.bottom };
-	// 부딪히는 bullet의 RECT
-	RECT recbullet = { m_bullet.posoriginDest.x, m_bullet.posoriginDest.y,
-		m_bullet.recDest.right, m_bullet.recDest.bottom };
-
-
-	return IntersectRect(&recHit, &recHitobj, &recbullet);
-};
+//bool Bullet::Hit(ST_OBJECT& _obj)
+//{
+//	RECT recHit = { 0,0,0,0 };
+//	// 부딪히는 obj의 RECT
+//	RECT recHitobj = { _obj.posoriginDest.x, _obj.posoriginDest.y,
+//		_obj.recDest.right, _obj.recDest.bottom };
+//	// 부딪히는 bullet의 RECT
+//	RECT recbullet = { m_bullet.posoriginDest.x, m_bullet.posoriginDest.y,
+//		m_bullet.recDest.right, m_bullet.recDest.bottom };
+//
+//
+//	return IntersectRect(&recHit, &recHitobj, &recbullet);
+//};
 
 void Bullet::ItemState()
 {
@@ -125,20 +123,20 @@ bool Bullet::bObjDead()
 		
 
 		// client 밖으로 나가면 
-		if (this->m_bullet.posoriginDest.x > ObjManager::GetInstance()->GetRect().right
+		if (m_DisBullet.ptDestPos.x > ObjManager::GetInstance()->GetRect().right
 			/*|| this->m_bullet.posoriginDest.x < ObjManager::GetInstance()->GetRect().left
 			|| this->m_bullet.posoriginDest.y > ObjManager::GetInstance()->GetRect().bottom
 			|| this->m_bullet.posoriginDest.y < ObjManager::GetInstance()->GetRect().bottom*/)
 		{
 			m_bdead = true;
 		}
-		// 어딘가에 부딫히면 (intercetcRect())
-		else if (Hit(*(monstertemp->GetMonsterObj())) == true)
-		{
-			monstertemp->bObjDead();
+		//// 어딘가에 부딫히면 (intercetcRect())
+		//else if (Hit(*(monstertemp->GetMonsterObj())) == true)
+		//{
+		//	monstertemp->bObjDead();
 
-			m_bdead = true;
-		}
+		//	m_bdead = true;
+		//}
 		else
 		{
 			m_bdead = false;

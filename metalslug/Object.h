@@ -1,9 +1,6 @@
 #pragma once
 
 #include "define.h"
-//#include "framework.h"
-
-
 
 class Object
 {
@@ -26,10 +23,12 @@ protected:
 	bool m_bjump;
 	// fire 유무
 	bool m_bfire;
-
 	bool m_bgravity;
 
 	RECT m_recHitBox;
+
+	// 전에 존재했던 st_object에 있던 변수, 오브젝트 이동관련이라 이동
+	int m_iobjmove;
 	
 public:
 	// 생성자
@@ -48,29 +47,20 @@ public:
 	virtual void Render(HDC& _hdc, HWND& _hWnd) PURE;
 	// 오브젝트 파괴
 	virtual void Destroy() PURE;
-	// struct 내보내기 
-	//virtual ST_OBJECT GetStruct() PURE;
 
 	// dbject를 움직여줄 애니메이션에 추가된 함수
-	void Aniimage(ST_OBJECT& _obj);
-	//void hitbox(RECT _rec1, RECT _rec2);
+	void Aniimage(DISPLAYINFO& _displayInfo, IMAGEINFO _imageInfo);
 
 	int Getobjstate() { return m_iobjstate; };
 	void Setobjstate(int _objstate) { m_iobjstate = _objstate; };
-	// iter 에 vector 넣기
-	bool GetIter(std::vector<Object*>& _obj);
-
+	
 	// object의 사망여부 함수
 	virtual bool bObjDead() PURE;
 
-	// struct 채우는 함수 
-	void SetObjStruct(ST_OBJECT& _obj, int _recSrcright, int _recSrcbottom, int _poriginSrcx, int _poriginSrcy,
-		int _recDestright, int _recDestbottom, int _posoriginDestx, int _posoriginDesty, 
-		int _iobjmove, int _iWidthnum, int _iHightnum);
-
-	void Gravity(ST_OBJECT* _obj);
+	void SetImgInfo(IMAGEINFO& _imgInfo, POINT _ptDestSize, int _iWidthNum, int _iHightNum);
+	//void Gravity(ST_OBJECT* _obj);
 	bool IntersectRectCheck(RECT* _rec1, RECT* _rec2);
 	// Object들이 배경에 설 수 있도록 해주는 함수 
-	void ObjStand(ST_OBJECT* _obj);
+	//void ObjStand(ST_OBJECT* _obj);
 };
 

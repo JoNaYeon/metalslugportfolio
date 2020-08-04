@@ -2,17 +2,17 @@
 
 #include "Object.h"
 #include "ObjManager.h"
-//#include "metalslug.h"
-#include "define.h"
 
-
- 
 // 생성자
 Background::Background()
 {
     // 각 배경 구조체 채워주기
-    SetObjStruct(m_BG, BGWANIMATION, BGHANIMATION, BGORIGINSRCX, BGORIGINSRCY, BGWANIMATION * BGSIZE, BGHANIMATION * BGSIZE, m_BG.posoriginDest.x, m_BG.posoriginDest.y,
-        BACKGROUNDMOVE, BGWNUM, BGHNUM);
+    m_DisBG.ptDestPos = { BGORIGINSRCX , BGORIGINSRCY };
+    m_DisBG.ptSrcPos = { BGORIGINSRCX , BGORIGINSRCY };
+    m_DisBG.ptSrcSize = { LONG(BGWANIMATION * BGSIZE), LONG(BGHANIMATION * BGSIZE) };
+
+    POINT ptImgSize = { BGWANIMATION , BGHANIMATION };
+    SetImgInfo(m_ImgBG, ptImgSize, BGWNUM, BGHNUM);
 
     //m_ibgTile1 = 0;
     //m_ibgTile2 = 0;
@@ -25,11 +25,11 @@ void Background::BackgroundMove(E_USERSTATE _e_state)
     {
         case E_USERSTATE_LWALK:
         {
-            m_BG.poriginSrc.x -= BACKGROUNDMOVE;
+            m_DisBG.ptSrcPos.x -= BACKGROUNDMOVE;
         }
         case E_USERSTATE_RWALK:
         {
-            m_BG.poriginSrc.x += BACKGROUNDMOVE;
+            m_DisBG.ptSrcPos.x += BACKGROUNDMOVE;
         }
     }
 
@@ -59,25 +59,19 @@ void Background::Render(HDC& _hdc, HWND& _hWnd)
     // 이전 도화지 저장해줄 변수
     HBITMAP hOldBit_img = NULL;
 
-
-
     // 이미지 저장할 HDC 생성 
     himgdc = CreateCompatibleDC(_hdc);
 
-
-
-
     // 비트맵을 hBIt에 뿌려주기
-    //himgBit1 = (HBITMAP)LoadBitmap(hInst, MAKEINTRESOURCE(BACKGROUND02));
     himgBit1 = (HBITMAP)LoadImage(NULL,"..\\source\\background\\background2.bmp",IMAGE_BITMAP,0,0,LR_LOADFROMFILE);
     // himgdc 에 hBit을 저장하고 hOldBit에 himgdc가 가지고 있던 도화지를 바꿔서 저장해둠
     // 이미지를 가지고 있을 도구 + 도화지
     hOldBit_img = (HBITMAP)SelectObject(himgdc, himgBit1);
     // 첫번째 이미지 출력
-    TransparentBlt(_hdc, m_BG.posoriginDest.x, m_BG.posoriginDest.y,
-        m_BG.recDest.right, m_BG.recDest.bottom,
-        himgdc, m_BG.poriginSrc.x, m_BG.poriginSrc.y,
-        m_BG.recSrc.right, m_BG.recSrc.bottom, RGB(255, 255, 255));
+    TransparentBlt(_hdc, m_DisBG.ptDestPos.x, m_DisBG.ptDestPos.y,
+        m_DisBG.ptSrcSize.x, m_DisBG.ptSrcSize.y,
+        himgdc, m_DisBG.ptSrcPos.x, m_DisBG.ptSrcPos.y,
+        m_DisBG.ptSrcSize.x, m_DisBG.ptSrcSize.y, RGB(255, 255, 255));
 
 
     // 배경 타일 깔아주는 함수
@@ -87,9 +81,6 @@ void Background::Render(HDC& _hdc, HWND& _hWnd)
     m_recClient = ObjManager::GetInstance()->GetRect();
     m_recClient.top = m_recClient.bottom - 300;
     Rectangle(_hdc, m_recClient.left, m_recClient.top, m_recClient.right, m_recClient.bottom);
-
-
-
 
     // 다시 hOldBit 으로 갈아주기
     SelectObject(himgdc, hOldBit_img);

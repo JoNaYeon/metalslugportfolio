@@ -10,14 +10,17 @@ MonsterZombieMan::MonsterZombieMan()
 {
 	m_iobjstate = E_USERSTATE_IDLE;
 	m_fdelay = 0.5;
+	m_iobjmove = MONSTERMOVE;
+
 	// 몬스터 구조체 정의
-	m_Monster.recSrc = { 0, 0, MONSTERWANIMATION, MONSTERHANIMATION };
-	m_Monster.poriginSrc = { 0,0 };
-	m_Monster.recDest = { 0, 0, MONSTERWANIMATION, MONSTERHANIMATION };
-	m_Monster.posoriginDest = { 1000, 400 };
-	m_Monster.iobjmove = MONSTERMOVE;
-	m_Monster.iWidthnum = MONSTERWNUM;
-	m_Monster.iHightnum = MONSTERHNUM;
+	m_DisMon.ptSrcPos = { 0,0 };
+	m_DisMon.ptDestPos = { 1000, 400 };
+	m_DisMon.ptSrcSize = { MONSTERWANIMATION, MONSTERHANIMATION };
+	
+
+	m_ImgMon.iWidthnum = MONSTERWNUM;
+	m_ImgMon.iHightnum = MONSTERHNUM;
+	m_ImgMon.ptDestSize = { MONSTERWANIMATION, MONSTERHANIMATION };
 
 	m_fdelay = 0.5;
 };
@@ -36,14 +39,14 @@ void MonsterZombieMan::Run()
 	{
 		// object 상태 움직임 변경 
 		//Animation(_hdc, m_Monster, m_iobjstate);
-		Aniimage(m_Monster);
+		Aniimage(m_DisMon, m_ImgMon);
 
 		// 이전 시간을 현재 시간으로 대체
 		m_dPrevTime = m_dcurTime;
 	}
 
 	// 배경 위에 설 수 있게 해주는 함수
-	ObjStand(&m_Monster);
+	//ObjStand(&m_Monster);
 
 	return;
 };
@@ -72,11 +75,11 @@ void MonsterZombieMan::Render(HDC& _hdc, HWND& _hWnd)
 	holdBit = (HBITMAP)SelectObject(hobjdc, hMonsterobjBit);
 
 	// 몬스터 이미지 출력
-	TransparentBlt(_hdc, m_Monster.posoriginDest.x, m_Monster.posoriginDest.y,
-		m_Monster.recDest.right * PLAYERSIZE, m_Monster.recDest.bottom * PLAYERSIZE,
-		// 이미지 크기 키우려고 *4 해둠.
-		hobjdc, m_Monster.poriginSrc.x, m_Monster.poriginSrc.y,
-		m_Monster.recSrc.right, m_Monster.recSrc.bottom, RGB(255, 255, 255));
+	TransparentBlt(_hdc, m_DisMon.ptDestPos.x, m_DisMon.ptDestPos.y,
+		m_DisMon.ptSrcSize.x * PLAYERSIZE, m_DisMon.ptSrcSize.y * PLAYERSIZE,
+		hobjdc, m_DisMon.ptSrcPos.x, m_DisMon.ptSrcPos.y,
+		m_DisMon.ptSrcSize.x, m_DisMon.ptSrcSize.y, RGB(255, 255, 255));
+
 
 	// 시간을 받아옴
 	m_dcurTime = timeGetTime();

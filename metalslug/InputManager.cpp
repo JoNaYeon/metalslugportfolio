@@ -5,9 +5,6 @@
 // ÃÊ±âÈ­
 InputManager* InputManager::m_pinstance = NULL;
 
-
-
-
 InputManager::InputManager()
 {
 	m_bkeyboard = true;

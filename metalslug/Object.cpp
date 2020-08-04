@@ -16,19 +16,13 @@ Object::Object()
 	m_bgravity = true;
 
 	m_bdead = false;
+	m_bfire = false;
 };
 
 void Object::Gravity(ST_OBJECT* _obj)
 {
 	if (m_bgravity == true)
 	{
-		//_obj->posoriginDest.y += 1.0f;
-		// 모든 object에 대해 중력을 적용한다.
-		//_obj->posoriginDest.y += (m_fvelocity * VELOCITYVALUE * 0.1);
-
-		//_obj->posoriginDest.y = 0.5f * 0.4f * m_initialt * m_initialt + m_fvelocity * m_initialt + 0;   // y방향의 위치 결정
-		//m_initialt++;
-		// 물체의 시각을 진행한다
 	}   
 
 	return;
@@ -52,6 +46,7 @@ void Object::Aniimage(ST_OBJECT& _obj)
 		_obj.poriginSrc.x = 0;
 		_obj.poriginSrc.y += _obj.recSrc.bottom;
 
+		//if (_obj.poriginSrc.y >= _obj.recSrc.bottom * (_obj.iHightnum - 1))
 		if (_obj.poriginSrc.y >= _obj.recSrc.bottom * (_obj.iHightnum - 1))
 		{
 			_obj.poriginSrc.y = 0;
@@ -61,8 +56,6 @@ void Object::Aniimage(ST_OBJECT& _obj)
 
 bool Object::IntersectRectCheck(RECT* _rec1, RECT* _rec2)
 {
-	//bool bInter = IntersectRect(recInter, _rec1, _rec2);
-
 	if ((_rec1->right >= _rec2->left) && (_rec1->left <= _rec2->right))
 	{
 		if ((_rec1->bottom >= _rec2->top) && (_rec1->top <= _rec2->bottom))

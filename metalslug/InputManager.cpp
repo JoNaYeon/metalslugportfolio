@@ -119,7 +119,7 @@ bool InputManager::Keyboard(E_KEY _E_KEY)
 		case E_KEYFIRE:
 		{
 			// 0x41 = A
-			if (GetAsyncKeyState(0x41) & 0x8000 || GetAsyncKeyState(0x41) & 0x0001)
+			if (GetAsyncKeyState(0x41) & 0x8000)
 			{
 				return true;
 			}

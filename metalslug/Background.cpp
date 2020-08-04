@@ -114,10 +114,6 @@ void Background::Destroy()
 
 RECT* Background::BackgroundTile(int _itilemove)
 {
-    /*RECT recTile = ObjManager::GetInstance()->GetRect();
-    recTile.top = recTile.bottom - 300;*/
-
-    //Rectangle(_hdc, recTile.left, recTile.top, recTile.right, recTile.bottom);
 
     return &m_recClient;
 }

@@ -75,6 +75,7 @@ void Player::AttackBomb()
 // 점프 (오버라이딩)
 void Player::Jump()
 {
+	/*
 	// jump bottom
 	m_iobjstate = E_USERSTATE_JUMP;
 	m_strBitmapBottom = "..\\source\\user\\userjunp.bmp";
@@ -90,6 +91,7 @@ void Player::Jump()
 	SetObjStruct(m_normalplayertop, JUMPPLAYERWANIMATION, JUMPPLAYERHANIMATION, m_normalplayertop.poriginSrc.x, m_normalplayertop.poriginSrc.y,
 		JUMPPLAYERWANIMATION, JUMPPLAYERHANIMATION, m_normalplayertop.posoriginDest.x, m_normalplayertop.posoriginDest.y, JUMPUSERDMOVE,
 		JUMPPLAYERWNUM, JUMPPLAYERHNUM);
+	*/
 
 	static int t = 0;		// 물체의 시각 
 						    // x방향의 위치 결정 

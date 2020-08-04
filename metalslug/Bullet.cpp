@@ -2,6 +2,7 @@
 #include "InputManager.h"
 #include "ObjManager.h"
 #include "define.h"
+#include "Monster.h"
 
 
 Bullet::Bullet(POINT _playerpos)
@@ -40,13 +41,8 @@ void Bullet::Run()
 	{
 		case E_GUNSTATE_NORMAL:
 		{
-			// 총 발사 버튼 (A) 눌렀을 때의 함수 ;
-			// 이미지 움직이는 함수 
-			//Aniimage(_obj);
-
 			// 총알 발사시키기 
 			m_bullet.posoriginDest.x += m_bullet.iobjmove;
-
 
 			// 총알 죽을 때 삭제는 ObjManager 에서 해주고 있음. 
 		}
@@ -67,29 +63,16 @@ void Bullet::Render(HDC& _hdc, HWND& _hWnd)
 
 	// client 갱신 
 	RECT recClient = ObjManager::GetInstance()->GetRect();
-	//GetClientRect(_hWnd, &recClient);
 
 	hMemdc = CreateCompatibleDC(_hdc);
-	//hbit = CreateCompatibleBitmap(_hdc, m_bullet.recSrc.right, m_bullet.recSrc.bottom);
 
 	// 이미지 HBITMAP 에 로드하여 넣음 
-	//hbit = LoadBitmap(hInst, MAKEINTRESOURCE(BULLET1));
 	hbit = (HBITMAP)LoadImage(NULL, "..\\source\\weapon\\bullet1.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 	holdbit = (HBITMAP)SelectObject(hMemdc, hbit);
 
 
 	// 시간을 받아옴
 	m_dcurTime = timeGetTime();
-
-	// 만약 이전 시간에서 현재 시간이 0.1float 지났을 때 
-	/*if (m_dcurTime - m_dPrevTime >= 0.1f * m_fdelay)
-	{
-		// object 상태 움직임 변경 
-		Animation(_hdc, m_bullet, m_iobjstate);
-
-		// 이전 시간을 현재 시간으로 대체
-		m_dPrevTime = m_dcurTime;
-	}*/
 
 
 	TransparentBlt(_hdc, m_bullet.posoriginDest.x, m_bullet.posoriginDest.y, m_bullet.recDest.right, m_bullet.recDest.bottom,
@@ -113,9 +96,18 @@ void Bullet::Destroy()
 
 
 // 총알 닿으면
-bool Bullet::Hit()
+bool Bullet::Hit(ST_OBJECT& _obj)
 {
-	return false;
+	RECT recHit = { 0,0,0,0 };
+	// 부딪히는 obj의 RECT
+	RECT recHitobj = { _obj.posoriginDest.x, _obj.posoriginDest.y,
+		_obj.recDest.right, _obj.recDest.bottom };
+	// 부딪히는 bullet의 RECT
+	RECT recbullet = { m_bullet.posoriginDest.x, m_bullet.posoriginDest.y,
+		m_bullet.recDest.right, m_bullet.recDest.bottom };
+
+
+	return IntersectRect(&recHit, &recHitobj, &recbullet);
 };
 
 void Bullet::ItemState()
@@ -125,22 +117,33 @@ void Bullet::ItemState()
 
 bool Bullet::bObjDead()
 {
-	// client 밖으로 나가면 
-	if (this->m_bullet.posoriginDest.x > ObjManager::GetInstance()->GetRect().right
-		/*|| this->m_bullet.posoriginDest.x < ObjManager::GetInstance()->GetRect().left
-		|| this->m_bullet.posoriginDest.y > ObjManager::GetInstance()->GetRect().bottom
-		|| this->m_bullet.posoriginDest.y < ObjManager::GetInstance()->GetRect().bottom*/)
+	std::vector<Object*> vectemp = ObjManager::GetInstance()->GetVector(EOBJECT_MONSTER);
+
+	for (int i = 0; i < vectemp.size(); i++)
 	{
-		m_bdead = true;
+		Monster* monstertemp = (Monster*)vectemp[i];
+		
+
+		// client 밖으로 나가면 
+		if (this->m_bullet.posoriginDest.x > ObjManager::GetInstance()->GetRect().right
+			/*|| this->m_bullet.posoriginDest.x < ObjManager::GetInstance()->GetRect().left
+			|| this->m_bullet.posoriginDest.y > ObjManager::GetInstance()->GetRect().bottom
+			|| this->m_bullet.posoriginDest.y < ObjManager::GetInstance()->GetRect().bottom*/)
+		{
+			m_bdead = true;
+		}
+		// 어딘가에 부딫히면 (intercetcRect())
+		else if (Hit(*(monstertemp->GetMonsterObj())) == true)
+		{
+			monstertemp->bObjDead();
+
+			m_bdead = true;
+		}
+		else
+		{
+			m_bdead = false;
+		}
 	}
-	// 어딘가에 부딫히면 (intercetcRect())
-	else if (Hit() == true)
-	{
-		m_bdead = true;
-	}
-	else
-	{
-		m_bdead = false;
-	}
+
 	return m_bdead;
 }

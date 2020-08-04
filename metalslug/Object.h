@@ -22,7 +22,11 @@ protected:
 	// 중력을 컨트롤 할 변수들
 	float m_fvelocity;
 	float m_fgravity;
+	// jump 유무
 	bool m_bjump;
+	// fire 유무
+	bool m_bfire;
+
 	bool m_bgravity;
 
 	RECT m_recHitBox;

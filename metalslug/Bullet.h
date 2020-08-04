@@ -25,7 +25,7 @@ public:
 	void Destroy();
 
 	// 총알 닿으면
-	bool Hit();
+	bool Hit(ST_OBJECT& _obj);
 	void ItemState();
 	// recclient 밖으로 나가면 
 	//void ObjectOut();

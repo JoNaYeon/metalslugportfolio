@@ -9,14 +9,14 @@ Bullet::Bullet(POINT _playerpos)
 {
 	// dest = 출력 , src = 원본
 	m_DisBullet.ptSrcPos = { 0, 0 };
-	m_DisBullet.ptSrcSize = { BULLETSIZE, BULLETSIZE };
+	m_DisBullet.ptDestSize = { BULLETSIZE, BULLETSIZE };
 	m_DisBullet.ptDestPos = { _playerpos.x + (FIREPLAYERWANIMATION * 3), _playerpos.y + (FIREPLAYERHANIMATION) };
 
 	m_iobjmove = BULLETMOVE;
 
 	m_ImgBullet.iWidthnum = BULLETWNUM;
 	m_ImgBullet.iHightnum = BULLETHNUM;
-	m_ImgBullet.ptDestSize = { BULLETSIZE, BULLETSIZE };
+	m_ImgBullet.ptSrcSize = { BULLETSIZE, BULLETSIZE };
 
 	m_fdelay = 0.2;
 	
@@ -72,9 +72,9 @@ void Bullet::Render(HDC& _hdc, HWND& _hWnd)
 	m_dcurTime = timeGetTime();
 
 	TransparentBlt(_hdc, m_DisBullet.ptDestPos.x, m_DisBullet.ptDestPos.y,
-		m_DisBullet.ptSrcSize.x * PLAYERSIZE, m_DisBullet.ptSrcSize.y * PLAYERSIZE,
+		m_DisBullet.ptDestSize.x, m_DisBullet.ptDestSize.y,
 		hMemdc, m_DisBullet.ptSrcPos.x, m_DisBullet.ptSrcPos.y,
-		m_DisBullet.ptSrcSize.x, m_DisBullet.ptSrcSize.y, RGB(255, 255, 255));
+		m_DisBullet.ptDestSize.x, m_DisBullet.ptDestSize.y, RGB(255, 255, 255));
 
 
 	SelectObject(hMemdc, holdbit);
@@ -123,10 +123,7 @@ bool Bullet::bObjDead()
 		
 
 		// client 밖으로 나가면 
-		if (m_DisBullet.ptDestPos.x > ObjManager::GetInstance()->GetRect().right
-			/*|| this->m_bullet.posoriginDest.x < ObjManager::GetInstance()->GetRect().left
-			|| this->m_bullet.posoriginDest.y > ObjManager::GetInstance()->GetRect().bottom
-			|| this->m_bullet.posoriginDest.y < ObjManager::GetInstance()->GetRect().bottom*/)
+		if (m_DisBullet.ptDestPos.x > ObjManager::GetInstance()->GetRect().right)
 		{
 			m_bdead = true;
 		}

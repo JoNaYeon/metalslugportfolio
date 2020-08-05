@@ -15,12 +15,12 @@ MonsterZombieMan::MonsterZombieMan()
 	// 몬스터 구조체 정의
 	m_DisMon.ptSrcPos = { 0,0 };
 	m_DisMon.ptDestPos = { 1000, 400 };
-	m_DisMon.ptSrcSize = { MONSTERWANIMATION, MONSTERHANIMATION };
+	m_DisMon.ptDestSize = { MONSTERWANIMATION, MONSTERHANIMATION };
 	
 
 	m_ImgMon.iWidthnum = MONSTERWNUM;
 	m_ImgMon.iHightnum = MONSTERHNUM;
-	m_ImgMon.ptDestSize = { MONSTERWANIMATION, MONSTERHANIMATION };
+	m_ImgMon.ptSrcSize = { MONSTERWANIMATION, MONSTERHANIMATION };
 
 	m_fdelay = 0.5;
 };
@@ -76,9 +76,9 @@ void MonsterZombieMan::Render(HDC& _hdc, HWND& _hWnd)
 
 	// 몬스터 이미지 출력
 	TransparentBlt(_hdc, m_DisMon.ptDestPos.x, m_DisMon.ptDestPos.y,
-		m_DisMon.ptSrcSize.x * PLAYERSIZE, m_DisMon.ptSrcSize.y * PLAYERSIZE,
+		m_DisMon.ptDestSize.x * PLAYERSIZE, m_DisMon.ptDestSize.y * PLAYERSIZE,
 		hobjdc, m_DisMon.ptSrcPos.x, m_DisMon.ptSrcPos.y,
-		m_DisMon.ptSrcSize.x, m_DisMon.ptSrcSize.y, RGB(255, 255, 255));
+		m_DisMon.ptDestSize.x, m_DisMon.ptDestSize.y, RGB(255, 255, 255));
 
 
 	// 시간을 받아옴

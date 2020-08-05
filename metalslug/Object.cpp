@@ -37,16 +37,16 @@ void Object::Aniimage(DISPLAYINFO& _displayInfo, IMAGEINFO _imageInfo)
 		_displayInfo.ptSrcPos = { 0,0 };
 	}
 
-	if (_displayInfo.ptSrcPos.x < _displayInfo.ptSrcSize.x * (_imageInfo.iWidthnum - 1))
+	if (_displayInfo.ptSrcPos.x < _displayInfo.ptDestSize.x * (_imageInfo.iWidthnum - 1))
 	{
-		_displayInfo.ptSrcPos.x += _displayInfo.ptSrcSize.x;
+		_displayInfo.ptSrcPos.x += _displayInfo.ptDestSize.x;
 	}
 	else
 	{
 		_displayInfo.ptSrcPos.x = 0;
-		_displayInfo.ptSrcPos.y += _displayInfo.ptSrcSize.y;
+		_displayInfo.ptSrcPos.y += _displayInfo.ptDestSize.y;
 
-		if (_displayInfo.ptSrcPos.y >= _displayInfo.ptSrcSize.y * (_imageInfo.iHightnum - 1))
+		if (_displayInfo.ptSrcPos.y >= _displayInfo.ptDestSize.y * (_imageInfo.iHightnum - 1))
 		{
 			_displayInfo.ptSrcPos.y = 0;
 		}
@@ -99,9 +99,9 @@ bool Object::IntersectRectCheck(RECT* _rec1, RECT* _rec2)
 //	return;
 //}
 
-void Object::SetImgInfo(IMAGEINFO& _imgInfo, POINT _ptDestSize, int _iWidthNum, int _iHightNum)
+void Object::SetImgInfo(IMAGEINFO& _imgInfo, POINT _ptSrcSize, int _iWidthNum, int _iHightNum)
 {
 	_imgInfo.iHightnum = _iHightNum;
 	_imgInfo.iWidthnum = _iWidthNum;
-	_imgInfo.ptDestSize = _ptDestSize;
+	_imgInfo.ptSrcSize = _ptSrcSize;
 }

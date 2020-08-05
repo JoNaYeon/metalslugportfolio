@@ -7,9 +7,9 @@
 Background::Background()
 {
     // 각 배경 구조체 채워주기
-    m_DisBG.ptDestPos = { BGORIGINSRCX , BGORIGINSRCY };
+    m_DisBG.ptDestPos = { 0 , 0 };
     m_DisBG.ptSrcPos = { BGORIGINSRCX , BGORIGINSRCY };
-    m_DisBG.ptSrcSize = { LONG(BGWANIMATION * BGSIZE), LONG(BGHANIMATION * BGSIZE) };
+    m_DisBG.ptDestSize = { BGWANIMATION * BGSIZE , BGHANIMATION * BGSIZE };
 
     POINT ptImgSize = { BGWANIMATION , BGHANIMATION };
     SetImgInfo(m_ImgBG, ptImgSize, BGWNUM, BGHNUM);
@@ -67,11 +67,13 @@ void Background::Render(HDC& _hdc, HWND& _hWnd)
     // himgdc 에 hBit을 저장하고 hOldBit에 himgdc가 가지고 있던 도화지를 바꿔서 저장해둠
     // 이미지를 가지고 있을 도구 + 도화지
     hOldBit_img = (HBITMAP)SelectObject(himgdc, himgBit1);
-    // 첫번째 이미지 출력
+    // 이미지 출력
     TransparentBlt(_hdc, m_DisBG.ptDestPos.x, m_DisBG.ptDestPos.y,
-        m_DisBG.ptSrcSize.x, m_DisBG.ptSrcSize.y,
+        m_DisBG.ptDestSize.x, m_DisBG.ptDestSize.y,
         himgdc, m_DisBG.ptSrcPos.x, m_DisBG.ptSrcPos.y,
-        m_DisBG.ptSrcSize.x, m_DisBG.ptSrcSize.y, RGB(255, 255, 255));
+        m_ImgBG.ptSrcSize.x, m_ImgBG.ptSrcSize.y, RGB(255, 255, 255));
+
+    //TransparentBlt(_hdc, 0, 0, 1000, 1000, himgdc, 0, 0, 1000, 1000, RGB(255, 255, 255));
 
 
     // 배경 타일 깔아주는 함수
@@ -80,7 +82,7 @@ void Background::Render(HDC& _hdc, HWND& _hWnd)
     // 바닥을 보여주는 임시 수식
     m_recClient = ObjManager::GetInstance()->GetRect();
     m_recClient.top = m_recClient.bottom - 300;
-    Rectangle(_hdc, m_recClient.left, m_recClient.top, m_recClient.right, m_recClient.bottom);
+    //Rectangle(_hdc, m_recClient.left, m_recClient.top, m_recClient.right, m_recClient.bottom);
 
     // 다시 hOldBit 으로 갈아주기
     SelectObject(himgdc, hOldBit_img);

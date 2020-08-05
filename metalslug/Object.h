@@ -57,7 +57,7 @@ public:
 	// object의 사망여부 함수
 	virtual bool bObjDead() PURE;
 
-	void SetImgInfo(IMAGEINFO& _imgInfo, POINT _ptDestSize, int _iWidthNum, int _iHightNum);
+	void SetImgInfo(IMAGEINFO& _imgInfo, POINT _ptSrcSize, int _iWidthNum, int _iHightNum);
 	//void Gravity(ST_OBJECT* _obj);
 	bool IntersectRectCheck(RECT* _rec1, RECT* _rec2);
 	// Object들이 배경에 설 수 있도록 해주는 함수 

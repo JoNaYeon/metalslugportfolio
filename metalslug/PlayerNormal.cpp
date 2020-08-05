@@ -20,20 +20,20 @@ PlayerNormal::PlayerNormal()
 	// 상체 구조체 정의
 	m_DisTop.ptDestPos = { 0, 500 };
 	m_DisTop.ptSrcPos = { 0, 0 };
-	m_DisTop.ptSrcSize = { IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION };
+	m_DisTop.ptDestSize = { IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION };
 	
 	m_ImgTop.iWidthnum = IDLEPLAYERWNUM;
 	m_ImgTop.iHightnum = IDLEPLAYERHNUM;
-	m_ImgTop.ptDestSize = { IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION };
+	m_ImgTop.ptSrcSize = { IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION };
 
 	// 하체 구조체 정의
 	m_DisBot.ptDestPos = { 0, 500 };
 	m_DisBot.ptSrcPos = { 0, 0 };
-	m_DisBot.ptSrcSize = { IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION };
+	m_DisBot.ptDestSize = { IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION };
 
 	m_ImgBot.iWidthnum = IDLEPLAYERWNUM;
 	m_ImgBot.iHightnum = IDLEPLAYERHNUM;
-	m_ImgBot.ptDestSize = { IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION };
+	m_ImgBot.ptSrcSize = { IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION };
 
 	return;
 }
@@ -53,6 +53,7 @@ void PlayerNormal::AnimationStateCheck()
 
 		m_iobjmove = JUMPUSERDMOVE;
 		ptImgSize = { JUMPPLAYERWANIMATION , JUMPPLAYERHANIMATION };
+		m_DisBot.ptDestSize = ptImgSize;
 		SetImgInfo(m_ImgBot, ptImgSize, JUMPPLAYERWNUM, JUMPPLAYERHNUM);
 
 		m_bjump = true;
@@ -66,6 +67,7 @@ void PlayerNormal::AnimationStateCheck()
 
 		m_iobjmove = IDLEUSERDMOVE;
 		ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
+		m_DisBot.ptDestSize = ptImgSize;
 		SetImgInfo(m_ImgBot, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
 	}
 	// 오른쪽
@@ -77,6 +79,7 @@ void PlayerNormal::AnimationStateCheck()
 
 		m_iobjmove = IDLEUSERDMOVE;
 		ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
+		m_DisBot.ptDestSize = ptImgSize;
 		SetImgInfo(m_ImgBot, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
 	}
 	// 아무것도 아닐 때 
@@ -90,6 +93,7 @@ void PlayerNormal::AnimationStateCheck()
 
 			m_iobjmove = IDLEUSERDMOVE;
 			ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
+			m_DisBot.ptDestSize = ptImgSize;
 			SetImgInfo(m_ImgBot, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
 		}
 		else
@@ -99,6 +103,7 @@ void PlayerNormal::AnimationStateCheck()
 
 			m_iobjmove = IDLEUSERDMOVE;
 			ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
+			m_DisBot.ptDestSize = ptImgSize;
 			SetImgInfo(m_ImgBot, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
 		}
 	}
@@ -117,6 +122,7 @@ void PlayerNormal::AnimationStateCheck()
 			// struct에 자료 삽입해주는 함수
 			m_iobjmove = FIREUSERDMOVE;
 			ptImgSize = { FIREPLAYERWANIMATION , FIREPLAYERHANIMATION };
+			m_DisTop.ptDestSize = ptImgSize;
 			SetImgInfo(m_ImgTop, ptImgSize, FIREPLAYERWNUM, FIREPLAYERHNUM);
 		}
 		// 왼쪽 방향으로 발사 
@@ -127,6 +133,7 @@ void PlayerNormal::AnimationStateCheck()
 			
 			m_iobjmove = FIREUSERDMOVE;
 			ptImgSize = { FIREPLAYERWANIMATION , FIREPLAYERHANIMATION };
+			m_DisTop.ptDestSize = ptImgSize;
 			SetImgInfo(m_ImgTop, ptImgSize, FIREPLAYERWNUM, FIREPLAYERHNUM);
 		}
 
@@ -140,6 +147,7 @@ void PlayerNormal::AnimationStateCheck()
 
 		m_iobjmove = JUMPUSERDMOVE;
 		ptImgSize = { JUMPPLAYERWANIMATION , JUMPPLAYERHANIMATION };
+		m_DisTop.ptDestSize = ptImgSize;
 		SetImgInfo(m_ImgTop, ptImgSize, JUMPPLAYERWNUM, JUMPPLAYERHNUM);
 	}
 	// 왼쪽
@@ -151,6 +159,7 @@ void PlayerNormal::AnimationStateCheck()
 
 		m_iobjmove = IDLEUSERDMOVE;
 		ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
+		m_DisTop.ptDestSize = ptImgSize;
 		SetImgInfo(m_ImgTop, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
 	}
 	// 오른쪽
@@ -162,6 +171,7 @@ void PlayerNormal::AnimationStateCheck()
 
 		m_iobjmove = IDLEUSERDMOVE;
 		ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
+		m_DisTop.ptDestSize = ptImgSize;
 		SetImgInfo(m_ImgTop, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
 	}
 	// 아무것도 아닐 때 
@@ -175,6 +185,7 @@ void PlayerNormal::AnimationStateCheck()
 
 			m_iobjmove = IDLEUSERDMOVE;
 			ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
+			m_DisTop.ptDestSize = ptImgSize;
 			SetImgInfo(m_ImgTop, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
 		}
 		else
@@ -184,6 +195,7 @@ void PlayerNormal::AnimationStateCheck()
 
 			m_iobjmove = IDLEUSERDMOVE;
 			ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
+			m_DisTop.ptDestSize = ptImgSize;
 			SetImgInfo(m_ImgTop, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
 		}
 	}
@@ -205,7 +217,7 @@ bool PlayerNormal::PlayerPosCheck()
 	bool btemp = false;
 
 	// 좌우 확인 
-	if (m_DisTop.ptDestPos.x <= (recClient.right / 2) - (m_ImgTop.ptDestSize.x * PLAYERSIZE))
+	if (m_DisTop.ptDestPos.x <= (recClient.right / 2) - (m_ImgTop.ptSrcSize.x * PLAYERSIZE))
 	{
 		btemp = false;
 	}
@@ -292,7 +304,7 @@ void PlayerNormal::AnimationStateMove()
 		// 점프
 		{
 			// 이미지 한바퀴 돌면 false로 만들어주기 
-			if (m_DisTop.ptSrcPos.y >= m_DisTop.ptSrcSize.y)
+			if (m_DisTop.ptSrcPos.y >= m_DisTop.ptDestSize.y)
 			{
 				m_bjump = false;
 			}
@@ -302,7 +314,7 @@ void PlayerNormal::AnimationStateMove()
 		// 총알 발사
 		{
 			// 이미지 한바퀴 돌면 false로 만들어주기 
-			if (m_DisTop.ptSrcPos.y >= m_DisTop.ptSrcSize.y)
+			if (m_DisTop.ptSrcPos.y >= m_DisTop.ptDestSize.y)
 			{
 				Object* objbullet = new Bullet(m_DisTop.ptDestPos);
 				ObjManager::GetInstance()->SetVector(objbullet, EOBJECT_BULLET);
@@ -394,8 +406,8 @@ void PlayerNormal::Run()
 
 	// hitbox 정의시켜주기 
 	m_recHitBox = { m_DisTop.ptDestPos.x, m_DisTop.ptDestPos.y,
-		m_DisTop.ptDestPos.x + m_DisTop.ptSrcSize.x * PLAYERSIZE,
-		m_DisTop.ptDestPos.y + m_DisTop.ptSrcSize.y * PLAYERSIZE };
+		m_DisTop.ptDestPos.x + m_DisTop.ptDestSize.x * PLAYERSIZE,
+		m_DisTop.ptDestPos.y + m_DisTop.ptDestSize.y * PLAYERSIZE };
 
 	// 화이 함수
 	//Gravity(&m_normalplayertop);
@@ -436,9 +448,9 @@ void PlayerNormal::Render(HDC& _hdc, HWND& _hWnd)
 
 	// 하체 이미지 출력
 	TransparentBlt(_hdc, m_DisBot.ptDestPos.x, m_DisBot.ptDestPos.y,
-		m_DisBot.ptSrcSize.x * PLAYERSIZE, m_DisBot.ptSrcSize.y * PLAYERSIZE,
+		m_DisBot.ptDestSize.x * PLAYERSIZE, m_DisBot.ptDestSize.y * PLAYERSIZE,
 		hobjdc, m_DisBot.ptSrcPos.x, m_DisBot.ptSrcPos.y,
-		m_DisBot.ptSrcSize.x, m_DisBot.ptSrcSize.y, RGB(255, 255, 255));
+		m_DisBot.ptDestSize.x, m_DisBot.ptDestSize.y, RGB(255, 255, 255));
 
 	// 비트맵을 hBIt에 뿌려주기
 	// hinst를 null로 하지 말자 
@@ -448,19 +460,19 @@ void PlayerNormal::Render(HDC& _hdc, HWND& _hWnd)
 
 	// 상체 이미지 출력
 	TransparentBlt(_hdc, m_DisTop.ptDestPos.x, m_DisTop.ptDestPos.y,
-		m_DisTop.ptSrcSize.x * PLAYERSIZE, m_DisTop.ptSrcSize.y * PLAYERSIZE,
+		m_DisTop.ptDestSize.x * PLAYERSIZE, m_DisTop.ptDestSize.y * PLAYERSIZE,
 		hobjdc, m_DisTop.ptSrcPos.x, m_DisTop.ptSrcPos.y,
-		m_DisTop.ptSrcSize.x, m_DisTop.ptSrcSize.y, RGB(255, 255, 255));
+		m_ImgTop.ptSrcSize.x, m_ImgTop.ptSrcSize.y, RGB(255, 255, 255));
 	
 	// 플레이어 하체 출력
-	/*Rectangle(_hdc, m_normalplayerbottom.posoriginDest.x, m_normalplayerbottom.posoriginDest.y,
-		m_normalplayerbottom.posoriginDest.x + (m_normalplayerbottom.recDest.right * PLAYERSIZE),
-		m_normalplayerbottom.posoriginDest.y + (m_normalplayerbottom.recDest.bottom * PLAYERSIZE));*/
+	/*Rectangle(_hdc, m_DisBot.ptDestPos.x, m_DisBot.ptDestPos.y,
+		(m_DisBot.ptDestSize.x * PLAYERSIZE) + m_DisBot.ptDestPos.x, 
+		(m_DisBot.ptDestSize.y * PLAYERSIZE) + m_DisBot.ptDestPos.y);*/
 
 	// 플레이어 상체 출력
-	/*Rectangle(_hdc, m_normalplayertop.posoriginDest.x, m_normalplayertop.posoriginDest.y,
-		m_normalplayertop.posoriginDest.x + (m_normalplayertop.recDest.right * PLAYERSIZE),
-		m_normalplayertop.posoriginDest.y + (m_normalplayertop.recDest.bottom * PLAYERSIZE));*/
+	/*Rectangle(_hdc, m_DisTop.ptDestPos.x, m_DisTop.ptDestPos.y,
+		(m_DisTop.ptDestSize.x * PLAYERSIZE) + m_DisTop.ptDestPos.x, 
+		(m_DisTop.ptDestSize.y * PLAYERSIZE) + m_DisTop.ptDestPos.y);*/
 
 	// 히트박스 디스플레이
 	//Rectangle(_hdc, m_recHitBox.left, m_recHitBox.top, m_recHitBox.right, m_recHitBox.bottom);

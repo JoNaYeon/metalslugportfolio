@@ -16,13 +16,13 @@
 
 #define VELOCITY 18.f
 
-#define BGSIZE 4.5
-#define BGEND 5450
+#define BGSIZE 4
+#define BGEND 5482
 // 배경 움직이는 거리
 #define BACKGROUNDMOVE 10
 // 출력될 배경 이미지의 시작부분
 #define BGORIGINSRCX 0
-#define BGORIGINSRCY 186 
+#define BGORIGINSRCY 186
 // 배경 이미지의 가로 길이
 #define BGWANIMATION 753
 // 배경 이미지의 세로 길이
@@ -84,7 +84,7 @@
 
 // 총알 object 구조체에 들어갈 define
 // 총알이 움직이는 길이
-#define BULLETMOVE 30 * 2
+#define BULLETMOVE 30 
 // 총알이 움직이는 가로세로 사이즈
 #define BULLETSIZE 30
 #define BULLETWNUM 4
@@ -159,7 +159,7 @@ typedef struct stImageInfo
 	// bmp과 관련된 정보.
 	// 이미지 자체의 정보 
 	// 이미지의 원본 크기
-	POINT ptDestSize;
+	POINT ptSrcSize; 
 	int iWidthnum; // 이미지 스프라이트 가로칸 수
 	int iHightnum; // 이미지 스프라이트 세로칸 수
 } IMAGEINFO;
@@ -170,11 +170,11 @@ typedef struct stDisplayInfo
 	// 그리는 특성과 관련된 변수들
 	// 이미지의 시작 위치
 	POINT ptSrcPos;
-	// 이미지의 위치
+	// 이미지가 출력 될 위치
 	POINT ptDestPos;
 
 	// 이미지의 출력 사이즈
-	POINT ptSrcSize;
+	POINT ptDestSize;
 } DISPLAYINFO;
 
 

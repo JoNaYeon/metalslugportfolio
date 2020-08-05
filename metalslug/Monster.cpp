@@ -22,3 +22,16 @@ bool Monster::bObjDead()
 
     return false;
 }
+
+
+void Monster::Hit()
+{
+    if (m_bCollisionCheck == true)
+    {
+        m_ihp -= 50;
+    }
+
+    // 피격 모션 넣기 
+
+    return;
+}

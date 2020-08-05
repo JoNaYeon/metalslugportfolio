@@ -21,6 +21,10 @@ Bullet::Bullet(POINT _playerpos)
 	m_fdelay = 0.2;
 	
 	m_iobjstate = E_GUNSTATE_NORMAL;
+
+	// HitBox 갱신
+	m_recHitBox = { m_DisBullet.ptDestPos.x, m_DisBullet.ptDestPos.y,
+		m_DisBullet.ptDestPos.x + m_DisBullet.ptDestSize.x, m_DisBullet.ptDestPos.y + m_DisBullet.ptDestSize.y };
 };
  
 
@@ -45,6 +49,10 @@ void Bullet::Run()
 		}
 	break;
 	}
+
+	// HitBox 갱신
+	m_recHitBox = { m_DisBullet.ptDestPos.x, m_DisBullet.ptDestPos.y,
+		m_DisBullet.ptDestPos.x + m_DisBullet.ptDestSize.x, m_DisBullet.ptDestPos.y + m_DisBullet.ptDestSize.y };
 
 	return;
 };
@@ -76,6 +84,9 @@ void Bullet::Render(HDC& _hdc, HWND& _hWnd)
 		hMemdc, m_DisBullet.ptSrcPos.x, m_DisBullet.ptSrcPos.y,
 		m_DisBullet.ptDestSize.x, m_DisBullet.ptDestSize.y, RGB(255, 255, 255));
 
+	// hitbox 보여주기
+	//Rectangle(_hdc, m_recHitBox.left, m_recHitBox.top, m_recHitBox.right, m_recHitBox.bottom);
+
 
 	SelectObject(hMemdc, holdbit);
 
@@ -94,7 +105,7 @@ void Bullet::Destroy()
 
 
 // 총알 닿으면
-//bool Bullet::Hit(ST_OBJECT& _obj)
+//bool Bullet::Hit()
 //{
 //	RECT recHit = { 0,0,0,0 };
 //	// 부딪히는 obj의 RECT

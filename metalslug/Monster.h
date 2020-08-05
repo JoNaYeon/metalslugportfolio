@@ -41,5 +41,9 @@ public:
 	virtual void Attack() PURE;
 
 	void MonsterMove(E_USERSTATE _e_state);
+
+	void Hit();
+
+	int GetHP() { return m_ihp; };
 };
 

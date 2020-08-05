@@ -405,9 +405,9 @@ void PlayerNormal::Run()
 	AnimationStateMove();
 
 	// hitbox 정의시켜주기 
-	m_recHitBox = { m_DisTop.ptDestPos.x, m_DisTop.ptDestPos.y,
+		/*m_recHitBox = { m_DisTop.ptDestPos.x, m_DisTop.ptDestPos.y,
 		m_DisTop.ptDestPos.x + m_DisTop.ptDestSize.x * PLAYERSIZE,
-		m_DisTop.ptDestPos.y + m_DisTop.ptDestSize.y * PLAYERSIZE };
+		m_DisTop.ptDestPos.y + m_DisTop.ptDestSize.y * PLAYERSIZE };*/
 
 	// 화이 함수
 	//Gravity(&m_normalplayertop);
@@ -463,6 +463,7 @@ void PlayerNormal::Render(HDC& _hdc, HWND& _hWnd)
 		m_DisTop.ptDestSize.x * PLAYERSIZE, m_DisTop.ptDestSize.y * PLAYERSIZE,
 		hobjdc, m_DisTop.ptSrcPos.x, m_DisTop.ptSrcPos.y,
 		m_ImgTop.ptSrcSize.x, m_ImgTop.ptSrcSize.y, RGB(255, 255, 255));
+
 	
 	// 플레이어 하체 출력
 	/*Rectangle(_hdc, m_DisBot.ptDestPos.x, m_DisBot.ptDestPos.y,

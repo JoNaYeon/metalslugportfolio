@@ -8,6 +8,10 @@
 // 생성자
 MonsterZombieMan::MonsterZombieMan()
 {
+	m_ihp = 100;
+	m_istrength = 0;
+	m_ispeed = 0;
+
 	m_iobjstate = E_USERSTATE_IDLE;
 	m_fdelay = 0.5;
 	m_iobjmove = MONSTERMOVE;
@@ -23,6 +27,9 @@ MonsterZombieMan::MonsterZombieMan()
 	m_ImgMon.ptSrcSize = { MONSTERWANIMATION, MONSTERHANIMATION };
 
 	m_fdelay = 0.5;
+
+	m_recHitBox = { m_DisMon.ptDestPos.x, m_DisMon.ptDestPos.y,
+		m_DisMon.ptDestPos.x + (m_DisMon.ptDestSize.x * PLAYERSIZE), m_DisMon.ptDestPos.y + (m_DisMon.ptDestSize.y * PLAYERSIZE) };
 };
 
 
@@ -47,6 +54,11 @@ void MonsterZombieMan::Run()
 
 	// 배경 위에 설 수 있게 해주는 함수
 	//ObjStand(&m_Monster);
+
+	// HitBox 갱신
+	m_recHitBox = { m_DisMon.ptDestPos.x, m_DisMon.ptDestPos.y,
+		m_DisMon.ptDestPos.x + (m_DisMon.ptDestSize.x * PLAYERSIZE), m_DisMon.ptDestPos.y + (m_DisMon.ptDestSize.y * PLAYERSIZE) };
+
 
 	return;
 };
@@ -80,6 +92,9 @@ void MonsterZombieMan::Render(HDC& _hdc, HWND& _hWnd)
 		hobjdc, m_DisMon.ptSrcPos.x, m_DisMon.ptSrcPos.y,
 		m_DisMon.ptDestSize.x, m_DisMon.ptDestSize.y, RGB(255, 255, 255));
 
+	// hitbox 보여주기
+	//Rectangle(_hdc, m_recHitBox.left, m_recHitBox.top, m_recHitBox.right, m_recHitBox.bottom);
+
 
 	// 시간을 받아옴
 	m_dcurTime = timeGetTime();
@@ -109,8 +124,10 @@ void MonsterZombieMan::Attack()
 
 bool MonsterZombieMan::bObjDead()
 {
-	std::vector<Object*> vectemp = ObjManager::GetInstance() -> GetVector(EOBJECT_MONSTER);
-	
+	if (m_ihp <= 0)
+	{
+		return true;
+	}
 
 	return false;
 }

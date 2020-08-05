@@ -11,7 +11,7 @@ private:
 	// DB 매니저 내부를 조종할 instance
 	static ObjManager* m_pinstance;
 	// 오브젝트를 종류별로 담을 백터
-	std::vector<Object*> m_vecBackObj[EOBJECT_OBJNUM];
+	std::vector<Object*> m_vecObj[EOBJECT_OBJNUM];
 
 	//  objcet의 vector를 담을 iter
 	std::vector<Object*>::iterator m_DBobjiter;
@@ -40,10 +40,12 @@ public:
 
 	// DB
 	void Run();
-
 	// Rend
 	void Rend(HWND& _hWnd);
 
 	std::vector<Object*> GetVector(E_OBJECT _e_obj);
+
+	// 각 Object 들의 HitBox들이 부딪힌 것을 체크해주는 함수
+	void CollisionCheck();
 };
 

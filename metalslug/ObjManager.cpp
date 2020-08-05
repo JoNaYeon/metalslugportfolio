@@ -1,5 +1,6 @@
 #include "Object.h"
 #include "ObjManager.h"
+#include "Monster.h"
 
 // 초기화
 ObjManager* ObjManager::m_pinstance = NULL;
@@ -50,10 +51,10 @@ void ObjManager::DeleteData()
 	{
 		for (int i = 0; i < EOBJECT_OBJNUM; i++)
 		{
-			for (int j = 0; j < m_vecBackObj[i].size(); j++)
+			for (int j = 0; j < m_vecObj[i].size(); j++)
 			{
-				delete (m_vecBackObj[i])[j];
-				(m_vecBackObj[i])[j] = NULL;
+				delete (m_vecObj[i])[j];
+				(m_vecObj[i])[j] = NULL;
 			}
 		}
 	}
@@ -64,7 +65,7 @@ void ObjManager::DeleteData()
 void ObjManager::SetVector(Object* _object, E_OBJECT _Eobjectkind)
 {
 	// vector ptr 을 넣어서 Rend() 할 수 있도록. 
-	m_vecBackObj[_Eobjectkind].push_back(_object);
+	m_vecObj[_Eobjectkind].push_back(_object);
 
 	return;
 }
@@ -89,34 +90,37 @@ void ObjManager::Run()
 {
 	for (int i = 0; i < EOBJECT_OBJNUM; i++)
 	{
-		m_DBobjiter = m_vecBackObj[i].begin();
+		m_DBobjiter = m_vecObj[i].begin();
 
- 		for (int j = 0; j < m_vecBackObj[i].size(); j++)
+ 		for (int j = 0; j < m_vecObj[i].size(); j++)
 		{
 			// 백터 내부에 있는 bobjdead 가 true일 경우 내부 정보 삭제 및 백터 삭제 
 			// iter 과 vector의 위치가 같을 때에만 삭제하도록 
-			if ((m_vecBackObj[i])[j]->bObjDead() == true && (m_vecBackObj[i])[j] == *m_DBobjiter)
+			if ((m_vecObj[i])[j]->bObjDead() == true && (m_vecObj[i])[j] == *m_DBobjiter)
 			{
-				delete (m_vecBackObj[i])[j];
-				((m_vecBackObj[i])[j]) = NULL;
+				delete (m_vecObj[i])[j];
+				((m_vecObj[i])[j]) = NULL;
 				
-				m_DBobjiter = (m_vecBackObj[i]).erase(m_DBobjiter);
+				m_DBobjiter = (m_vecObj[i]).erase(m_DBobjiter);
 				continue;
 			}
 			// 만약 NULL이 들어있고 제대로 erase 가 안 되어 있다면 
-			else if ((m_vecBackObj[i])[j] == NULL)
+			else if ((m_vecObj[i])[j] == NULL)
 			{
-				m_DBobjiter = (m_vecBackObj[i]).erase(m_DBobjiter);
+				m_DBobjiter = (m_vecObj[i]).erase(m_DBobjiter);
 			}
 			else
 			{
 				// 백터 내부에 접근하여 Object class 의 내부 함수 (Run) 출력
-				(m_vecBackObj[i])[j]->Run();
+				(m_vecObj[i])[j]->Run();
 			}
 
 			m_DBobjiter++;
 		}
 	}
+
+	CollisionCheck();
+
 	return;
 };
 
@@ -144,11 +148,11 @@ void ObjManager::Rend(HWND& _hWnd)
 		
 		for (int i = 0; i < EOBJECT_OBJNUM; i++)
 		{
-			for (int j = 0; j < m_vecBackObj[i].size(); j++)
+			for (int j = 0; j < m_vecObj[i].size(); j++)
 			{
 				// 백터 내부에 접근하여 Object class 의 내부 함수 (Render) 출력
 				// 동시에  bullet이 삭제되면 이 부분에서 문제가 남
-				(m_vecBackObj[i])[j]->Render(hMemdc, _hWnd);
+				(m_vecObj[i])[j]->Render(hMemdc, _hWnd);
 			}
 		}
 
@@ -175,27 +179,73 @@ std::vector<Object*> ObjManager::GetVector(E_OBJECT _e_obj)
 	{
 		case EOBJECT_BG:
 		{
-			return m_vecBackObj[EOBJECT_BG];
+			return m_vecObj[EOBJECT_BG];
 		}
 		case EOBJECT_TERRAIN:
 		{
-			return m_vecBackObj[EOBJECT_TERRAIN];
+			return m_vecObj[EOBJECT_TERRAIN];
 		}
 		case EOBJECT_BULLET:
 		{
-			return m_vecBackObj[EOBJECT_BULLET];
+			return m_vecObj[EOBJECT_BULLET];
 		}
 		case EOBJECT_MONSTER:
 		{
-			return m_vecBackObj[EOBJECT_MONSTER];
+			return m_vecObj[EOBJECT_MONSTER];
 		}
 		case EOBJECT_OBJ:
 		{
-			return m_vecBackObj[EOBJECT_OBJ];
+			return m_vecObj[EOBJECT_OBJ];
 		}
 		case EOBJECT_UI:
 		{
-			return m_vecBackObj[EOBJECT_UI];
+			return m_vecObj[EOBJECT_UI];
 		}
 	}
+}
+
+
+void ObjManager::CollisionCheck()
+{
+	bool bCollisiontemp = false;
+	RECT rectemp = { 0,0,0,0 };
+
+	// Bullet 과 Monster 의 충돌시 
+	for (int i = 0; i < m_vecObj[EOBJECT_BULLET].size(); i++)
+	{
+		std::vector<Object*>::iterator iter = m_vecObj[EOBJECT_BULLET].begin();
+		RECT recHitBullet = m_vecObj[EOBJECT_BULLET][i]->GetHitBox();
+
+		for (int j = 0; j < m_vecObj[EOBJECT_MONSTER].size(); j++)
+		{
+			RECT recHitMonster = m_vecObj[EOBJECT_MONSTER][j]->GetHitBox();
+
+			if (IntersectRect(&rectemp, &recHitBullet, &recHitMonster) == true)
+			{
+				// bullet 파괴
+				delete m_vecObj[EOBJECT_BULLET][i];
+				m_vecObj[EOBJECT_BULLET][i] = NULL;
+
+				iter = (m_vecObj[EOBJECT_BULLET]).erase(iter);
+				bCollisiontemp = true;
+
+				// 몬스터가 피격되었음을 알려주고 
+				m_vecObj[EOBJECT_MONSTER][j]->SetCollisionCheck(bCollisiontemp);
+				// 몬스터 피격으로 HP 깎기 
+				((Monster*)(m_vecObj[EOBJECT_MONSTER][j]))->Hit();
+			}
+		}
+
+		// iter 가 vector 의 끝부분과 같다면 더이상 iter를 더해주지 않도록.
+		if (iter == (m_vecObj[EOBJECT_BULLET]).end())
+		{
+			break;
+		}
+		else
+		{
+			iter++;
+		}
+	}
+
+	return; 
 }

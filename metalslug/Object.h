@@ -24,6 +24,8 @@ protected:
 	// fire 유무
 	bool m_bfire;
 	bool m_bgravity;
+	// collision Check 
+	bool m_bCollisionCheck;
 
 	RECT m_recHitBox;
 
@@ -62,5 +64,9 @@ public:
 	bool IntersectRectCheck(RECT* _rec1, RECT* _rec2);
 	// Object들이 배경에 설 수 있도록 해주는 함수 
 	//void ObjStand(ST_OBJECT* _obj);
+
+	RECT GetHitBox() { return m_recHitBox; };
+	void SetCollisionCheck(bool _CollisionCheck) { m_bCollisionCheck = _CollisionCheck; };
+
 };
 

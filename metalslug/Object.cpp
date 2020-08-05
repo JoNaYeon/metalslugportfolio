@@ -17,6 +17,8 @@ Object::Object()
 
 	m_bdead = false;
 	m_bfire = false;
+
+	m_bCollisionCheck = false;
 };
 
 //void Object::Gravity(ST_OBJECT* _obj)

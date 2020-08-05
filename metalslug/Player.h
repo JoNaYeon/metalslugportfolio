@@ -19,12 +19,13 @@ protected:
 	LPCSTR m_strBitmapBottom;
 
 	Object* m_classobjptr;
-	// 총알을 담을 vector
-	//std::vector<Object*> m_vbullet;
 
 	// 플레이어 구조체
-	ST_OBJECT m_normalplayertop;
-	ST_OBJECT m_normalplayerbottom;
+	DISPLAYINFO	m_DisTop;
+	DISPLAYINFO	m_DisBot;
+
+	IMAGEINFO	m_ImgTop;
+	IMAGEINFO	m_ImgBot;
 
 public:
 	// 생성자

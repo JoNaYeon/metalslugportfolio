@@ -1,7 +1,3 @@
 ﻿  Object.cpp
-D:\Private\Git\metalslug\metalslugportfolio\metalslug\Object.cpp(30,92): warning C4244: '=': 'float'에서 'LONG'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\Private\Git\metalslug\metalslugportfolio\metalslug\Object.cpp(116,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-  Player.cpp
-  코드를 생성하고 있습니다...
-D:\Private\Git\metalslug\metalslugportfolio\metalslug\Object.cpp(78): warning C4715: 'Object::IntersectRectCheck': 모든 제어 경로에서 값을 반환하지는 않습니다.
-  metalslug.vcxproj -> D:\Private\Git\metalslug\metalslugportfolio\Debug\metalslug.exe
+D:\Github\metalslugportfolio\metalslug\Object.cpp(69): warning C4715: 'Object::IntersectRectCheck': 모든 제어 경로에서 값을 반환하지는 않습니다.
+  metalslug.vcxproj -> D:\Github\metalslugportfolio\Debug\metalslug.exe

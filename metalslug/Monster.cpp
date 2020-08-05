@@ -10,9 +10,15 @@ void Monster::MonsterMove(E_USERSTATE _e_state)
         }*/
         case E_USERSTATE_RWALK:
         {
-            m_Monster.posoriginDest.x -= MONSTERMOVE;
+            m_DisMon.ptDestPos.x -= MONSTERMOVE;
         }
     }
 
     return;
+}
+
+bool Monster::bObjDead()
+{
+
+    return false;
 }

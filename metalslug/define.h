@@ -14,14 +14,8 @@
 
 #define PURE = 0;
 
-#define GRAVITY 1
 #define VELOCITY 18.f
-#define VELOCITYVALUE 0.9f
 
-// 배경 object 구조체에 들어갈 define
-//#define BACKGROUNDMOVE 10
-//#define BGWSIZE 753
-//#define BGHSIZE 224
 #define BGSIZE 4.5
 #define BGEND 5450
 // 배경 움직이는 거리
@@ -159,45 +153,29 @@ enum E_OBJECTKIND
 
 };
 
-
-
-
-
 // 오브젝트 특징 담은 구조체 
-typedef struct st_object
+typedef struct stImageInfo
 {
-	// 이미지의 출력 사이즈
-	RECT recSrc;
+	// bmp과 관련된 정보.
+	// 이미지 자체의 정보 
+	// 이미지의 원본 크기
+	POINT ptDestSize;
+	int iWidthnum; // 이미지 스프라이트 가로칸 수
+	int iHightnum; // 이미지 스프라이트 세로칸 수
+} IMAGEINFO;
+
+typedef struct stDisplayInfo
+{
+	// 화면에 그릴때 필요한 정보
+	// 그리는 특성과 관련된 변수들
 	// 이미지의 시작 위치
-	POINT poriginSrc;
-	// 이미지의 크기
-	RECT recDest;
+	POINT ptSrcPos;
 	// 이미지의 위치
-	POINT posoriginDest;
-	int iobjmove;
-	int iWidthnum;
-	int iHightnum;
+	POINT ptDestPos;
 
-	st_object()
-	{
-		recSrc = { 0,0, 0, 0 };
-		poriginSrc = { 0,0 };
-		recDest = { 0,0,0,0 };
-		posoriginDest = { 0,0 };
-		iobjmove = 0;
-		iWidthnum = 0;
-		iHightnum = 0;
-	}
-	~st_object()
-	{
-
-	}
-} ST_OBJECT;
-
-
-
-
-
+	// 이미지의 출력 사이즈
+	POINT ptSrcSize;
+} DISPLAYINFO;
 
 
 // CreateCompatableBitmap() 의 내용을 바꾸어서 커스텀 한 함수

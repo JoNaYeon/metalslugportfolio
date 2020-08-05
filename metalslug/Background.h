@@ -11,7 +11,8 @@ private:
 	ObjectImage m_obimg2;
 
 	// 배경화면 구조체
-	ST_OBJECT m_BG;
+	DISPLAYINFO m_DisBG;
+	IMAGEINFO m_ImgBG;
 
 	// 객체의 위치 상태를 표시하는 E_OBJECTMOVEPOS enum을 담을 int 변수
 	int m_objPosState;
@@ -48,7 +49,7 @@ public:
 
 	// 배경 이동 함수 
 	void BackgroundMove(E_USERSTATE _e_state);
-	ST_OBJECT GetBG() { return m_BG; };
+	DISPLAYINFO GetBG() { return m_DisBG; };
 	
 };
 

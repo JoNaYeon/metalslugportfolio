@@ -10,14 +10,17 @@ MonsterZombieMan::MonsterZombieMan()
 {
 	m_iobjstate = E_USERSTATE_IDLE;
 	m_fdelay = 0.5;
+	m_iobjmove = MONSTERMOVE;
+
 	// 몬스터 구조체 정의
-	m_Monster.recSrc = { 0, 0, MONSTERWANIMATION, MONSTERHANIMATION };
-	m_Monster.poriginSrc = { 0,0 };
-	m_Monster.recDest = { 0, 0, MONSTERWANIMATION, MONSTERHANIMATION };
-	m_Monster.posoriginDest = { 1000, 400 };
-	m_Monster.iobjmove = MONSTERMOVE;
-	m_Monster.iWidthnum = MONSTERWNUM;
-	m_Monster.iHightnum = MONSTERHNUM;
+	m_DisMon.ptSrcPos = { 0,0 };
+	m_DisMon.ptDestPos = { 1000, 400 };
+	m_DisMon.ptSrcSize = { MONSTERWANIMATION, MONSTERHANIMATION };
+	
+
+	m_ImgMon.iWidthnum = MONSTERWNUM;
+	m_ImgMon.iHightnum = MONSTERHNUM;
+	m_ImgMon.ptDestSize = { MONSTERWANIMATION, MONSTERHANIMATION };
 
 	m_fdelay = 0.5;
 };
@@ -32,47 +35,18 @@ void MonsterZombieMan::Init()
 // 오브젝트 움직임 (오버라이딩)
 void MonsterZombieMan::Run()
 {
-	// 시간을 받아옴
-	//m_dcurTime = timeGetTime();
-
-
 	if (m_dcurTime - m_dPrevTime >= 0.1f * m_fdelay)
 	{
 		// object 상태 움직임 변경 
 		//Animation(_hdc, m_Monster, m_iobjstate);
-		Aniimage(m_Monster);
+		Aniimage(m_DisMon, m_ImgMon);
 
 		// 이전 시간을 현재 시간으로 대체
 		m_dPrevTime = m_dcurTime;
 	}
 
-	/*// 배경 vector를 가져옴 
-	std::vector<Object*> vectemp = ObjManager::GetInstance()->GetVector(EOBJECT_BG);
-
-	for (int i = 0; i < vectemp.size(); i++)
-	{
-		// 배경 vector 를 넣어줄 변수
-		Background* bgtemp = (Background*)vectemp[i];
-		// player의 RECT를 넣어줌
-		RECT Monsterpostemp = { m_Monster.posoriginDest.x, m_Monster.posoriginDest.y,
-			m_Monster.posoriginDest.x + (m_Monster.recDest.right) * PLAYERSIZE,
-			m_Monster.posoriginDest.y + (m_Monster.recDest.bottom) * PLAYERSIZE };
-
-		// plater과 background Tile에 충돌이 일어나도록 해줌
-		bool btemp = IntersectRectCheck(&Monsterpostemp, &bgtemp->BackgroundTile(BACKGROUNDMOVE));
-
-		// 만약 충돌이 일어날 경우
-		if (btemp == true)
-		{
-			m_Monster.posoriginDest.y -= m_fvelocity * 0.5f;
-		}
-	}
-
-	Graviy(&m_Monster);*/
-
 	// 배경 위에 설 수 있게 해주는 함수
-	ObjStand(&m_Monster);
-
+	//ObjStand(&m_Monster);
 
 	return;
 };
@@ -94,24 +68,18 @@ void MonsterZombieMan::Render(HDC& _hdc, HWND& _hWnd)
 	// 이미지 출력할 hdc 출력 
 	hobjdc = CreateCompatibleDC(_hdc);
 
-
-	// 상체 이미지를 저장할 HBITMAP
-	//hMonsterobjBit = CreateCompatibleBitmap(_hdc, m_Monster.recSrc.right, m_Monster.recSrc.bottom);
-
-
 	// 비트맵을 hBIt에 뿌려주기
 	// hinst를 null로 하지 말자 
-	//hMonsterobjBit = (HBITMAP)LoadBitmap(hInst, MAKEINTRESOURCE(ZOMBIEMAN));
 	hMonsterobjBit = (HBITMAP)LoadImage(NULL, "..\\source\\monster\\zombie1.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 	// oldbit 에 상체 이미지 저장 
 	holdBit = (HBITMAP)SelectObject(hobjdc, hMonsterobjBit);
 
 	// 몬스터 이미지 출력
-	TransparentBlt(_hdc, m_Monster.posoriginDest.x, m_Monster.posoriginDest.y,
-		m_Monster.recDest.right * 4, m_Monster.recDest.bottom * 4,
-		// 이미지 크기 키우려고 *4 해둠.
-		hobjdc, m_Monster.poriginSrc.x, m_Monster.poriginSrc.y,
-		m_Monster.recSrc.right, m_Monster.recSrc.bottom, RGB(255, 255, 255));
+	TransparentBlt(_hdc, m_DisMon.ptDestPos.x, m_DisMon.ptDestPos.y,
+		m_DisMon.ptSrcSize.x * PLAYERSIZE, m_DisMon.ptSrcSize.y * PLAYERSIZE,
+		hobjdc, m_DisMon.ptSrcPos.x, m_DisMon.ptSrcPos.y,
+		m_DisMon.ptSrcSize.x, m_DisMon.ptSrcSize.y, RGB(255, 255, 255));
+
 
 	// 시간을 받아옴
 	m_dcurTime = timeGetTime();
@@ -122,7 +90,7 @@ void MonsterZombieMan::Render(HDC& _hdc, HWND& _hWnd)
 
 	DeleteDC(hobjdc);
 	DeleteObject(hMonsterobjBit);
-
+	
 	return;
 };
 
@@ -141,5 +109,8 @@ void MonsterZombieMan::Attack()
 
 bool MonsterZombieMan::bObjDead()
 {
+	std::vector<Object*> vectemp = ObjManager::GetInstance() -> GetVector(EOBJECT_MONSTER);
+	
+
 	return false;
 }

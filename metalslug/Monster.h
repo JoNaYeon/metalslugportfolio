@@ -9,7 +9,8 @@ protected:
 	int m_ispeed;
 
 	// 몬스터 구조체
-	ST_OBJECT m_Monster;
+	DISPLAYINFO m_DisMon;
+	IMAGEINFO m_ImgMon;
 
 public:
 	// 생성자
@@ -34,6 +35,7 @@ public:
 	virtual void Render(HDC& _hdc, HWND& _hWnd) PURE;
 	// 오브젝트 파괴 (오버라이딩)
 	virtual void Destroy() PURE;
+	bool bObjDead();
 
 	// 몹 공격 
 	virtual void Attack() PURE;

@@ -5,7 +5,10 @@ class Bullet :
 {
 protected:
 	// 총알 구조체
-	ST_OBJECT m_bullet;
+	DISPLAYINFO m_DisBullet;
+	IMAGEINFO m_ImgBullet;
+
+
 public:
 	// 생성자
 	Bullet(POINT _playerpos);
@@ -25,11 +28,11 @@ public:
 	void Destroy();
 
 	// 총알 닿으면
-	bool Hit();
+	//bool Hit(ST_OBJECT& _obj);
 	void ItemState();
 	// recclient 밖으로 나가면 
 	//void ObjectOut();
-	ST_OBJECT GetStruct() { return m_bullet; };
+	//ST_OBJECT GetStruct() { return m_bullet; };
 	// 총알 사망 여부 반환
 	bool bObjDead();
 };

@@ -70,6 +70,15 @@ void Player::AttackBomb()
 void Player::Jump()
 {
 	static int t = 0;		// 물체의 시각 
+
+
+	if (m_bgravity == false)
+	{
+		t = 0;
+		m_bjump = false;
+	}
+
+
 	// x방향의 위치 결정 
 	// 4.0 < 이게 솟구치는 정도, 속력
 	// 0.4f < 떨어지는 정도. 중력
@@ -79,11 +88,6 @@ void Player::Jump()
 
 	t++; // 물체의 시각을 진행한다 
 	
-	if (m_bgravity == false)
-	{
-		t = 0;
-		m_bjump = false;
-	}
 
 	return;
 };

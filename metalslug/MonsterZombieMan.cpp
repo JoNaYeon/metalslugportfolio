@@ -59,6 +59,7 @@ void MonsterZombieMan::Run()
 	m_recHitBox = { m_DisMon.ptDestPos.x, m_DisMon.ptDestPos.y,
 		m_DisMon.ptDestPos.x + (m_DisMon.ptDestSize.x * PLAYERSIZE), m_DisMon.ptDestPos.y + (m_DisMon.ptDestSize.y * PLAYERSIZE) };
 
+	//Gravity(&m_DisMon);
 
 	return;
 };

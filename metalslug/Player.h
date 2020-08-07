@@ -57,5 +57,10 @@ public:
 
 	// 좀비가 되는 애니메이션 
 	void DeadZombie();
+
+	DISPLAYINFO* GetPlayerDisTop() { return &m_DisTop; };
+	DISPLAYINFO* GetPlayerDisBot() { return &m_DisBot; };
+	void SetPlayerDisTop(POINT _disTop) { m_DisTop.ptDestPos = _disTop; return; };
+	void SetPlayerDisBot(POINT _disBot) { m_DisBot.ptDestPos = _disBot; return; };
 };
 

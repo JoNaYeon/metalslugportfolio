@@ -1,6 +1,8 @@
 #include "Object.h"
 #include "ObjManager.h"
 #include "Monster.h"
+#include "Player.h"
+#include "Background.h"
 
 // 초기화
 ObjManager* ObjManager::m_pinstance = NULL;
@@ -235,7 +237,6 @@ void ObjManager::CollisionCheck()
 				((Monster*)(m_vecObj[EOBJECT_MONSTER][j]))->Hit();
 			}
 		}
-
 		// iter 가 vector 의 끝부분과 같다면 더이상 iter를 더해주지 않도록.
 		if (iter == (m_vecObj[EOBJECT_BULLET]).end())
 		{
@@ -244,6 +245,46 @@ void ObjManager::CollisionCheck()
 		else
 		{
 			iter++;
+		}
+	}
+
+
+	// Player 과 BackgroundTile 의 충돌시 
+	for (int i = 0; i < m_vecObj[EOBJECT_USER].size(); i++)
+	{
+		RECT recHitPlayer = m_vecObj[EOBJECT_USER][i]->GetHitBox();
+
+		for (int j = 0; j < m_vecObj[EOBJECT_BG].size(); j++)
+		{
+			RECT recHitBG = m_vecObj[EOBJECT_BG][j]->GetHitBox();
+
+			// background Tile 과 Player 의 HitBox 가 부딪혔을 때 조금씩 올라오도록.
+			if (IntersectRect(&rectemp, &recHitPlayer, &recHitBG) == true)
+			{
+				DISPLAYINFO* disinfotemp = ((Player*)(m_vecObj[EOBJECT_USER][i]))->GetPlayerDisTop();
+				disinfotemp->ptDestPos.y -= 0.4f;
+
+				disinfotemp = ((Player*)(m_vecObj[EOBJECT_USER][i]))->GetPlayerDisBot();
+				disinfotemp->ptDestPos.y -= 0.4f;
+
+				// 점프중일 경우 점프 중단
+				if ((m_vecObj[EOBJECT_USER][i])->GetJump() == true)
+				{
+					(m_vecObj[EOBJECT_USER][i])->SetboolGravity(false);
+					
+					// 점프를 마치면 처음 위치로 고정시켜줌 
+					POINT ptTemp = { (((Player*)(m_vecObj[EOBJECT_USER][i]))->GetPlayerDisTop()->ptDestPos.x) ,
+						(((Background*)(m_vecObj[EOBJECT_BG][i]))->GetHitBox().top) - 
+						((((Player*)(m_vecObj[EOBJECT_USER][i]))->GetPlayerDisTop()->ptDestSize.y) * PLAYERSIZE) };
+					((Player*)(m_vecObj[EOBJECT_USER][i]))->SetPlayerDisTop(ptTemp);
+					((Player*)(m_vecObj[EOBJECT_USER][i]))->SetPlayerDisBot(ptTemp);
+				}
+			}
+			// backgoround 와 부딪히지 않았을 경우 계속 gravity 받도록. 
+			else
+			{
+				(m_vecObj[EOBJECT_USER][i])->SetboolGravity(true);
+			}
 		}
 	}
 

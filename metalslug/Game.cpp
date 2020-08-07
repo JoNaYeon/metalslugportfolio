@@ -38,7 +38,7 @@ void Game::Create()
 	{
 		// 플레이어 생성해주기 
 		classuserptr = new PlayerNormal();
-		ObjManager::GetInstance()->SetVector(classuserptr, EOBJECT_OBJ);
+		ObjManager::GetInstance()->SetVector(classuserptr, EOBJECT_USER);
 	}
 
 	if (classmonsterptr == NULL)

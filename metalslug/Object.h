@@ -60,13 +60,16 @@ public:
 	virtual bool bObjDead() PURE;
 
 	void SetImgInfo(IMAGEINFO& _imgInfo, POINT _ptSrcSize, int _iWidthNum, int _iHightNum);
-	//void Gravity(ST_OBJECT* _obj);
+	void Gravity(DISPLAYINFO* _objdis);
 	bool IntersectRectCheck(RECT* _rec1, RECT* _rec2);
 	// Object들이 배경에 설 수 있도록 해주는 함수 
 	//void ObjStand(ST_OBJECT* _obj);
 
 	RECT GetHitBox() { return m_recHitBox; };
 	void SetCollisionCheck(bool _CollisionCheck) { m_bCollisionCheck = _CollisionCheck; };
+	void SetboolGravity(bool _bGravity) { m_bgravity = _bGravity; return; };
+	bool GetboolGravity() { return m_bgravity; };
 
+	bool GetJump() { return m_bjump; };
 };
 

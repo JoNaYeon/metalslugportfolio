@@ -98,6 +98,7 @@ enum E_OBJECT
 	EOBJECT_TERRAIN,
 	EOBJECT_BULLET,
 	EOBJECT_MONSTER,
+	EOBJECT_USER,
 	EOBJECT_OBJ,
 	EOBJECT_UI,
 	// 오브젝트의 갯수를 마지막에 넣어서 담아야 할 오브젝트의 갯수 자동 지정

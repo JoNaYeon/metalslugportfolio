@@ -14,6 +14,8 @@ Background::Background()
     POINT ptImgSize = { BGWANIMATION , BGHANIMATION };
     SetImgInfo(m_ImgBG, ptImgSize, BGWNUM, BGHNUM);
 
+    m_recHitBox = { 0,0,0,0 };
+
     //m_ibgTile1 = 0;
     //m_ibgTile2 = 0;
 };
@@ -45,6 +47,9 @@ void Background::Init()
 
 void Background::Run()
 {
+    // 배경화면에 타일을 깔아주는 함수 
+    BackgroundTile();
+
     return; 
 }
 
@@ -80,9 +85,8 @@ void Background::Render(HDC& _hdc, HWND& _hWnd)
     //BackgroundTile(_hdc, BACKGROUNDMOVE);
 
     // 바닥을 보여주는 임시 수식
-    m_recClient = ObjManager::GetInstance()->GetRect();
-    m_recClient.top = m_recClient.bottom - 300;
-    //Rectangle(_hdc, m_recClient.left, m_recClient.top, m_recClient.right, m_recClient.bottom);
+    Rectangle(_hdc, m_recHitBox.left, m_recHitBox.top, m_recHitBox.right, m_recHitBox.bottom);
+
 
     // 다시 hOldBit 으로 갈아주기
     SelectObject(himgdc, hOldBit_img);
@@ -105,10 +109,19 @@ void Background::Destroy()
 
 
 
-RECT* Background::BackgroundTile(int _itilemove)
+void Background::BackgroundTile()
 {
+    POINT ptTile = { 50,50 };
 
-    return &m_recClient;
+    /*for (int i = 0; i < 500; i++)
+    {
+        RECT recTile = { 0,0,0,0 };
+    }*/
+    
+    // 임시로 깔아둠
+    m_recHitBox = { 0, 600, 1000, 2000 };
+
+    return;
 }
 
 /*POINT Background::GetRatio(int iwidth, int iheight)

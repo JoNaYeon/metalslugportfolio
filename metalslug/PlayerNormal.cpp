@@ -18,7 +18,7 @@ PlayerNormal::PlayerNormal()
 	m_bleftright = true;
 
 	// 상체 구조체 정의
-	m_DisTop.ptDestPos = { 0, 500 };
+	m_DisTop.ptDestPos = { 0, 400 };
 	m_DisTop.ptSrcPos = { 0, 0 };
 	m_DisTop.ptDestSize = { IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION };
 	
@@ -27,13 +27,16 @@ PlayerNormal::PlayerNormal()
 	m_ImgTop.ptSrcSize = { IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION };
 
 	// 하체 구조체 정의
-	m_DisBot.ptDestPos = { 0, 500 };
+	m_DisBot.ptDestPos = { 0, 400 };
 	m_DisBot.ptSrcPos = { 0, 0 };
 	m_DisBot.ptDestSize = { IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION };
 
 	m_ImgBot.iWidthnum = IDLEPLAYERWNUM;
 	m_ImgBot.iHightnum = IDLEPLAYERHNUM;
 	m_ImgBot.ptSrcSize = { IDLEPLAYERWANIMATION, IDLEPLAYERHANIMATION };
+
+	m_recHitBox = { m_DisTop.ptDestPos.x, m_DisTop.ptDestPos.y,
+		m_DisTop.ptDestPos.x + (m_DisTop.ptDestSize.x * PLAYERSIZE), m_DisTop.ptDestPos.y + (m_DisTop.ptDestSize.y * PLAYERSIZE) };
 
 	return;
 }
@@ -404,10 +407,12 @@ void PlayerNormal::Run()
 
 	AnimationStateMove();
 
+
 	// hitbox 정의시켜주기 
-		/*m_recHitBox = { m_DisTop.ptDestPos.x, m_DisTop.ptDestPos.y,
-		m_DisTop.ptDestPos.x + m_DisTop.ptDestSize.x * PLAYERSIZE,
-		m_DisTop.ptDestPos.y + m_DisTop.ptDestSize.y * PLAYERSIZE };*/
+
+	m_recHitBox = { m_DisTop.ptDestPos.x, m_DisTop.ptDestPos.y,
+		m_DisTop.ptDestPos.x + (m_DisTop.ptDestSize.x * PLAYERSIZE), 
+		m_DisTop.ptDestPos.y + (m_DisTop.ptDestSize.y * PLAYERSIZE) };
 
 	// 화이 함수
 	//Gravity(&m_normalplayertop);
@@ -476,7 +481,7 @@ void PlayerNormal::Render(HDC& _hdc, HWND& _hWnd)
 		(m_DisTop.ptDestSize.y * PLAYERSIZE) + m_DisTop.ptDestPos.y);*/
 
 	// 히트박스 디스플레이
-	//Rectangle(_hdc, m_recHitBox.left, m_recHitBox.top, m_recHitBox.right, m_recHitBox.bottom);
+	Rectangle(_hdc, m_recHitBox.left, m_recHitBox.top, m_recHitBox.right, m_recHitBox.bottom);
 
 	// oldbit로 바꿔주기
 	SelectObject(hobjdc, holdBit);

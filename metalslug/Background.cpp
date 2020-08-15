@@ -119,57 +119,10 @@ void Background::BackgroundTile()
     }*/
     
     // 임시로 깔아둠
-    m_recHitBox = { 0, 600, 1000, 2000 };
+    m_recHitBox = { 0, 600, 2000, 2000 };
 
     return;
 }
-
-/*POINT Background::GetRatio(int iwidth, int iheight)
-{
-    // 화면 비율 구하는 함수
-    int imax = 0;
-    int imin = 0;
-    int igcd = 0;
-    int itemp = 0;
-
-    RECT rectemp = ObjManager::GetInstance()->GetRect();
-
-    POINT proit = { 0,0 };
-
-    // 큰 값을 imax에 넣어주기
-    if (iwidth >= iheight)
-    {
-        imax = iwidth;
-        imin = iheight;
-    }
-    else
-    {
-        imax = iheight;
-        imin = iwidth;
-    }
-
-    while (true)
-    {
-        itemp = imax % imin;
-
-        if (itemp == 0)
-        {
-            break;
-        }
-        else
-        {
-            imax = imin;
-            imin = itemp;
-        }
-    }
-
-    igcd = imin;
-
-    proit.x = rectemp.right / igcd;
-    proit.y = rectemp.bottom / igcd;
-
-    return proit;
-}*/
 
 bool Background::bObjDead()
 {

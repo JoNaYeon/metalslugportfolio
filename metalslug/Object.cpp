@@ -12,11 +12,11 @@ Object::Object()
 	m_dcurTime = timeGetTime();
 	m_fdelay = 1;
 
-	m_fvelocity = -VELOCITY;
+	//m_fvelocity = -VELOCITY;
 	m_bgravity = true;
 
 	m_bdead = false;
-	m_bfire = false;
+	//m_bfire = false;
 
 	m_bCollisionCheck = false;
 };
@@ -68,10 +68,39 @@ void Object::SetImgInfo(IMAGEINFO& _imgInfo, POINT _ptSrcSize, int _iWidthNum, i
 	_imgInfo.ptSrcSize = _ptSrcSize;
 }
 
-void Object::Gravity(DISPLAYINFO* _objdis)
+void Object::Gravity(DISPLAYINFO* _objdis, E_OBJECT _eobj)
 {
-	// 임시 중력 
-	_objdis->ptDestPos.y += 0.4f;
+	static int temp = 0;		// 물체의 시각 
+
+	// gravity 가 true 일 때 중력 적용
+	if (m_bgravity == true)
+	{
+		for (int i = 0; i < ObjManager::GetInstance()->GetVector(_eobj).size(); i++)
+		{
+			RECT rectemp = { 0,0,0,0 };
+			RECT recHitPlayer = ObjManager::GetInstance()->GetVector(_eobj)[i]->GetHitBox();
+
+			for (int j = 0; j < ObjManager::GetInstance()->GetVector(_eobj).size(); j++)
+			{
+				RECT recHitBG = ObjManager::GetInstance()->GetVector(EOBJECT_BG)[j]->GetHitBox();
+
+				// 배경과 user가 충돌이 일어나지 않을 때 중력 적용 
+				if (IntersectRect(&rectemp, &recHitPlayer, &recHitBG) == false && m_bjump == false)
+				{
+					// 임시 중력 
+					_objdis->ptDestPos.y += 0.5f * 0.4f * temp * temp;
+				}
+			}
+		}
+	}
+	else
+	{
+		temp = 0;
+	}
+	
+
+
+	temp++;
 
 	return;
 }

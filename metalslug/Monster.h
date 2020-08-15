@@ -12,6 +12,8 @@ protected:
 	DISPLAYINFO m_DisMon;
 	IMAGEINFO m_ImgMon;
 
+	bool m_bsee;
+
 public:
 	// »ý¼ºÀÚ
 	Monster()
@@ -41,9 +43,14 @@ public:
 	virtual void Attack() PURE;
 
 	void MonsterMove(E_USERSTATE _e_state);
+	void MovePattern();
 
 	void Hit();
 
 	int GetHP() { return m_ihp; };
+
+	DISPLAYINFO* GetMonsterDis() { return &m_DisMon; };
+	void SetMonsterDis(DISPLAYINFO _disobj) { m_DisMon = _disobj; return; }
+	bool GetSee() { return m_bsee; };
 };
 

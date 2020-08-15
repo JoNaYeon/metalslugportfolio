@@ -104,20 +104,6 @@ void Bullet::Destroy()
 };
 
 
-// ÃÑ¾Ë ´êÀ¸¸é
-//bool Bullet::Hit()
-//{
-//	RECT recHit = { 0,0,0,0 };
-//	// ºÎµúÈ÷´Â objÀÇ RECT
-//	RECT recHitobj = { _obj.posoriginDest.x, _obj.posoriginDest.y,
-//		_obj.recDest.right, _obj.recDest.bottom };
-//	// ºÎµúÈ÷´Â bulletÀÇ RECT
-//	RECT recbullet = { m_bullet.posoriginDest.x, m_bullet.posoriginDest.y,
-//		m_bullet.recDest.right, m_bullet.recDest.bottom };
-//
-//
-//	return IntersectRect(&recHit, &recHitobj, &recbullet);
-//};
 
 void Bullet::ItemState()
 {

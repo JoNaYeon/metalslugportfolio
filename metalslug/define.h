@@ -72,7 +72,7 @@
 
 // 몬스터 object 구조체에 들어갈 define
 // object가 움직이는 거리
-#define MONSTERMOVE BACKGROUNDMOVE * PLAYERSIZE
+#define MONSTERMOVE 10  //BACKGROUNDMOVE * PLAYERSIZE
 // object 이미지의 가로 길이
 #define MONSTERWANIMATION 36
 // object 이미지의 세로 길이
@@ -81,6 +81,9 @@
 #define MONSTERWNUM 10
 // object 이미지의 세로 칸 수
 #define MONSTERHNUM 2
+
+// 몬스터 피격시 뒤로 가기
+#define MONHITEDMOTION 8
 
 // 총알 object 구조체에 들어갈 define
 // 총알이 움직이는 길이
@@ -92,6 +95,7 @@
 
 extern HINSTANCE hInst;
 
+// 오브젝트 종류 enum
 enum E_OBJECT
 {
 	EOBJECT_BG = 0,
@@ -103,11 +107,6 @@ enum E_OBJECT
 	EOBJECT_UI,
 	// 오브젝트의 갯수를 마지막에 넣어서 담아야 할 오브젝트의 갯수 자동 지정
 	EOBJECT_OBJNUM,
-};
-
-enum E_BGSCENE
-{
-	E_BGSCENE_GAME = 0
 };
 
 // scene 의 상태 표시 
@@ -129,11 +128,13 @@ enum E_USERSTATE
 	E_USERSTATE_DROP,
 };
 
+// 총알의 상태 enum
 enum E_GUNSTATE
 {
 	E_GUNSTATE_NORMAL = 100
 };
 
+// 행동패턴 enum
 enum E_KEY
 {
 	E_KEYSPACE = 0,
@@ -144,6 +145,7 @@ enum E_KEY
 	E_KEYBOMB
 };
 
+// 객체 종류 enum
 enum E_OBJECTKIND
 {
 	E_OBJECTKIND_PLAYERTOP = 0,
@@ -152,6 +154,38 @@ enum E_OBJECTKIND
 	E_OBJECTKIND_BG1,
 	E_OBJECTKIND_BG2
 
+};
+
+// 총알별 데미지 enum
+enum E_DAMAGE
+{
+	E_DAMAGE_NORMAL = 10
+};
+
+// 스코어 아이템 enum
+enum E_ITEMSCORE
+{
+	E_ITEMSCORE_CURE = 2000,
+	E_ITEMSCORE_FISH = 2001,
+	E_ITEMSCORE_BREAD = 2002,
+	E_ITEMSCORE_MEAT = 2003,
+	E_ITEMSCORE_CAN = 2004,
+	E_ITEMSCORE_CHICKEN = 2005,
+	E_ITEMSCORE_FRUIT = 2006,
+	E_ITEMSCORE_CARRAT = 2007,
+	E_ITEMSCORE_BANANA = 2008,
+	E_ITEMSCORE_BONE = 2009
+};
+
+// 총알 아이템 enum
+enum E_ITEMWEAPON
+{
+	E_ITEMWEAPON_BOMB = 2100,
+	E_ITEMWEAPON_H = 2101,
+	E_ITEMWEAPON_R = 2102,
+	E_ITEMWEAPON_S = 2103,
+	E_ITEMWEAPON_F = 2104,
+	E_ITEMWEAPON_L = 2105
 };
 
 // 오브젝트 특징 담은 구조체 

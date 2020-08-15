@@ -1,9 +1,7 @@
 #include "PlayerNormal.h"
-#include "ObjManager.h"
 #include "InputManager.h"
 #include "define.h"
 #include "Mainfrm.h"
-#include "Bullet.h"
 #include "Background.h"
 #include "Monster.h"
 
@@ -53,6 +51,10 @@ void PlayerNormal::AnimationStateCheck()
 	{
 		m_iobjstate = E_USERSTATE_JUMP;
 		m_strBitmapBottom = "..\\source\\user\\userjunp.bmp";
+		// 중력 false
+		m_bleftright = false;
+		// 점프 true
+		m_bjump = true;
 
 		m_iobjmove = JUMPUSERDMOVE;
 		ptImgSize = { JUMPPLAYERWANIMATION , JUMPPLAYERHANIMATION };
@@ -66,7 +68,8 @@ void PlayerNormal::AnimationStateCheck()
 	{
 		m_iobjstate = E_USERSTATE_LWALK;
 		m_strBitmapBottom = "..\\source\\user\\UserRun_Bottom2.bmp";
-		m_bleftright = false;
+		// 중력 true
+		m_bleftright = true;
 
 		m_iobjmove = IDLEUSERDMOVE;
 		ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
@@ -78,6 +81,7 @@ void PlayerNormal::AnimationStateCheck()
 	{
 		m_iobjstate = E_USERSTATE_RWALK;
 		m_strBitmapBottom = "..\\source\\user\\UserRun_Bottom1.bmp";
+		// 중력 true
 		m_bleftright = true;
 
 		m_iobjmove = IDLEUSERDMOVE;
@@ -93,6 +97,8 @@ void PlayerNormal::AnimationStateCheck()
 		{
 			m_iobjstate = E_USERSTATE_IDLE;
 			m_strBitmapBottom = "..\\source\\user\\UserIdle_Bottom1.bmp";
+			// 중력 true
+			m_bleftright = true;
 
 			m_iobjmove = IDLEUSERDMOVE;
 			ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
@@ -103,6 +109,8 @@ void PlayerNormal::AnimationStateCheck()
 		{
 			m_iobjstate = E_USERSTATE_IDLE;
 			m_strBitmapBottom = "..\\source\\user\\UserIdle_Bottom2.bmp";
+			// 중력 true
+			m_bleftright = true;
 
 			m_iobjmove = IDLEUSERDMOVE;
 			ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
@@ -134,7 +142,7 @@ void PlayerNormal::AnimationStateCheck()
 			m_iobjstate = E_USERSTATE_FIRE;
 			m_strBitmapTop = "..\\source\\user\\usertopfire.bmp";
 			
-			m_iobjmove = FIREUSERDMOVE;
+			m_iobjmove = -FIREUSERDMOVE;
 			ptImgSize = { FIREPLAYERWANIMATION , FIREPLAYERHANIMATION };
 			m_DisTop.ptDestSize = ptImgSize;
 			SetImgInfo(m_ImgTop, ptImgSize, FIREPLAYERWNUM, FIREPLAYERHNUM);
@@ -147,29 +155,22 @@ void PlayerNormal::AnimationStateCheck()
 	{
 		m_iobjstate = E_USERSTATE_JUMP;
 		m_strBitmapTop = "..\\source\\user\\userjunptop.bmp";
+		// 중력 false
+		m_bleftright = false;
+		// 점프 true
+		m_bjump = true;
 
 		m_iobjmove = JUMPUSERDMOVE;
 		ptImgSize = { JUMPPLAYERWANIMATION , JUMPPLAYERHANIMATION };
 		m_DisTop.ptDestSize = ptImgSize;
 		SetImgInfo(m_ImgTop, ptImgSize, JUMPPLAYERWNUM, JUMPPLAYERHNUM);
 	}
-	// 왼쪽
+	// 왼쪽으로 걷기
 	else if (InputManager::GetInstance()->Keyboard(E_KEYLEFT) == true)
 	{
 		m_iobjstate = E_USERSTATE_LWALK;
 		m_strBitmapTop = "..\\source\\user\\UserIdle_Top2.bmp";
-		m_bleftright = false;
-
-		m_iobjmove = IDLEUSERDMOVE;
-		ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
-		m_DisTop.ptDestSize = ptImgSize;
-		SetImgInfo(m_ImgTop, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
-	}
-	// 오른쪽
-	else if (InputManager::GetInstance()->Keyboard(E_KEYRIGHT) == true)
-	{
-		m_iobjstate = E_USERSTATE_RWALK;
-		m_strBitmapTop = "..\\source\\user\\UserIdle_Top1.bmp";
+		// 중력 true
 		m_bleftright = true;
 
 		m_iobjmove = IDLEUSERDMOVE;
@@ -177,7 +178,20 @@ void PlayerNormal::AnimationStateCheck()
 		m_DisTop.ptDestSize = ptImgSize;
 		SetImgInfo(m_ImgTop, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
 	}
-	// 아무것도 아닐 때 
+	// 오른쪽으로 걷기
+	else if (InputManager::GetInstance()->Keyboard(E_KEYRIGHT) == true)
+	{
+		m_iobjstate = E_USERSTATE_RWALK;
+		m_strBitmapTop = "..\\source\\user\\UserIdle_Top1.bmp";
+		// 중력 true
+		m_bleftright = true;
+
+		m_iobjmove = IDLEUSERDMOVE;
+		ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
+		m_DisTop.ptDestSize = ptImgSize;
+		SetImgInfo(m_ImgTop, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
+	}
+	// IDLE
 	else
 	{
 		// bool 변수 혹은 enum 으로 좌우 위치 확인해주기
@@ -185,6 +199,8 @@ void PlayerNormal::AnimationStateCheck()
 		{
 			m_iobjstate = E_USERSTATE_IDLE;
 			m_strBitmapTop = "..\\source\\user\\UserIdle_Top1.bmp";
+			// 중력 true
+			m_bleftright = true;
 
 			m_iobjmove = IDLEUSERDMOVE;
 			ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
@@ -195,6 +211,8 @@ void PlayerNormal::AnimationStateCheck()
 		{
 			m_iobjstate = E_USERSTATE_IDLE;
 			m_strBitmapTop = "..\\source\\user\\UserIdle_Top2.bmp";
+			// 중력 true
+			m_bleftright = true;
 
 			m_iobjmove = IDLEUSERDMOVE;
 			ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
@@ -202,7 +220,6 @@ void PlayerNormal::AnimationStateCheck()
 			SetImgInfo(m_ImgTop, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
 		}
 	}
-
 
 	return;
 }
@@ -226,7 +243,7 @@ bool PlayerNormal::PlayerPosCheck()
 	}
 	else if (bgtemp->GetBG().ptSrcPos.x >= BGEND)
 	{
-		btemp = false;
+		btemp = true;
 	}
 	else 
 	{
@@ -244,7 +261,7 @@ bool PlayerNormal::PlayerPosCheck()
 // 애니메이션의 움직임을 실행해주는 함수
 void PlayerNormal::AnimationStateMove()
 {
-	/////////////////////////////////// top 
+	// 연속성이 있는 키 
 	switch (m_iobjstate)
 	{
 		// 멈춤 상태
@@ -255,15 +272,21 @@ void PlayerNormal::AnimationStateMove()
 		case E_USERSTATE_RWALK:
 		// 오른쪽 버튼 눌렀을 때 반응
 		{
+			m_DisTop.ptDestPos.x += IDLEUSERDMOVE;
+			m_DisBot.ptDestPos.x += IDLEUSERDMOVE;
+
+			// 화면 밖으로 나갈 수 없도록
 			if (ObjManager::GetInstance()->GetRect().right - (m_DisTop.ptSrcPos.x * PLAYERSIZE) <= (m_DisTop.ptDestPos.x))
 			{
 				break;
 			}
+			// 플레이어가 화면 중앙에 위치한 것이 아닐 때
 			else if (PlayerPosCheck() == false)
 			{
 				m_DisTop.ptDestPos.x += IDLEUSERDMOVE;
 				m_DisBot.ptDestPos.x += IDLEUSERDMOVE;
 			}
+			// 플레이어가 화면 중앙에 위치할 때
 			else
 			{
 				// 배경 움직이기
@@ -275,6 +298,7 @@ void PlayerNormal::AnimationStateMove()
 					bgtemp->BackgroundMove(E_USERSTATE_RWALK);
 				}
 
+				// #임시 
 				// 지금 게임의 원리 : 천동설 
 				// -> 지동설
 				// 몬스터 움직이기
@@ -302,61 +326,32 @@ void PlayerNormal::AnimationStateMove()
 				m_DisBot.ptDestPos.x -= IDLEUSERDMOVE;
 			}
 		}
-		break;
+		break;		
+	}
+
+
+	// 연속성이 없는 키
+	/*switch (m_iobjstate)
+	{
 		case E_USERSTATE_JUMP:
-		// 점프
+			// 점프
 		{
 			// 이미지 한바퀴 돌면 false로 만들어주기 
-			if (m_DisTop.ptSrcPos.y >= m_DisTop.ptDestSize.y)
+			//if (m_DisTop.ptSrcPos.y >= m_DisTop.ptDestSize.y)
+			if (m_ImgTop.ptSrcSize.y >= (m_ImgTop.ptSrcSize.y * m_ImgTop.iHightnum))
 			{
 				m_bjump = false;
 			}
 		}
 		break;
+		// #임시 - 총알
 		case E_USERSTATE_FIRE:
-		// 총알 발사
 		{
-			// 이미지 한바퀴 돌면 false로 만들어주기 
-			if (m_DisTop.ptSrcPos.y >= m_DisTop.ptDestSize.y)
-			{
-				Object* objbullet = new Bullet(m_DisTop.ptDestPos);
-				ObjManager::GetInstance()->SetVector(objbullet, EOBJECT_BULLET);
-
-				m_bfire = false;
-			}
+			AttackGun();
 		}
 		break;
-	}
+	}*/
 
-
-
-	/////////////////////////////// bottom
-	switch (m_iobjstate)
-	{
-			// 멈춤 상태
-		case E_USERSTATE_IDLE:
-		{
-		}
-		break;
-		case E_USERSTATE_RWALK:
-		// 오른쪽 버튼 눌렀을 때 반응
-		{
-
-		}
-		break;
-		case E_USERSTATE_LWALK:
-		// 왼쪽 버튼 눌렀을 때 반응
-		{
-			
-		}
-		break;
-		case E_USERSTATE_JUMP:
-		// 점프
-		{
-
-		}
-		break;
-	}
 
 	m_fdelay = 0.5;
 
@@ -391,41 +386,40 @@ void PlayerNormal::Run()
 	// 키보드 입력 받기
 	// 키보드 입력은 정리해서 판정에 우선순위를 구분할 것 
 
+	AnimationStateCheck();
+
 	// jump 체크하고 실행
 	if (m_bjump == true)
 	{
 		Jump();
-		// 움직이고 총쏘는 함수 하나 더 만들기 
+
 	}
-	else if (m_bfire == true)
+	// fire 실행
+	if (m_bfire == true)
 	{
-	}
-	else
-	{
-		AnimationStateCheck();
+		AttackGun();
 	}
 
 	AnimationStateMove();
 
 
-	// hitbox 정의시켜주기 
+	// #임시 - 필요하다면 수정하기
+	// bottom hitbox 정의시켜주기 
+	m_recHitBox = { m_DisBot.ptDestPos.x, m_DisBot.ptDestPos.y,
+		m_DisBot.ptDestPos.x + (m_DisBot.ptDestSize.x * PLAYERSIZE),
+		m_DisBot.ptDestPos.y + (m_DisBot.ptDestSize.y * PLAYERSIZE) };
+	// #임시
+	Gravity(&m_DisBot, EOBJECT_USER);
 
+	// top hitbox 정의시켜주기 
 	m_recHitBox = { m_DisTop.ptDestPos.x, m_DisTop.ptDestPos.y,
-		m_DisTop.ptDestPos.x + (m_DisTop.ptDestSize.x * PLAYERSIZE), 
+		m_DisTop.ptDestPos.x + (m_DisTop.ptDestSize.x * PLAYERSIZE),
 		m_DisTop.ptDestPos.y + (m_DisTop.ptDestSize.y * PLAYERSIZE) };
-
-	// 화이 함수
-	//Gravity(&m_normalplayertop);
-	//Gravity(&m_normalplayerbottom);		// 껍데기 함수, 해결방안 고안 해야함 < 한슬이가 해야함
-
-	// 화이 함수
-	// 함수 두개를 하나로 합쳐야함
-	// 배경 위에 설 수 있게 해주는 함수
-	//ObjStand(&m_normalplayertop);
-	//ObjStand(&m_normalplayerbottom);	// 하나의 함수로 해결할 수 있도록 하는 것 ☆
+	Gravity(&m_DisTop, EOBJECT_USER);
 
 	return;
 };
+
 
 // 오브젝트 출력 (오버라이딩)
 void PlayerNormal::Render(HDC& _hdc, HWND& _hWnd)
@@ -481,7 +475,7 @@ void PlayerNormal::Render(HDC& _hdc, HWND& _hWnd)
 		(m_DisTop.ptDestSize.y * PLAYERSIZE) + m_DisTop.ptDestPos.y);*/
 
 	// 히트박스 디스플레이
-	Rectangle(_hdc, m_recHitBox.left, m_recHitBox.top, m_recHitBox.right, m_recHitBox.bottom);
+	//Rectangle(_hdc, m_recHitBox.left, m_recHitBox.top, m_recHitBox.right, m_recHitBox.bottom);
 
 	// oldbit로 바꿔주기
 	SelectObject(hobjdc, holdBit);
@@ -508,6 +502,7 @@ void PlayerNormal::DeadZombie()
 // 공격 - 총 (오버라이딩)
 void PlayerNormal::AttackGun()
 {
+	Player::AttackGun();
 	return;
 };
 

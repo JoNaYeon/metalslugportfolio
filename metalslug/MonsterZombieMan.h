@@ -24,6 +24,8 @@ public:
 
 	// 몹 공격 - 뇌 공격 애니메이션
 	void Attack();
+	// 몬스터 움직임 
+	void MovePattern();
 
 	bool bObjDead();
 

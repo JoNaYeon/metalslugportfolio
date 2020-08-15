@@ -195,6 +195,10 @@ std::vector<Object*> ObjManager::GetVector(E_OBJECT _e_obj)
 		{
 			return m_vecObj[EOBJECT_MONSTER];
 		}
+		case EOBJECT_USER:
+		{
+			return m_vecObj[EOBJECT_USER];
+		}
 		case EOBJECT_OBJ:
 		{
 			return m_vecObj[EOBJECT_OBJ];
@@ -217,10 +221,22 @@ void ObjManager::CollisionCheck()
 	{
 		std::vector<Object*>::iterator iter = m_vecObj[EOBJECT_BULLET].begin();
 		RECT recHitBullet = m_vecObj[EOBJECT_BULLET][i]->GetHitBox();
+		bool bright = false;
 
 		for (int j = 0; j < m_vecObj[EOBJECT_MONSTER].size(); j++)
 		{
 			RECT recHitMonster = m_vecObj[EOBJECT_MONSTER][j]->GetHitBox();
+
+			// 왼쪽에서 피격당했을 때
+			if ( (recHitMonster.left + (recHitMonster.left - recHitMonster.right / 2)) >= recHitBullet.right)
+			{
+				bright = false;
+			}
+			// 오른쪽에서 피격당했을 때
+			else if ((recHitMonster.left + (recHitMonster.left - recHitMonster.right / 2)) < recHitBullet.right)
+			{
+				bright = true;
+			}
 
 			if (IntersectRect(&rectemp, &recHitBullet, &recHitMonster) == true)
 			{
@@ -228,11 +244,33 @@ void ObjManager::CollisionCheck()
 				delete m_vecObj[EOBJECT_BULLET][i];
 				m_vecObj[EOBJECT_BULLET][i] = NULL;
 
+				
 				iter = (m_vecObj[EOBJECT_BULLET]).erase(iter);
 				bCollisiontemp = true;
 
 				// 몬스터가 피격되었음을 알려주고 
 				m_vecObj[EOBJECT_MONSTER][j]->SetCollisionCheck(bCollisiontemp);
+
+				// 몬스터 피격 좌우 알려주기
+				// 오른쪽에서 맞을 때
+				if (bright == true)
+				{
+					// Monster 뒤로 밀리기
+					DISPLAYINFO MonDisTemp = *(((Monster*)m_vecObj[EOBJECT_MONSTER][j])->GetMonsterDis());
+					MonDisTemp.ptDestPos.x -= MONHITEDMOTION;
+
+					((Monster*)m_vecObj[EOBJECT_MONSTER][j])->SetMonsterDis(MonDisTemp);
+				}
+				// 왼쪽에서 맞을 때
+				//else
+				{
+					// Monster 뒤로 밀리기
+					DISPLAYINFO MonDisTemp = *(((Monster*)m_vecObj[EOBJECT_MONSTER][j])->GetMonsterDis());
+					MonDisTemp.ptDestPos.x += MONHITEDMOTION;
+
+					((Monster*)m_vecObj[EOBJECT_MONSTER][j])->SetMonsterDis(MonDisTemp);
+				}
+
 				// 몬스터 피격으로 HP 깎기 
 				((Monster*)(m_vecObj[EOBJECT_MONSTER][j]))->Hit();
 			}
@@ -267,6 +305,9 @@ void ObjManager::CollisionCheck()
 				disinfotemp = ((Player*)(m_vecObj[EOBJECT_USER][i]))->GetPlayerDisBot();
 				disinfotemp->ptDestPos.y -= 0.4f;
 
+
+				(m_vecObj[EOBJECT_USER][i])->SetboolGravity(false);
+
 				// 점프중일 경우 점프 중단
 				if ((m_vecObj[EOBJECT_USER][i])->GetJump() == true)
 				{
@@ -288,5 +329,34 @@ void ObjManager::CollisionCheck()
 		}
 	}
 
+	// Monster 과 Background Tile 충돌
+	for (int i = 0; i < m_vecObj[EOBJECT_MONSTER].size(); i++)
+	{
+		RECT recHitPlayer = m_vecObj[EOBJECT_MONSTER][i]->GetHitBox();
+
+		for (int j = 0; j < m_vecObj[EOBJECT_BG].size(); j++)
+		{
+			RECT recHitBG = m_vecObj[EOBJECT_BG][j]->GetHitBox();
+
+			// background Tile 과 Monster 의 HitBox 가 부딪혔을 때 조금씩 올라오도록.
+			if (IntersectRect(&rectemp, &recHitPlayer, &recHitBG) == true)
+			{
+				DISPLAYINFO* disinfotemp = ((Monster*)(m_vecObj[EOBJECT_MONSTER][i]))->GetMonsterDis();
+				disinfotemp->ptDestPos.y -= 0.4f;
+
+				disinfotemp = ((Monster*)(m_vecObj[EOBJECT_MONSTER][i]))->GetMonsterDis();
+				disinfotemp->ptDestPos.y -= 0.4f;
+
+				(m_vecObj[EOBJECT_MONSTER][i])->SetboolGravity(false);
+			}
+			// backgoround 와 부딪히지 않았을 경우 계속 gravity 받도록. 
+			else
+			{
+				(m_vecObj[EOBJECT_MONSTER][i])->SetboolGravity(true);
+			}
+		}
+	}
+
+	
 	return; 
 }

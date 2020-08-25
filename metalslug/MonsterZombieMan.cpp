@@ -55,14 +55,11 @@ void MonsterZombieMan::Run()
 		m_dPrevTime = m_dcurTime;
 	}
 
-	// 배경 위에 설 수 있게 해주는 함수
-	//ObjStand(&m_Monster);
-
 	// 중력 적용
 	Gravity(&m_DisMon, EOBJECT_MONSTER);
 
 	// 움직임 패턴 적용
-	MovePattern();
+	//MovePattern();
 
 	// HitBox 갱신
 	m_recHitBox = { m_DisMon.ptDestPos.x, m_DisMon.ptDestPos.y,

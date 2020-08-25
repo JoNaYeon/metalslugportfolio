@@ -83,17 +83,14 @@ void Player::Jump()
 	static int t = 0;		// 물체의 시각 
 
 
-	if (m_bgravity == true)
+	// 유저와 타일이 완전히 부딪혔을 경우, t를 초기화 시켜주고 점프를 false 시켜준다.
+	if (m_bgravity == false)
 	{
 		t = 0;
 		m_bjump = false;
-	}
 
-	// 가장 높은 정점에 다달았을 때 
-	/*if (m_DisTop.ptDestPos.y >= 100)
-	{
-		m_bjump = true;
-	}*/
+		return;
+	}
 
 
 	// x방향의 위치 결정 

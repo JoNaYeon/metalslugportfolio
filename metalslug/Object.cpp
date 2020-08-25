@@ -13,10 +13,10 @@ Object::Object()
 	m_fdelay = 1;
 
 	//m_fvelocity = -VELOCITY;
-	m_bgravity = true;
+	//m_bgravity = true;
 
 	m_bdead = false;
-	//m_bfire = false;
+	m_bfire = false;
 
 	m_bCollisionCheck = false;
 };

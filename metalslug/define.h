@@ -95,6 +95,69 @@
 
 extern HINSTANCE hInst;
 
+
+// BackgroundTile Pos define
+#define POSX0 0 
+#define POSY0 380
+#define POSX1 100 
+#define POSY1 380
+#define POSX2 114
+#define POSY2 366
+#define POSX3 205
+#define POSY3 366
+#define POSX4 292
+#define POSY4 380
+#define POSX5 420
+#define POSY5 380
+#define POSX6 433
+#define POSY6 366
+#define POSX7 525
+#define POSY7 366
+#define POSX8 605
+#define POSY8 380
+#define POSX9 747
+#define POSY9 380
+#define POSX10 771
+#define POSY10 357
+#define POSX11 823
+#define POSY11 356
+#define POSX12 824
+#define POSY12 380
+#define POSX13 1038
+#define POSY13 370
+#define POSX14 1185
+#define POSY14 370
+#define POSX15 1743
+#define POSY15 229
+#define POSX16 1747
+#define POSY16 360
+#define POSX17 2056
+#define POSY17 360
+#define POSX18 2424
+#define POSY18 445
+#define POSX19 2495
+#define POSY19 530
+#define POSX20 2751
+#define POSY20 530
+#define POSX21 2840
+#define POSY21 670
+#define POSX22 3077
+#define POSY22 670
+#define POSX23 3216
+#define POSY23 808
+#define POSX24 3281
+#define POSY24 820
+#define POSX25 4471
+#define POSY25 816
+#define POSX26 6990
+#define POSY26 884
+#define POSX27 5428
+#define POSY27 884
+
+
+
+
+
 // 오브젝트 종류 enum
 enum E_OBJECT
 {

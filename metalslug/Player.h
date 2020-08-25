@@ -14,6 +14,8 @@ protected:
 	int m_ivirous;
 	bool m_bhuman;
 
+	bool m_bmove;
+
 	// player의 이미지 경로를 담을 변수
 	LPCSTR m_strBitmapTop;
 	LPCSTR m_strBitmapBottom;
@@ -62,5 +64,6 @@ public:
 	DISPLAYINFO* GetPlayerDisBot() { return &m_DisBot; };
 	void SetPlayerDisTop(POINT _disTop) { m_DisTop.ptDestPos = _disTop; return; };
 	void SetPlayerDisBot(POINT _disBot) { m_DisBot.ptDestPos = _disBot; return; };
+	bool GetBGMove() { return m_bmove; };
 };
 

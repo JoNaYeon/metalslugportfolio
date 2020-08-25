@@ -14,6 +14,11 @@ PlayerNormal::PlayerNormal()
 
 	m_fdelay = 0.5;
 	m_bleftright = true;
+	// 중력 받기
+	m_bgravity = true;
+	
+	// 플레이어 배경 움직이기
+	m_bmove = false;
 
 	// 상체 구조체 정의
 	m_DisTop.ptDestPos = { 0, 400 };
@@ -45,83 +50,213 @@ PlayerNormal::PlayerNormal()
 void PlayerNormal::AnimationStateCheck()
 {
 	POINT ptImgSize = { 0, 0 };
-	//////////////////////////////////// bottom 반응
-	// 점프할 때 
-	if (InputManager::GetInstance()->Keyboard(E_KEYJUMP) == true)
+
+
+	// 한번 누를 때 반응을 보이는 이미지들
+	// 점프중일 때 
+	if (m_bjump == true)
 	{
 		m_iobjstate = E_USERSTATE_JUMP;
-		m_strBitmapBottom = "..\\source\\user\\userjunp.bmp";
-		// 중력 false
-		m_bleftright = false;
-		// 점프 true
-		m_bjump = true;
-
 		m_iobjmove = JUMPUSERDMOVE;
 		ptImgSize = { JUMPPLAYERWANIMATION , JUMPPLAYERHANIMATION };
+
+		m_strBitmapBottom = "..\\source\\user\\userjunp.bmp";
 		m_DisBot.ptDestSize = ptImgSize;
 		SetImgInfo(m_ImgBot, ptImgSize, JUMPPLAYERWNUM, JUMPPLAYERHNUM);
 
-		m_bjump = true;
-	}
-	// 왼쪽 
-	else if (InputManager::GetInstance()->Keyboard(E_KEYLEFT) == true)
-	{
-		m_iobjstate = E_USERSTATE_LWALK;
-		m_strBitmapBottom = "..\\source\\user\\UserRun_Bottom2.bmp";
-		// 중력 true
-		m_bleftright = true;
+		m_strBitmapTop = "..\\source\\user\\userjunptop.bmp";
+		m_DisTop.ptDestSize = ptImgSize;
+		SetImgInfo(m_ImgTop, ptImgSize, JUMPPLAYERWNUM, JUMPPLAYERHNUM);
 
-		m_iobjmove = IDLEUSERDMOVE;
-		ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
-		m_DisBot.ptDestSize = ptImgSize;
-		SetImgInfo(m_ImgBot, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
-	}
-	// 오른쪽
-	else if (InputManager::GetInstance()->Keyboard(E_KEYRIGHT) == true)
-	{
-		m_iobjstate = E_USERSTATE_RWALK;
-		m_strBitmapBottom = "..\\source\\user\\UserRun_Bottom1.bmp";
-		// 중력 true
-		m_bleftright = true;
+		// 총 쏠 때 
+		if (InputManager::GetInstance()->Keyboard(E_KEYFIRE) == true)
+		{
+			// 오른쪽 방향으로 발사 
+			if (m_bleftright == true)
+			{
+				m_iobjstate = E_USERSTATE_FIRE;
+				m_strBitmapTop = "..\\source\\user\\usertopfire.bmp";
 
-		m_iobjmove = IDLEUSERDMOVE;
-		ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
-		m_DisBot.ptDestSize = ptImgSize;
-		SetImgInfo(m_ImgBot, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
+				// struct에 자료 삽입해주는 함수
+				m_iobjmove = FIREUSERDMOVE;
+				ptImgSize = { FIREPLAYERWANIMATION , FIREPLAYERHANIMATION };
+				m_DisTop.ptDestSize = ptImgSize;
+				SetImgInfo(m_ImgTop, ptImgSize, FIREPLAYERWNUM, FIREPLAYERHNUM);
+			}
+			// 왼쪽 방향으로 발사 
+			else
+			{
+				m_iobjstate = E_USERSTATE_FIRE;
+				m_strBitmapTop = "..\\source\\user\\usertopfire.bmp";
+
+				m_iobjmove = -FIREUSERDMOVE;
+				ptImgSize = { FIREPLAYERWANIMATION , FIREPLAYERHANIMATION };
+				m_DisTop.ptDestSize = ptImgSize;
+				SetImgInfo(m_ImgTop, ptImgSize, FIREPLAYERWNUM, FIREPLAYERHNUM);
+			}
+			m_bfire = true;
+		}
+		// 왼쪽 방향으로 움직이기
+		else if (InputManager::GetInstance()->Keyboard(E_KEYLEFT) == true)
+		{
+			// 중력 true
+			m_bleftright = true;
+
+			m_iobjstate = E_USERSTATE_LWALK;
+			m_iobjmove = IDLEUSERDMOVE;
+			ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
+
+			m_strBitmapBottom = "..\\source\\user\\UserRun_Bottom2.bmp";
+			m_DisBot.ptDestSize = ptImgSize;
+			SetImgInfo(m_ImgBot, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
+
+			m_strBitmapTop = "..\\source\\user\\UserIdle_Top2.bmp";
+			m_DisTop.ptDestSize = ptImgSize;
+			SetImgInfo(m_ImgTop, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
+
+		}
+		// 오른쪽 방향으로 움직이기
+		else if (InputManager::GetInstance()->Keyboard(E_KEYRIGHT) == true)
+		{
+			// 중력 true
+			m_bleftright = true;
+
+			m_iobjstate = E_USERSTATE_RWALK;
+			m_iobjmove = IDLEUSERDMOVE;
+			ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
+
+			m_strBitmapBottom = "..\\source\\user\\UserRun_Bottom1.bmp";
+			m_DisBot.ptDestSize = ptImgSize;
+			SetImgInfo(m_ImgBot, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
+
+			m_strBitmapTop = "..\\source\\user\\UserIdle_Top1.bmp";
+			m_DisTop.ptDestSize = ptImgSize;
+			SetImgInfo(m_ImgTop, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
+		}
 	}
-	// 아무것도 아닐 때 
+	// 점프중이 아닐 때
 	else
 	{
-		// bool 변수 혹은 enum 으로 좌우 위치 확인해주기
-		if (m_bleftright == true)
+		// 총 쏠 때 
+		if (InputManager::GetInstance()->Keyboard(E_KEYFIRE) == true)
 		{
-			m_iobjstate = E_USERSTATE_IDLE;
-			m_strBitmapBottom = "..\\source\\user\\UserIdle_Bottom1.bmp";
+			// 오른쪽 방향으로 발사 
+			if (m_bleftright == true)
+			{
+				m_iobjstate = E_USERSTATE_FIRE;
+				m_strBitmapTop = "..\\source\\user\\usertopfire.bmp";
+
+				// struct에 자료 삽입해주는 함수
+				m_iobjmove = FIREUSERDMOVE;
+				ptImgSize = { FIREPLAYERWANIMATION , FIREPLAYERHANIMATION };
+				m_DisTop.ptDestSize = ptImgSize;
+				SetImgInfo(m_ImgTop, ptImgSize, FIREPLAYERWNUM, FIREPLAYERHNUM);
+			}
+			// 왼쪽 방향으로 발사 
+			else
+			{
+				m_iobjstate = E_USERSTATE_FIRE;
+				m_strBitmapTop = "..\\source\\user\\usertopfire.bmp";
+
+				m_iobjmove = -FIREUSERDMOVE;
+				ptImgSize = { FIREPLAYERWANIMATION , FIREPLAYERHANIMATION };
+				m_DisTop.ptDestSize = ptImgSize;
+				SetImgInfo(m_ImgTop, ptImgSize, FIREPLAYERWNUM, FIREPLAYERHNUM);
+			}
+
+			m_bfire = true;
+		}
+		// 점프할 때 
+		else if (InputManager::GetInstance()->Keyboard(E_KEYJUMP) == true)
+		{
+			// 중력 false
+			m_bleftright = false;
+			// 점프 true
+			m_bjump = true;
+		}
+		// 왼쪽 방향으로 움직이기
+		else if (InputManager::GetInstance()->Keyboard(E_KEYLEFT) == true)
+		{
 			// 중력 true
 			m_bleftright = true;
 
+			m_iobjstate = E_USERSTATE_LWALK;
 			m_iobjmove = IDLEUSERDMOVE;
 			ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
+
+			m_strBitmapBottom = "..\\source\\user\\UserRun_Bottom2.bmp";
 			m_DisBot.ptDestSize = ptImgSize;
 			SetImgInfo(m_ImgBot, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
+
+			m_strBitmapTop = "..\\source\\user\\UserIdle_Top2.bmp";
+			m_DisTop.ptDestSize = ptImgSize;
+			SetImgInfo(m_ImgTop, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
+
 		}
+		// 오른쪽 방향으로 움직이기
+		else if (InputManager::GetInstance()->Keyboard(E_KEYRIGHT) == true)
+		{
+			// 중력 true
+			m_bleftright = true;
+
+			m_iobjstate = E_USERSTATE_RWALK;
+			m_iobjmove = IDLEUSERDMOVE;
+			ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
+
+			m_strBitmapBottom = "..\\source\\user\\UserRun_Bottom1.bmp";
+			m_DisBot.ptDestSize = ptImgSize;
+			SetImgInfo(m_ImgBot, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
+
+			m_strBitmapTop = "..\\source\\user\\UserIdle_Top1.bmp";
+			m_DisTop.ptDestSize = ptImgSize;
+			SetImgInfo(m_ImgTop, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
+		}
+		// IDELE
 		else
 		{
-			m_iobjstate = E_USERSTATE_IDLE;
-			m_strBitmapBottom = "..\\source\\user\\UserIdle_Bottom2.bmp";
-			// 중력 true
-			m_bleftright = true;
+			// bool 변수 혹은 enum 으로 좌우 위치 확인해주기
+			if (m_bleftright == true)
+			{
+				// 중력 true
+				m_bleftright = true;
 
-			m_iobjmove = IDLEUSERDMOVE;
-			ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
-			m_DisBot.ptDestSize = ptImgSize;
-			SetImgInfo(m_ImgBot, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
+				m_iobjstate = E_USERSTATE_IDLE;
+				m_iobjmove = IDLEUSERDMOVE;
+
+				ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
+
+				m_strBitmapBottom = "..\\source\\user\\UserIdle_Bottom1.bmp";
+				m_DisBot.ptDestSize = ptImgSize;
+				SetImgInfo(m_ImgBot, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
+
+				m_strBitmapTop = "..\\source\\user\\UserIdle_Top1.bmp";
+				m_DisTop.ptDestSize = ptImgSize;
+				SetImgInfo(m_ImgTop, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
+			}
+			else
+			{
+				// 중력 true
+				m_bleftright = true;
+
+				m_iobjstate = E_USERSTATE_IDLE;
+				m_iobjmove = IDLEUSERDMOVE;
+
+				ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
+
+				m_strBitmapBottom = "..\\source\\user\\UserIdle_Bottom2.bmp";
+				m_DisBot.ptDestSize = ptImgSize;
+				SetImgInfo(m_ImgBot, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
+
+				m_strBitmapTop = "..\\source\\user\\UserIdle_Top2.bmp";
+				m_DisTop.ptDestSize = ptImgSize;
+				SetImgInfo(m_ImgTop, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
+
+			}
 		}
 	}
-
-
+	
 	//////////////////////////////////////// top 반응
-	// 총을 쏠 때 
+	/*// 총을 쏠 때 
 	if (InputManager::GetInstance()->Keyboard(E_KEYFIRE) == true)
 	{
 		// 오른쪽 방향으로 발사 
@@ -153,17 +288,11 @@ void PlayerNormal::AnimationStateCheck()
 	// 점프할 때 
 	else if (InputManager::GetInstance()->Keyboard(E_KEYJUMP) == true)
 	{
-		m_iobjstate = E_USERSTATE_JUMP;
-		m_strBitmapTop = "..\\source\\user\\userjunptop.bmp";
 		// 중력 false
 		m_bleftright = false;
 		// 점프 true
 		m_bjump = true;
 
-		m_iobjmove = JUMPUSERDMOVE;
-		ptImgSize = { JUMPPLAYERWANIMATION , JUMPPLAYERHANIMATION };
-		m_DisTop.ptDestSize = ptImgSize;
-		SetImgInfo(m_ImgTop, ptImgSize, JUMPPLAYERWNUM, JUMPPLAYERHNUM);
 	}
 	// 왼쪽으로 걷기
 	else if (InputManager::GetInstance()->Keyboard(E_KEYLEFT) == true)
@@ -219,7 +348,8 @@ void PlayerNormal::AnimationStateCheck()
 			m_DisTop.ptDestSize = ptImgSize;
 			SetImgInfo(m_ImgTop, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
 		}
-	}
+	}*/
+	
 
 	return;
 }
@@ -237,13 +367,13 @@ bool PlayerNormal::PlayerPosCheck()
 	bool btemp = false;
 
 	// 좌우 확인 
-	if (m_DisTop.ptDestPos.x <= (recClient.right / 2) - (m_ImgTop.ptSrcSize.x * PLAYERSIZE))
+	if (m_DisTop.ptDestPos.x <= (recClient.right / 2) - (m_ImgTop.ptSrcSize.x))
 	{
 		btemp = false;
 	}
 	else if (bgtemp->GetBG().ptSrcPos.x >= BGEND)
 	{
-		btemp = true;
+		btemp = false;
 	}
 	else 
 	{
@@ -261,59 +391,44 @@ bool PlayerNormal::PlayerPosCheck()
 // 애니메이션의 움직임을 실행해주는 함수
 void PlayerNormal::AnimationStateMove()
 {
-	// 연속성이 있는 키 
-	switch (m_iobjstate)
+	if (m_bjump == true)
 	{
-		// 멈춤 상태
+		switch (m_iobjstate)
+		{
+			// 멈춤 상태
 		case E_USERSTATE_IDLE:
 		{
+			m_bmove = false;
 		}
 		break;
 		case E_USERSTATE_RWALK:
-		// 오른쪽 버튼 눌렀을 때 반응
+			// 오른쪽 버튼 눌렀을 때 반응
 		{
-			m_DisTop.ptDestPos.x += IDLEUSERDMOVE;
-			m_DisBot.ptDestPos.x += IDLEUSERDMOVE;
-
 			// 화면 밖으로 나갈 수 없도록
 			if (ObjManager::GetInstance()->GetRect().right - (m_DisTop.ptSrcPos.x * PLAYERSIZE) <= (m_DisTop.ptDestPos.x))
 			{
 				break;
 			}
-			// 플레이어가 화면 중앙에 위치한 것이 아닐 때
-			else if (PlayerPosCheck() == false)
-			{
-				m_DisTop.ptDestPos.x += IDLEUSERDMOVE;
-				m_DisBot.ptDestPos.x += IDLEUSERDMOVE;
-			}
-			// 플레이어가 화면 중앙에 위치할 때
 			else
 			{
-				// 배경 움직이기
-				std::vector<Object*> vectemp = ObjManager::GetInstance()->GetVector(EOBJECT_BG);
-
-				for (int i = 0; i < vectemp.size(); i++)
+				// 플레이어가 화면 중앙에 위치한 것이 아닐 때
+				if (PlayerPosCheck() == false)
 				{
-					Background* bgtemp = (Background*)vectemp[i];
-					bgtemp->BackgroundMove(E_USERSTATE_RWALK);
+					m_bmove = false;
+
+					m_DisTop.ptDestPos.x += IDLEUSERDMOVE;
+					m_DisBot.ptDestPos.x += IDLEUSERDMOVE;
 				}
-
-				// #임시 
-				// 지금 게임의 원리 : 천동설 
-				// -> 지동설
-				// 몬스터 움직이기
-				vectemp = ObjManager::GetInstance()->GetVector(EOBJECT_MONSTER);
-
-				for (int i = 0; i < vectemp.size(); i++)
+				// 플레이어가 화면 중앙에 위치할 때
+				else
 				{
-					Monster* Monstertemp = (Monster*)vectemp[i];
-					Monstertemp->MonsterMove(E_USERSTATE_RWALK);
+					m_bmove = true;
 				}
 			}
 		}
 		break;
 		case E_USERSTATE_LWALK:
-		// 왼쪽 버튼 눌렀을 때 반응
+			// 왼쪽 버튼 눌렀을 때 반응
 		{
 			// client 밖으로 못 나가도록 
 			if (ObjManager::GetInstance()->GetRect().left >= m_DisTop.ptDestPos.x)
@@ -322,35 +437,70 @@ void PlayerNormal::AnimationStateMove()
 			}
 			else
 			{
+				m_bmove = false;
+
 				m_DisTop.ptDestPos.x -= IDLEUSERDMOVE;
 				m_DisBot.ptDestPos.x -= IDLEUSERDMOVE;
 			}
 		}
-		break;		
+		break;
+		}
 	}
-
-
-	// 연속성이 없는 키
-	/*switch (m_iobjstate)
+	else
 	{
-		case E_USERSTATE_JUMP:
-			// 점프
+		switch (m_iobjstate)
 		{
-			// 이미지 한바퀴 돌면 false로 만들어주기 
-			//if (m_DisTop.ptSrcPos.y >= m_DisTop.ptDestSize.y)
-			if (m_ImgTop.ptSrcSize.y >= (m_ImgTop.ptSrcSize.y * m_ImgTop.iHightnum))
+			// 멈춤 상태
+		case E_USERSTATE_IDLE:
+		{
+			m_bmove = false;
+		}
+		break;
+		case E_USERSTATE_RWALK:
+			// 오른쪽 버튼 눌렀을 때 반응
+		{
+			// 화면 밖으로 나갈 수 없도록
+			if (ObjManager::GetInstance()->GetRect().right - (m_DisTop.ptSrcPos.x * PLAYERSIZE) <= (m_DisTop.ptDestPos.x))
 			{
-				m_bjump = false;
+				break;
+			}
+			else
+			{
+				// 플레이어가 화면 중앙에 위치한 것이 아닐 때
+				if (PlayerPosCheck() == false)
+				{
+					m_bmove = false;
+
+					m_DisTop.ptDestPos.x += IDLEUSERDMOVE;
+					m_DisBot.ptDestPos.x += IDLEUSERDMOVE;
+				}
+				// 플레이어가 화면 중앙에 위치할 때
+				else
+				{
+					m_bmove = true;
+				}
 			}
 		}
 		break;
-		// #임시 - 총알
-		case E_USERSTATE_FIRE:
+		case E_USERSTATE_LWALK:
+			// 왼쪽 버튼 눌렀을 때 반응
 		{
-			AttackGun();
+			// client 밖으로 못 나가도록 
+			if (ObjManager::GetInstance()->GetRect().left >= m_DisTop.ptDestPos.x)
+			{
+				break;
+			}
+			else
+			{
+				m_bmove = false;
+
+				m_DisTop.ptDestPos.x -= IDLEUSERDMOVE;
+				m_DisBot.ptDestPos.x -= IDLEUSERDMOVE;
+			}
 		}
 		break;
-	}*/
+		}
+	}
 
 
 	m_fdelay = 0.5;
@@ -392,7 +542,6 @@ void PlayerNormal::Run()
 	if (m_bjump == true)
 	{
 		Jump();
-
 	}
 	// fire 실행
 	if (m_bfire == true)
@@ -416,6 +565,9 @@ void PlayerNormal::Run()
 		m_DisTop.ptDestPos.x + (m_DisTop.ptDestSize.x * PLAYERSIZE),
 		m_DisTop.ptDestPos.y + (m_DisTop.ptDestSize.y * PLAYERSIZE) };
 	Gravity(&m_DisTop, EOBJECT_USER);
+
+	// #임시 - 상체와 하체가 분리되는 것 막아주기
+	m_DisBot.ptDestPos.y = m_DisTop.ptDestPos.y;
 
 	return;
 };

@@ -17,7 +17,10 @@ private:
 	// 객체의 위치 상태를 표시하는 E_OBJECTMOVEPOS enum을 담을 int 변수
 	int m_objPosState;
 
-	//RECT m_recClient;
+	// 배경화면이 움직인 정도를 담는 POINT
+	POINT ptTileMove;
+
+
 
 public:
 
@@ -42,7 +45,7 @@ public:
 	// 오브젝트 파괴
 	void Destroy();
 	// 타일을 깔아 줄 함수
-	void BackgroundTile();
+	RECT BackgroundTile(int _i);
 	//POINT GetRatio(int iwidth, int iheight);
 
 	bool bObjDead();

@@ -33,7 +33,7 @@ protected:
 
 	// 전에 존재했던 st_object에 있던 변수, 오브젝트 이동관련이라 이동
 	int m_iobjmove;
-	
+
 public:
 	// 생성자
 	Object();
@@ -57,7 +57,7 @@ public:
 
 	int Getobjstate() { return m_iobjstate; };
 	void Setobjstate(int _objstate) { m_iobjstate = _objstate; };
-	
+
 	// object의 사망여부 함수
 	virtual bool bObjDead() PURE;
 
@@ -70,10 +70,11 @@ public:
 	RECT GetHitBox() { return m_recHitBox; };
 	// 피격 체크
 	void SetCollisionCheck(bool _CollisionCheck) { m_bCollisionCheck = _CollisionCheck; };
-	
+
 	void SetboolGravity(bool _bGravity) { m_bgravity = _bGravity; return; };
 	bool GetboolGravity() { return m_bgravity; };
 
 	bool GetJump() { return m_bjump; };
+	void SetJump(bool _bjump) { m_bjump = _bjump; return; };
 };
 

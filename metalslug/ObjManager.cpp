@@ -12,6 +12,8 @@ ObjManager* ObjManager::m_pinstance = NULL;
 ObjManager::ObjManager()
 {
 	m_recClient = { 0, 0, 0, 0 };
+	m_bTile = false;
+	m_itile = 0;
 };
 
 ObjManager* ObjManager::GetInstance()
@@ -122,6 +124,12 @@ void ObjManager::Run()
 	}
 
 	CollisionCheck();
+	BackgroundMove();
+
+	if (m_bTile == false)
+	{
+		BackgroundTileSet();
+	}
 
 	return;
 };
@@ -292,34 +300,49 @@ void ObjManager::CollisionCheck()
 	{
 		RECT recHitPlayer = m_vecObj[EOBJECT_USER][i]->GetHitBox();
 
-		for (int j = 0; j < m_vecObj[EOBJECT_BG].size(); j++)
+		/*for (int j = 0; j < m_vecObj[EOBJECT_BG].size(); j++)
 		{
 			RECT recHitBG = m_vecObj[EOBJECT_BG][j]->GetHitBox();
 
 			// background Tile 과 Player 의 HitBox 가 부딪혔을 때 조금씩 올라오도록.
 			if (IntersectRect(&rectemp, &recHitPlayer, &recHitBG) == true)
 			{
+				// top과 bot을 일정한 위치에 위치하도록 해주기.
 				DISPLAYINFO* disinfotemp = ((Player*)(m_vecObj[EOBJECT_USER][i]))->GetPlayerDisTop();
-				disinfotemp->ptDestPos.y -= 0.4f;
+				//disinfotemp->ptDestPos.y -= 0.4f;
+				disinfotemp->ptDestPos.y = recHitBG.top - (disinfotemp->ptDestSize.y * PLAYERSIZE);
 
 				disinfotemp = ((Player*)(m_vecObj[EOBJECT_USER][i]))->GetPlayerDisBot();
-				disinfotemp->ptDestPos.y -= 0.4f;
+				//disinfotemp->ptDestPos.y -= 0.4f;
+				disinfotemp->ptDestPos.y = recHitBG.top - (disinfotemp->ptDestSize.y * PLAYERSIZE);
 
+				(m_vecObj[EOBJECT_USER][i])->SetboolGravity(false);
+			}
+			// backgoround 와 부딪히지 않았을 경우 계속 gravity 받도록. 
+			else
+			{
+				(m_vecObj[EOBJECT_USER][i])->SetboolGravity(true);
+			}
+		}*/
+
+		for (int j = 0; j < m_vecBGpos.size(); j++)
+		{
+			RECT recHitBG = m_vecBGpos[j];
+
+			// background Tile 과 Player 의 HitBox 가 부딪혔을 때 조금씩 올라오도록.
+			if (IntersectRect(&rectemp, &recHitPlayer, &recHitBG) == true)
+			{
+				// top과 bot을 일정한 위치에 위치하도록 해주기.
+				DISPLAYINFO* disinfotemp = ((Player*)(m_vecObj[EOBJECT_USER][i]))->GetPlayerDisTop();
+				disinfotemp->ptDestPos.y = recHitBG.top - (disinfotemp->ptDestSize.y * PLAYERSIZE);
+
+				disinfotemp = ((Player*)(m_vecObj[EOBJECT_USER][i]))->GetPlayerDisBot();
+				disinfotemp->ptDestPos.y = recHitBG.top - (disinfotemp->ptDestSize.y * PLAYERSIZE);
 
 				(m_vecObj[EOBJECT_USER][i])->SetboolGravity(false);
 
-				// 점프중일 경우 점프 중단
-				if ((m_vecObj[EOBJECT_USER][i])->GetJump() == true)
-				{
-					(m_vecObj[EOBJECT_USER][i])->SetboolGravity(false);
-					
-					// 점프를 마치면 처음 위치로 고정시켜줌 
-					POINT ptTemp = { (((Player*)(m_vecObj[EOBJECT_USER][i]))->GetPlayerDisTop()->ptDestPos.x) ,
-						(((Background*)(m_vecObj[EOBJECT_BG][i]))->GetHitBox().top) - 
-						((((Player*)(m_vecObj[EOBJECT_USER][i]))->GetPlayerDisTop()->ptDestSize.y) * PLAYERSIZE) };
-					((Player*)(m_vecObj[EOBJECT_USER][i]))->SetPlayerDisTop(ptTemp);
-					((Player*)(m_vecObj[EOBJECT_USER][i]))->SetPlayerDisBot(ptTemp);
-				}
+				// 부딫힐 경우 다른 background tile 과는 비교하지 않도록 
+				break;
 			}
 			// backgoround 와 부딪히지 않았을 경우 계속 gravity 받도록. 
 			else
@@ -334,7 +357,7 @@ void ObjManager::CollisionCheck()
 	{
 		RECT recHitPlayer = m_vecObj[EOBJECT_MONSTER][i]->GetHitBox();
 
-		for (int j = 0; j < m_vecObj[EOBJECT_BG].size(); j++)
+		/*for (int j = 0; j < m_vecObj[EOBJECT_BG].size(); j++)
 		{
 			RECT recHitBG = m_vecObj[EOBJECT_BG][j]->GetHitBox();
 
@@ -354,9 +377,124 @@ void ObjManager::CollisionCheck()
 			{
 				(m_vecObj[EOBJECT_MONSTER][i])->SetboolGravity(true);
 			}
+		}*/
+
+		for (int j = 0; j < m_vecBGpos.size(); j++)
+		{
+			RECT recHitBG = m_vecBGpos[j];
+			
+			// background tile 의 위치 조정 
+			//recHitBG.left += m_itile;
+			//recHitBG.right += m_itile;
+
+			// background Tile 과 Monster 의 HitBox 가 부딪혔을 때 조금씩 올라오도록.
+			if (IntersectRect(&rectemp, &recHitPlayer, &recHitBG) == true)
+			{
+				DISPLAYINFO* disinfotemp = ((Monster*)(m_vecObj[EOBJECT_MONSTER][i]))->GetMonsterDis();
+				disinfotemp->ptDestPos.y -= 0.4f;
+
+				disinfotemp = ((Monster*)(m_vecObj[EOBJECT_MONSTER][i]))->GetMonsterDis();
+				disinfotemp->ptDestPos.y -= 0.4f;
+
+				(m_vecObj[EOBJECT_MONSTER][i])->SetboolGravity(false);
+
+				// 부딫힐 경우 다른 background tile 과는 비교하지 않도록 
+				break;
+			}
+			// backgoround 와 부딪히지 않았을 경우 계속 gravity 받도록. 
+			else
+			{
+				(m_vecObj[EOBJECT_MONSTER][i])->SetboolGravity(true);
+			}
 		}
 	}
 
 	
 	return; 
+}
+
+
+// 유저의 위치에 따라서 배경과 오브젝트들을 움직여주는 함수
+void ObjManager::BackgroundMove()
+{
+	std::vector<Object*> vecusertemp = ObjManager::GetInstance()->GetVector(EOBJECT_USER);
+
+	std::vector<Object*> vectemp = ObjManager::GetInstance()->GetVector(EOBJECT_BG);
+
+	for (int i = 0; i < vecusertemp.size(); i++)
+	{
+		// 유저가 가지고 있는 b_BGMove 변수가 true 일 경우에만 움직여주도록.
+		if (((Player*)(vecusertemp[i]))->GetBGMove() == true)
+		{
+			// 배경 움직여주기
+			for (int i = 0; i < vectemp.size(); i++)
+			{
+				Background* bgtemp = (Background*)vectemp[i];
+				bgtemp->BackgroundMove(E_USERSTATE_RWALK);
+				TileMove(E_USERSTATE_RWALK);
+			}
+
+			// 몬스터 움직여주기
+			vectemp = ObjManager::GetInstance()->GetVector(EOBJECT_MONSTER);
+
+			for (int i = 0; i < vectemp.size(); i++)
+			{
+				Monster* Monstertemp = (Monster*)vectemp[i];
+				Monstertemp->MonsterMove(E_USERSTATE_RWALK);
+			}
+		}
+	}
+	return;
+}
+
+
+void ObjManager::BackgroundTileSet()
+{
+	for (int i = 0; i < m_vecObj[EOBJECT_BG].size(); i++)
+	{
+		for (int j = 0; j < BGEND; j++)
+		{
+			m_vecBGpos.push_back(((Background*)(m_vecObj[EOBJECT_BG][i]))->BackgroundTile(j));
+		}
+	}
+
+	m_bTile = true;
+
+	return;
+}
+
+
+void ObjManager::TileMove(E_USERSTATE _e_state)
+{
+	switch (_e_state)
+	{
+	case E_USERSTATE_LWALK:
+	{
+		//m_itile += BACKGROUNDMOVE;
+
+		for (int i = 0; i < m_vecObj[EOBJECT_BG].size(); i++)
+		{
+			for (int j = 0; j < m_vecBGpos.size(); j++)
+			{
+				m_vecBGpos[j].left += (BACKGROUNDMOVE * BGSIZE);
+				m_vecBGpos[j].right += (BACKGROUNDMOVE * BGSIZE);
+			}
+		}
+	}
+	case E_USERSTATE_RWALK:
+	{
+		//m_itile -= BACKGROUNDMOVE;
+
+		for (int i = 0; i < m_vecObj[EOBJECT_BG].size(); i++)
+		{
+			for (int j = 0; j < m_vecBGpos.size(); j++)
+			{
+				m_vecBGpos[j].left -= (BACKGROUNDMOVE * BGSIZE);
+				m_vecBGpos[j].right -= (BACKGROUNDMOVE * BGSIZE);
+			}
+		}
+	}
+	}
+
+	return;
 }

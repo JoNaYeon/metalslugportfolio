@@ -20,6 +20,8 @@ private:
 	// 배경화면이 움직인 정도를 담는 POINT
 	POINT ptTileMove;
 
+	std::vector<POINT> m_vecpos;
+
 
 
 public:
@@ -45,7 +47,11 @@ public:
 	// 오브젝트 파괴
 	void Destroy();
 	// 타일을 깔아 줄 함수
-	RECT BackgroundTile(int _i);
+	void BackgroundTile(int _i);
+	// 개체들의 y의 위치를 잡아줄 함수
+	int GetTileY();
+	/*void BackgroundTileset(int _i, int _iposy1, int _iposy2, 
+		int _iposx1, int _iposx2, RECT* _rec);*/
 	//POINT GetRatio(int iwidth, int iheight);
 
 	bool bObjDead();

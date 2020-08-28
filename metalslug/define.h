@@ -17,6 +17,8 @@
 #define VELOCITY 18.f
 
 #define BGSIZE 4
+#define BGTILESIZE 2
+
 #define BGEND 5482
 // 배경 움직이는 거리
 #define BACKGROUNDMOVE 10
@@ -97,6 +99,7 @@ extern HINSTANCE hInst;
 
 
 // BackgroundTile Pos define
+#define POSPOINT 27
 #define POSX0 0 
 #define POSY0 380
 #define POSX1 100 

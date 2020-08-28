@@ -21,6 +21,68 @@ Background::Background()
 
     ptTileMove = { 0,0 };
 
+    for (int i = 0; i <= POSPOINT; i++)
+    {
+        if (i == 0)
+        { POINT postemp = { POSX0, POSY0 }; }
+        else if (i == 1)
+        { POINT postemp = { POSX1, POSY1 }; }
+        else if (i == 2)
+        { POINT postemp = { POSX2, POSY2 }; }
+        else if (i == 3)
+        { POINT postemp = { POSX3, POSY3 }; }
+        else if (i == 4)
+        { POINT postemp = { POSX4, POSY4 }; }
+        else if (i == 5)
+        { POINT postemp = { POSX5, POSY5 }; }
+        else if (i == 6)
+        { POINT postemp = { POSX6, POSY6 }; }
+        else if (i == 7)
+        { POINT postemp = { POSX7, POSY7 }; }
+        else if (i == 8)
+        { POINT postemp = { POSX8, POSY8 }; }
+        else if (i == 9)
+        { POINT postemp = { POSX9, POSY9 }; }
+        else if (i == 10)
+        { POINT postemp = { POSX10, POSY10 }; }
+        else if (i == 11)
+        { POINT postemp = { POSX11, POSY11 }; }
+        else if (i == 12)
+        { POINT postemp = { POSX12, POSY12 }; }
+        else if (i == 13)
+        { POINT postemp = { POSX13, POSY13 }; }
+        else if (i == 14)
+        { POINT postemp = { POSX14, POSY14 }; }
+        else if (i == 15)
+        { POINT postemp = { POSX15, POSY15 }; }
+        else if (i == 16)
+        { POINT postemp = { POSX16, POSY16 }; }
+        else if (i == 17)
+        { POINT postemp = { POSX17, POSY17 }; }
+        else if (i == 18)
+        { POINT postemp = { POSX18, POSY18 }; }
+        else if (i == 19)
+        { POINT postemp = { POSX19, POSY19 }; }
+        else if (i == 20)
+        { POINT postemp = { POSX20, POSY20 }; }
+        else if (i == 21)
+        { POINT postemp = { POSX21, POSY21 }; }
+        else if (i == 22)
+        { POINT postemp = { POSX22, POSY22 }; }
+        else if (i == 23)
+        { POINT postemp = { POSX23, POSY23 }; }
+        else if (i == 24)
+        { POINT postemp = { POSX24, POSY24 }; }
+        else if (i == 25)
+        { POINT postemp = { POSX25, POSY25 }; }
+        else if (i == 26)
+        { POINT postemp = { POSX26, POSY26 }; }
+        else if (i == 27)
+        { POINT postemp = { POSX27, POSY27 }; }
+        
+        m_vecpos.push_back(ptTileMove);
+    }
+
 
     //m_ibgTile1 = 0;
     //m_ibgTile2 = 0;
@@ -122,23 +184,98 @@ void Background::Destroy()
 };
 
 
+/*void Background::BackgroundTileset(int _i, int _iposy1, int _iposy2, int _iposx1, int _iposx2, RECT* _rec)
+{
+    if (_iposy1 != _iposy2)
+    {
+        int imax = 0;
+        int imin = 0;
+
+        if (_iposy1 > _iposy2)
+        {
+            imax = _iposy1;
+            imin = _iposy2;
+        }
+        else
+        {
+            imax = _iposy2;
+            imin = _iposy1;
+        }
+
+        int iytemp = imax - imin;
+        int ixtemp = _iposx2 - _iposx1;
+
+        int itemp = (_i - imin) * (iytemp / ixtemp);
+
+        _rec->left = _i;
+        _rec->top = (_iposy1 + itemp) * BGTILESIZE;
+        _rec->right = _i + 1;
+        _rec->bottom = ((_iposy1 + itemp) * BGTILESIZE) + 1;
+    }
+    else
+    {
+        _rec->left = _i;
+        _rec->top = (_iposy1 * BGTILESIZE);
+        _rec->right = _i + 1;
+        _rec->bottom = (_iposy1 + 1) * BGTILESIZE;
+    }
+
+    return;
+}*/
+
+int Background::GetTileY()
+{
+    std::vector<Object*> vecObjTemp = ObjManager::GetInstance()->GetVector(EOBJECT_USER);
+
+    int iPlayerX = 0;
+    int iPlayerY = 0;
+
+    int im = 0;
+
+    int iY = 0;
+
+    POINT posleft = { 0,0 };
+    POINT posright = { 0,0 };
+
+    for (int i = 0; i < vecObjTemp.size(); i++)
+    {
+        DISPLAYINFO* distemp = ((PlayerNormal*)(vecObjTemp)[i])->GetPlayerDisTop();
+        iPlayerX = distemp->ptDestPos.x;
+    }
+
+    for (int i = 0; i < m_vecpos.size(); i++)
+    {
+        if (iPlayerX >= m_vecpos[i - 1].x && iPlayerX < m_vecpos[i].x)
+        {
+            posleft = m_vecpos[i - 1];
+            posright = m_vecpos[i];
+        }
+    }
+
+    // 직선의 기울기 = (y의 증가량 / x의 증가량)
+    im = (posright.y - posleft.y) / (posright.x - posleft.x);
+
+    // y의 절편
+    iY = posleft.y - (posleft.x * im);
+
+    // y의 위치값 = (직선 기울기 X 현재 x의 위치값) + y의 절편
+    iPlayerY = (im * iPlayerX) + iY;
+
+    return iPlayerY;
+}
 
 
-
-RECT Background::BackgroundTile(int _i)
+void Background::BackgroundTile(int _i)
 {
     //POINT ptTiletemp = { 1,1 };
     /*int iposx = 0;
-    int iposy = 0;*/
+    int iposy = 0;
 
     POINT ptTile = { 0,0 };
     RECT recClient = ObjManager::GetInstance()->GetRect();
     RECT recTemp = { 0,0,0,0 };
 
-    int iyDown = 0;
-    int iyUp = 0;
-
-    /*if (m_DisBG.ptSrcPos.x <= POSX1)
+    if (m_DisBG.ptSrcPos.x <= POSX1)
     {
         iposx = POSX1;
         iposy = POSY1;
@@ -178,169 +315,142 @@ RECT Background::BackgroundTile(int _i)
     {
         Rectangle(_hdc, (&(ObjManager::GetInstance()->GetvecBGpos())[i]).left, (&(ObjManager::GetInstance()->GetvecBGpos())[i]).top, 
             (&(ObjManager::GetInstance()->GetvecBGpos())[i]).right, (&(ObjManager::GetInstance()->GetvecBGpos())[i]).bottom);
-    }*/
+    }*/ 
 
-    if (POSX0 * BGSIZE < _i && _i < POSX1 * BGSIZE)
+    /*if (POSX0 * BGSIZE < _i && _i < POSX1 * BGSIZE)
     {
-        if (POSY0 != POSY1)
-        {
-            int imax = 0;
-            int imin = 0;
-
-            if (POSY0 > POSY1)
-            {
-                imax = POSY0;
-                imin = POSY1;
-            }
-            else
-            {
-                imax = POSY1;
-                imin = POSY0;
-            }
-
-            int iytemp = imax - imin;
-            int ixtemp = POSX1 - POSX0;
-            int itemp = (_i - imin) * (iytemp / ixtemp);
-
-            recTemp = { _i, (POSY0 * 2) + itemp, _i + 1, ((POSY0 + 1) * 2) + itemp };
-        }
-        else
-        {
-            recTemp = { _i, (POSY0 * 2), _i + 1, (POSY0 + 1) * 2 };
-        }
-
+        BackgroundTileset(_i, POSY0, POSY1, POSX0, POSX1, &recTemp);
     }
     else if (POSX1 * BGSIZE < _i && _i < POSX2 * BGSIZE)
     {
-        if (POSY1 != POSY2)
-        {
-            int imax = 0;
-            int imin = 0;
-
-            if (POSY1 > POSY2)
-            {
-                imax = POSY1;
-                imin = POSY2;
-            }
-            else
-            {
-                imax = POSY2;
-                imin = POSY1;
-            }
-
-            int iytemp = imax - imin;
-            int ixtemp = POSX2 - POSX1;
-            int itemp = (_i - imin) * (iytemp / ixtemp);
-
-            recTemp = { _i, (POSY1 * 2) + itemp, _i + 1, ((POSY2 + 1) * 2) + itemp };
-        }
-        else
-        {
-            recTemp = { _i, (POSY1 * 2), _i + 1, (POSY1 + 1) * 2 };
-        }
+        BackgroundTileset(_i, POSY1, POSY2, POSX1, POSX2, &recTemp);
     }
     else if (POSX2 * BGSIZE < _i && _i < POSX3 * BGSIZE)
     {
-        recTemp = { _i, POSY3 * 2, _i + 1, (POSY3 + 1) * 2 };
+        BackgroundTileset(_i, POSY2, POSY3, POSX2, POSX3, &recTemp);
     }
     else if (POSX3 * BGSIZE < _i && _i < POSX4 * BGSIZE)
     {
-        recTemp = { _i, POSY4 * 2, _i + 1, (POSY4 + 1) * 2 };
+        BackgroundTileset(_i, POSY3, POSY4, POSX3, POSX4, &recTemp);
     }
     else if (POSX4 * BGSIZE < _i && _i < POSX5 * BGSIZE)
     {
-        recTemp = { _i, POSY5 * 2, _i + 1, (POSY5 + 1) * 2 };
+        BackgroundTileset(_i, POSY4, POSY5, POSX4, POSX5, &recTemp);
     }
     else if (POSX5 * BGSIZE < _i && _i < POSX6 * BGSIZE)
     {
-        recTemp = { _i, POSY6 * 2, _i + 1, (POSY6 + 1) * 2 };
+        BackgroundTileset(_i, POSY5, POSY6, POSX5, POSX6, &recTemp);
     }
     else if (POSX6 * BGSIZE < _i && _i < POSX7 * BGSIZE)
     {
-        recTemp = { _i, POSY7 * 2, _i + 1, (POSY7 + 1) * 2 };
+        BackgroundTileset(_i, POSY6, POSY7, POSX6, POSX7, &recTemp);
     }
     else if (POSX7 * BGSIZE < _i && _i < POSX8 * BGSIZE)
     {
-        recTemp = { _i, POSY8 * 2, _i + 1, (POSY8 + 1) * 2 };
+        BackgroundTileset(_i, POSY7, POSY8, POSX7, POSX8, &recTemp);
     }
     else if (POSX8 * BGSIZE < _i && _i < POSX9 * BGSIZE)
     {
-        recTemp = { _i, POSY9 * 2, _i + 1, (POSY9 + 1) * 2 };
+        BackgroundTileset(_i, POSY8, POSY9, POSX8, POSX9, &recTemp);
     }
     else if (POSX9 * BGSIZE < _i && _i < POSX10 * BGSIZE)
     {
-        recTemp = { _i, POSY10 * 2, _i + 1, (POSY10 + 1) * 2 };
+        BackgroundTileset(_i, POSY9, POSY10, POSX9, POSX10, &recTemp);
     }
     else if (POSX10 * BGSIZE < _i && _i < POSX11 * BGSIZE)
     {
-        recTemp = { _i, POSY11 * 2, _i + 1, (POSY11 + 1) * 2 };
+        BackgroundTileset(_i, POSY10, POSY11, POSX10, POSX11, &recTemp);
     }
     else if (POSX11 * BGSIZE < _i && _i < POSX12 * BGSIZE)
     {
-        recTemp = { _i, POSY12 * 2, _i + 1, (POSY12 + 1) * 2 };
+        BackgroundTileset(_i, POSY11, POSY12, POSX11, POSX12, &recTemp);
     }
     else if (POSX12 * BGSIZE < _i && _i < POSX13 * BGSIZE)
     {
-        recTemp = { _i, POSY13 * 2, _i + 1, (POSY13 + 1) * 2 };
+        BackgroundTileset(_i, POSY12, POSY13, POSX12, POSX13, &recTemp);
     }
     else if (POSX13 * BGSIZE < _i && _i < POSX14 * BGSIZE)
     {
-        recTemp = { _i, POSY14 * 2, _i + 1, (POSY14 + 1) * 2 };
+        BackgroundTileset(_i, POSY13, POSY14, POSX13, POSX14, &recTemp);
     }
     else if (POSX14 * BGSIZE < _i && _i < POSX15 * BGSIZE)
     {
-        recTemp = { _i, POSY15 * 2, _i + 1, (POSY15 + 1) * 2 };
+        BackgroundTileset(_i, POSY14, POSY15, POSX14, POSX15, &recTemp);
     }
     else if (POSX15 * BGSIZE < _i && _i < POSX16 * BGSIZE)
     {
-        recTemp = { _i, POSY16 * 2, _i + 1, (POSY16 + 1) * 2 };
+        BackgroundTileset(_i, POSY15, POSY16, POSX15, POSX16, &recTemp);
     }
     else if (POSX16 * BGSIZE < _i && _i < POSX17 * BGSIZE)
     {
-        recTemp = { _i, POSY17 * 2, _i + 1, (POSY17 + 1) * 2 };
+        BackgroundTileset(_i, POSY16, POSY17, POSX16, POSX17, &recTemp);
     }
     else if (POSX17 * BGSIZE < _i && _i < POSX18 * BGSIZE)
     {
-        recTemp = { _i, POSY18 * 2, _i + 1, (POSY18 + 1) * 2 };
+        BackgroundTileset(_i, POSY17, POSY18, POSX17, POSX18, &recTemp);
     }
     else if (POSX18 * BGSIZE < _i && _i < POSX19 * BGSIZE)
     {
-        recTemp = { _i, POSY19 * 2, _i + 1, (POSY19 + 1) * 2 };
+        BackgroundTileset(_i, POSY18, POSY19, POSX18, POSX19, &recTemp);
     }
     else if (POSX19 * BGSIZE < _i && _i < POSX20 * BGSIZE)
     {
-        recTemp = { _i, POSY20 * 2, _i + 1, (POSY20 + 1) * 2 };
+        BackgroundTileset(_i, POSY19, POSY20, POSX19, POSX20, &recTemp);
     }
     else if (POSX20 * BGSIZE < _i && _i < POSX21 * BGSIZE)
     {
-        recTemp = { _i, POSY21 * 2, _i + 1, (POSY21 + 1) * 2 };
+        BackgroundTileset(_i, POSY20, POSY21, POSX20, POSX21, &recTemp);
     }
     else if (POSX21 * BGSIZE < _i && _i < POSX22 * BGSIZE)
     {
-        recTemp = { _i, POSY22 * 2, _i + 1, (POSY22 + 1) * 2 };
+        BackgroundTileset(_i, POSY21, POSY22, POSX21, POSX22, &recTemp);
     }
     else if (POSX22 * BGSIZE < _i && _i < POSX23 * BGSIZE)
     {
-        recTemp = { _i, POSY23 * 2, _i + 1, (POSY23 + 1) * 2 };
+        BackgroundTileset(_i, POSY22, POSY23, POSX22, POSX23, &recTemp);
     }
     else if (POSX23 * BGSIZE < _i && _i < POSX24 * BGSIZE)
     {
-        recTemp = { _i, POSY24 * 2, _i + 1, (POSY24 + 1) * 2 };
+        BackgroundTileset(_i, POSY23, POSY24, POSX23, POSX24, &recTemp);
     }
     else if (POSX24 * BGSIZE < _i && _i < POSX25 * BGSIZE)
     {
-        recTemp = { _i, POSY25 * 2, _i + 1, (POSY25 + 1) * 2 };
+        BackgroundTileset(_i, POSY24, POSY25, POSX24, POSX25, &recTemp);
     }
     else if (POSX25 * BGSIZE < _i && _i < POSX26 * BGSIZE)
     {
-        recTemp = { _i, POSY26 * 2, _i + 1, (POSY26 + 1) * 2 };
+        BackgroundTileset(_i, POSY25, POSY26, POSX25, POSX26, &recTemp);
     }
     else if (POSX26 * BGSIZE < _i && _i < POSX27 * BGSIZE)
     {
-    recTemp = { _i, POSY27 * 2, _i + 1, (POSY27 + 1) * 2 };
+        BackgroundTileset(_i, POSY26, POSY27, POSX26, POSX27, &recTemp);
+    }*/
+
+
+    for (int i = 0; i < ObjManager::GetInstance()->GetVector(EOBJECT_USER).size(); i++)
+    {
+        POINT postemp = { ((PlayerNormal*)(ObjManager::GetInstance()->GetVector(EOBJECT_USER))[i])->GetPlayerDisTop()->ptDestPos.x,GetTileY() };
+        ((PlayerNormal*)(ObjManager::GetInstance()->GetVector(EOBJECT_USER))[i])->SetPlayerDisTop(postemp);
+        ((PlayerNormal*)(ObjManager::GetInstance()->GetVector(EOBJECT_USER))[i])->SetPlayerDisBot(postemp);
     }
 
-    return recTemp;
+    /*// 음의 기울기일 때
+    if (GetTileY() < 0)
+    {
+        
+    }
+    // 양의 기울기일 때
+    else if (GetTileY() > 0)
+    {
+
+    }
+    // 기울기가 0일 때
+    else
+    {
+
+    }*/
+
+    return;
 }
 
 

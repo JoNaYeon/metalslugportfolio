@@ -3,6 +3,7 @@
 #include "Monster.h"
 #include "Player.h"
 #include "Background.h"
+#include "PlayerNormal.h"
 
 // √ ±‚»≠
 ObjManager* ObjManager::m_pinstance = NULL;
@@ -450,11 +451,25 @@ void ObjManager::BackgroundMove()
 
 void ObjManager::BackgroundTileSet()
 {
-	for (int i = 0; i < m_vecObj[EOBJECT_BG].size(); i++)
+	/*for (int i = 0; i < m_vecObj[EOBJECT_BG].size(); i++)
 	{
 		for (int j = 0; j < BGEND; j++)
 		{
 			m_vecBGpos.push_back(((Background*)(m_vecObj[EOBJECT_BG][i]))->BackgroundTile(j));
+		}
+	}
+
+	m_bTile = true;*/
+
+	for (int i = 0; i < m_vecObj[EOBJECT_USER].size(); i++)
+	{
+		for (int j = 0; j < m_vecObj[EOBJECT_BG].size(); j++)
+		{
+			POINT postemp = { ((PlayerNormal*)(m_vecObj[EOBJECT_USER])[i])->GetPlayerDisTop()->ptDestPos.x, 
+				((Background*)(m_vecObj[EOBJECT_BG])[j])->GetTileY() };
+
+			((PlayerNormal*)(m_vecObj[EOBJECT_USER])[i])->SetPlayerDisTop(postemp);
+			((PlayerNormal*)(m_vecObj[EOBJECT_USER])[i])->SetPlayerDisBot(postemp);
 		}
 	}
 

@@ -101,6 +101,27 @@
     <Filter Include="Scene\Score">
       <UniqueIdentifier>{43df8dff-6ce8-4b77-8118-51813cb79ff9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="리소스 파일\Player">
+      <UniqueIdentifier>{91141d27-a1e9-48ca-890e-4fdbea292d6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\Background">
+      <UniqueIdentifier>{139c0cde-90d9-4848-ad28-c68c31cd1bcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\Weapon">
+      <UniqueIdentifier>{92ad79a4-8766-4035-9d53-a9c1fd3db0fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\Bullet">
+      <UniqueIdentifier>{17737113-e6d1-442f-9b97-1040adcb1b8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\Item">
+      <UniqueIdentifier>{c7c4e70c-b727-40bc-bea6-497d19e0a831}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\Basic">
+      <UniqueIdentifier>{a118aafc-3788-44a7-8f58-2b098c68dabd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="리소스 파일\Monster">
+      <UniqueIdentifier>{5ee6f691-f8ae-4448-89eb-a4069dff38be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -222,61 +243,56 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="metalslug.rc">
-      <Filter>리소스 파일</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="small.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="metalslug.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\source\user\UserIdle_Top1.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\source\user\UserIdle_Top2.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\source\user\UserIdle_Bottom1.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\source\user\UserIdle_Bottom2.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\source\user\UserRun_Bottom1.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\source\user\UserRun_Bottom2.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\source\monster\zombie1.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\source\user\bitmap6.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
     <Image Include="..\source\background\background1.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\source\weapon\bullet1.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\source\user\usertopfire.bmp">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="..\source\user\userbottomfire.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\Background</Filter>
     </Image>
     <Image Include="..\source\background\background2.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\Background</Filter>
     </Image>
-    <Image Include="..\source\user\userjunptop.bmp">
-      <Filter>리소스 파일</Filter>
+    <Image Include="..\source\weapon\bullet1.bmp">
+      <Filter>리소스 파일\Bullet</Filter>
+    </Image>
+    <Image Include="..\source\user\bitmap6.bmp">
+      <Filter>리소스 파일\Basic</Filter>
+    </Image>
+    <Image Include="metalslug.ico">
+      <Filter>리소스 파일\Basic</Filter>
+    </Image>
+    <Image Include="small.ico">
+      <Filter>리소스 파일\Basic</Filter>
+    </Image>
+    <Image Include="..\source\user\userbottomfire.bmp">
+      <Filter>리소스 파일\Player</Filter>
+    </Image>
+    <Image Include="..\source\user\UserIdle_Bottom1.bmp">
+      <Filter>리소스 파일\Player</Filter>
+    </Image>
+    <Image Include="..\source\user\UserIdle_Bottom2.bmp">
+      <Filter>리소스 파일\Player</Filter>
+    </Image>
+    <Image Include="..\source\user\UserIdle_Top1.bmp">
+      <Filter>리소스 파일\Player</Filter>
+    </Image>
+    <Image Include="..\source\user\UserIdle_Top2.bmp">
+      <Filter>리소스 파일\Player</Filter>
     </Image>
     <Image Include="..\source\user\userjunp.bmp">
-      <Filter>리소스 파일</Filter>
+      <Filter>리소스 파일\Player</Filter>
+    </Image>
+    <Image Include="..\source\user\userjunptop.bmp">
+      <Filter>리소스 파일\Player</Filter>
+    </Image>
+    <Image Include="..\source\user\UserRun_Bottom1.bmp">
+      <Filter>리소스 파일\Player</Filter>
+    </Image>
+    <Image Include="..\source\user\UserRun_Bottom2.bmp">
+      <Filter>리소스 파일\Player</Filter>
+    </Image>
+    <Image Include="..\source\user\usertopfire.bmp">
+      <Filter>리소스 파일\Player</Filter>
+    </Image>
+    <Image Include="..\source\monster\zombie1.bmp">
+      <Filter>리소스 파일\Monster</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -386,5 +402,10 @@
     <ClCompile Include="ObjManager.cpp">
       <Filter>02. Manager\DB</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="metalslug.rc">
+      <Filter>리소스 파일\Basic</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

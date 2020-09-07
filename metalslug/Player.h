@@ -14,6 +14,8 @@ protected:
 	int m_ivirous;
 	bool m_bhuman;
 
+	bool m_bmove;
+
 	// player의 이미지 경로를 담을 변수
 	LPCSTR m_strBitmapTop;
 	LPCSTR m_strBitmapBottom;
@@ -57,5 +59,11 @@ public:
 
 	// 좀비가 되는 애니메이션 
 	void DeadZombie();
+
+	DISPLAYINFO* GetPlayerDisTop() { return &m_DisTop; };
+	DISPLAYINFO* GetPlayerDisBot() { return &m_DisBot; };
+	void SetPlayerDisTop(POINT _disTop) { m_DisTop.ptDestPos = _disTop; return; };
+	void SetPlayerDisBot(POINT _disBot) { m_DisBot.ptDestPos = _disBot; return; };
+	bool GetBGMove() { return m_bmove; };
 };
 

@@ -8,12 +8,16 @@
 // 생성자
 MonsterZombieMan::MonsterZombieMan()
 {
+	m_ihp = 100;
+	m_istrength = 0;
+	m_ispeed = 0;
+
 	m_iobjstate = E_USERSTATE_IDLE;
 	m_fdelay = 0.5;
 	m_iobjmove = MONSTERMOVE;
 
 	// 몬스터 구조체 정의
-	m_DisMon.ptSrcPos = { 0,0 };
+	m_DisMon.ptSrcPos = { 0,0 }; 
 	m_DisMon.ptDestPos = { 1000, 400 };
 	m_DisMon.ptDestSize = { MONSTERWANIMATION, MONSTERHANIMATION };
 	
@@ -23,6 +27,12 @@ MonsterZombieMan::MonsterZombieMan()
 	m_ImgMon.ptSrcSize = { MONSTERWANIMATION, MONSTERHANIMATION };
 
 	m_fdelay = 0.5;
+
+	m_recHitBox = { m_DisMon.ptDestPos.x, m_DisMon.ptDestPos.y,
+		m_DisMon.ptDestPos.x + (m_DisMon.ptDestSize.x * PLAYERSIZE), m_DisMon.ptDestPos.y + (m_DisMon.ptDestSize.y * PLAYERSIZE) };
+
+	m_bjump = false;
+	m_bsee = true;
 };
 
 
@@ -45,8 +55,17 @@ void MonsterZombieMan::Run()
 		m_dPrevTime = m_dcurTime;
 	}
 
-	// 배경 위에 설 수 있게 해주는 함수
-	//ObjStand(&m_Monster);
+	// 중력 적용
+	Gravity(&m_DisMon, EOBJECT_MONSTER);
+
+	// 움직임 패턴 적용
+	//MovePattern();
+
+	// HitBox 갱신
+	m_recHitBox = { m_DisMon.ptDestPos.x, m_DisMon.ptDestPos.y,
+		m_DisMon.ptDestPos.x + (m_DisMon.ptDestSize.x * PLAYERSIZE), m_DisMon.ptDestPos.y + (m_DisMon.ptDestSize.y * PLAYERSIZE) };
+
+	//Gravity(&m_DisMon);
 
 	return;
 };
@@ -80,6 +99,9 @@ void MonsterZombieMan::Render(HDC& _hdc, HWND& _hWnd)
 		hobjdc, m_DisMon.ptSrcPos.x, m_DisMon.ptSrcPos.y,
 		m_DisMon.ptDestSize.x, m_DisMon.ptDestSize.y, RGB(255, 255, 255));
 
+	// 히트박스 디스플레이
+	Rectangle(_hdc, m_recHitBox.left, m_recHitBox.top, m_recHitBox.right, m_recHitBox.bottom);
+
 
 	// 시간을 받아옴
 	m_dcurTime = timeGetTime();
@@ -109,8 +131,57 @@ void MonsterZombieMan::Attack()
 
 bool MonsterZombieMan::bObjDead()
 {
-	std::vector<Object*> vectemp = ObjManager::GetInstance() -> GetVector(EOBJECT_MONSTER);
-	
+	if (m_ihp <= 0)
+	{
+		return true;
+	}
 
 	return false;
+}
+
+void MonsterZombieMan::MovePattern()
+{
+	static int imovepattern = 0;
+	static bool bmoveright = false;
+
+	// #임시 - 움직임 패턴 설정해주기 
+	/*if (m_bsee == true)
+	{
+		// if (m_DisMon.ptDestPos.x >= m_DisTop.ptDestPos.x) { m_DisMon.ptDestPos.x -= MONSTERMOVE; } else ...
+
+		// 움직임의 영역 설정해주기
+		if (imovepattern >= 0)
+		{
+			m_DisMon.ptDestPos.x -= MONSTERMOVE;
+		}
+		else if(imovepattern <= 0)
+		{
+			m_DisMon.ptDestPos.x += MONSTERMOVE;
+		}
+	}*/
+
+	if (bmoveright == false)
+	{
+		m_DisMon.ptDestPos.x -= MONSTERMOVE;
+		imovepattern += MONSTERMOVE;
+
+		// 만약 100px 이상 움직였을 경우 반대로 
+		if (imovepattern >= 100)
+		{
+			bmoveright = true;
+		}
+	}
+	else
+	{
+		m_DisMon.ptDestPos.x += MONSTERMOVE;
+		imovepattern -= MONSTERMOVE;
+
+		// 만약 원상태로 돌아왔을 경우 반대로
+		if (imovepattern <= 0)
+		{
+			bmoveright = false;
+		}
+	}
+
+	return;
 }

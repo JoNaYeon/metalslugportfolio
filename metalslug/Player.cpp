@@ -1,4 +1,6 @@
 #include "Player.h"
+#include "Bullet.h"
+#include "ObjManager.h"
 
 // 생성자
 Player::Player()
@@ -11,7 +13,7 @@ Player::Player()
 	m_ivirous = 0;
 	m_bhuman = 0;
 
-	m_fgravity = 0;
+	//m_fgravity = 0;
 	m_bjump = false;
 
 	m_classobjptr = NULL;
@@ -51,6 +53,15 @@ void Player::DeadZombie()
 // 공격 - 총 (오버라이딩)
 void Player::AttackGun()
 {
+	// 이미지 한바퀴 돌면 false로 만들어주기 
+	if (m_DisTop.ptSrcPos.y >= ((m_DisTop.ptDestSize.y) * (m_ImgTop.iHightnum - 1)))
+	{
+		Object* objbullet = new Bullet(m_DisTop.ptDestPos);
+		ObjManager::GetInstance()->SetVector(objbullet, EOBJECT_BULLET);
+
+		m_bfire = false;
+	}
+
 	return;
 };
 
@@ -70,6 +81,18 @@ void Player::AttackBomb()
 void Player::Jump()
 {
 	static int t = 0;		// 물체의 시각 
+
+
+	// 유저와 타일이 완전히 부딪혔을 경우, t를 초기화 시켜주고 점프를 false 시켜준다.
+	if (m_bgravity == false)
+	{
+		t = 0;
+		m_bjump = false;
+
+		return;
+	}
+
+
 	// x방향의 위치 결정 
 	// 4.0 < 이게 솟구치는 정도, 속력
 	// 0.4f < 떨어지는 정도. 중력
@@ -79,11 +102,6 @@ void Player::Jump()
 
 	t++; // 물체의 시각을 진행한다 
 	
-	if (m_bgravity == false)
-	{
-		t = 0;
-		m_bjump = false;
-	}
 
 	return;
 };

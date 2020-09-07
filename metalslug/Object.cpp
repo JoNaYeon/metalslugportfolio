@@ -12,21 +12,14 @@ Object::Object()
 	m_dcurTime = timeGetTime();
 	m_fdelay = 1;
 
-	m_fvelocity = -VELOCITY;
-	m_bgravity = true;
+	//m_fvelocity = -VELOCITY;
+	//m_bgravity = true;
 
 	m_bdead = false;
 	m_bfire = false;
-};
 
-//void Object::Gravity(ST_OBJECT* _obj)
-//{
-//	if (m_bgravity == true)
-//	{
-//	}   
-//
-//	return;
-//}
+	m_bCollisionCheck = false;
+};
 
 void Object::Aniimage(DISPLAYINFO& _displayInfo, IMAGEINFO _imageInfo)
 {
@@ -68,40 +61,46 @@ bool Object::IntersectRectCheck(RECT* _rec1, RECT* _rec2)
 	}
 }
 
-//void Object::ObjStand(ST_OBJECT* _obj)
-//{
-//	// 배경 vector를 가져옴 
-//	std::vector<Object*> vectemp = ObjManager::GetInstance()->GetVector(EOBJECT_BG);
-//
-//	for (int i = 0; i < vectemp.size(); i++)
-//	{
-//		// 배경 vector 를 넣어줄 변수
-//		Background* bgtemp = (Background*)vectemp[i];
-//		// player의 RECT를 넣어줌
-//		RECT recttemp = { _obj->posoriginDest.x, _obj->posoriginDest.y,
-//			_obj->posoriginDest.x + (_obj->recDest.right) * PLAYERSIZE,
-//			_obj->posoriginDest.y + (_obj->recDest.bottom) * PLAYERSIZE };
-//
-//		bool btemp = IntersectRect(&recttemp, &m_recHitBox, bgtemp->BackgroundTile(BACKGROUNDMOVE));
-//
-//		// 만약 충돌이 일어날 경우
-//		if (btemp == true)
-//		{
-//			m_bgravity = false;
-//			_obj->posoriginDest.y -= (recttemp.bottom - recttemp.top);
-//		}
-//		else
-//		{
-//			m_bgravity = true;
-//		}
-//	}
-//
-//	return;
-//}
-
 void Object::SetImgInfo(IMAGEINFO& _imgInfo, POINT _ptSrcSize, int _iWidthNum, int _iHightNum)
 {
 	_imgInfo.iHightnum = _iHightNum;
 	_imgInfo.iWidthnum = _iWidthNum;
 	_imgInfo.ptSrcSize = _ptSrcSize;
+}
+
+void Object::Gravity(DISPLAYINFO* _objdis, E_OBJECT _eobj)
+{
+	static int temp = 0;		// 물체의 시각 
+
+	// gravity 가 true 일 때 중력 적용
+	if (m_bgravity == true)
+	{
+		for (int i = 0; i < ObjManager::GetInstance()->GetVector(_eobj).size(); i++)
+		{
+			RECT rectemp = { 0,0,0,0 };
+			RECT recHitPlayer = ObjManager::GetInstance()->GetVector(_eobj)[i]->GetHitBox();
+
+			for (int j = 0; j < ObjManager::GetInstance()->GetVector(_eobj).size(); j++)
+			{
+				RECT recHitBG = ObjManager::GetInstance()->GetVector(EOBJECT_BG)[j]->GetHitBox();
+
+				// 배경과 user가 충돌이 일어나지 않을 때 중력 적용 
+				if (IntersectRect(&rectemp, &recHitPlayer, &recHitBG) == false && m_bjump == false)
+				{
+					// 임시 중력 
+					_objdis->ptDestPos.y += 0.5f * 0.4f * temp * temp;
+				}
+			}
+		}
+	}
+	else
+	{
+		temp = 0;
+	}
+	
+
+
+	temp++;
+
+	return;
 }

@@ -17,6 +17,8 @@
 #define VELOCITY 18.f
 
 #define BGSIZE 4
+#define BGTILESIZE 2
+
 #define BGEND 5482
 // 배경 움직이는 거리
 #define BACKGROUNDMOVE 10
@@ -72,7 +74,7 @@
 
 // 몬스터 object 구조체에 들어갈 define
 // object가 움직이는 거리
-#define MONSTERMOVE BACKGROUNDMOVE * PLAYERSIZE
+#define MONSTERMOVE 10  //BACKGROUNDMOVE * PLAYERSIZE
 // object 이미지의 가로 길이
 #define MONSTERWANIMATION 36
 // object 이미지의 세로 길이
@@ -81,6 +83,9 @@
 #define MONSTERWNUM 10
 // object 이미지의 세로 칸 수
 #define MONSTERHNUM 2
+
+// 몬스터 피격시 뒤로 가기
+#define MONHITEDMOTION 8
 
 // 총알 object 구조체에 들어갈 define
 // 총알이 움직이는 길이
@@ -92,21 +97,82 @@
 
 extern HINSTANCE hInst;
 
+
+// BackgroundTile Pos define
+#define POSPOINT 27
+#define POSX0 0 
+#define POSY0 380
+#define POSX1 100 
+#define POSY1 380
+#define POSX2 114
+#define POSY2 366
+#define POSX3 205
+#define POSY3 366
+#define POSX4 292
+#define POSY4 380
+#define POSX5 420
+#define POSY5 380
+#define POSX6 433
+#define POSY6 366
+#define POSX7 525
+#define POSY7 366
+#define POSX8 605
+#define POSY8 380
+#define POSX9 747
+#define POSY9 380
+#define POSX10 771
+#define POSY10 357
+#define POSX11 823
+#define POSY11 356
+#define POSX12 824
+#define POSY12 380
+#define POSX13 1038
+#define POSY13 370
+#define POSX14 1185
+#define POSY14 370
+#define POSX15 1743
+#define POSY15 229
+#define POSX16 1747
+#define POSY16 360
+#define POSX17 2056
+#define POSY17 360
+#define POSX18 2424
+#define POSY18 445
+#define POSX19 2495
+#define POSY19 530
+#define POSX20 2751
+#define POSY20 530
+#define POSX21 2840
+#define POSY21 670
+#define POSX22 3077
+#define POSY22 670
+#define POSX23 3216
+#define POSY23 808
+#define POSX24 3281
+#define POSY24 820
+#define POSX25 4471
+#define POSY25 816
+#define POSX26 6990
+#define POSY26 884
+#define POSX27 5428
+#define POSY27 884
+
+
+
+
+
+// 오브젝트 종류 enum
 enum E_OBJECT
 {
 	EOBJECT_BG = 0,
 	EOBJECT_TERRAIN,
 	EOBJECT_BULLET,
 	EOBJECT_MONSTER,
+	EOBJECT_USER,
 	EOBJECT_OBJ,
 	EOBJECT_UI,
 	// 오브젝트의 갯수를 마지막에 넣어서 담아야 할 오브젝트의 갯수 자동 지정
 	EOBJECT_OBJNUM,
-};
-
-enum E_BGSCENE
-{
-	E_BGSCENE_GAME = 0
 };
 
 // scene 의 상태 표시 
@@ -128,11 +194,13 @@ enum E_USERSTATE
 	E_USERSTATE_DROP,
 };
 
+// 총알의 상태 enum
 enum E_GUNSTATE
 {
 	E_GUNSTATE_NORMAL = 100
 };
 
+// 행동패턴 enum
 enum E_KEY
 {
 	E_KEYSPACE = 0,
@@ -143,6 +211,7 @@ enum E_KEY
 	E_KEYBOMB
 };
 
+// 객체 종류 enum
 enum E_OBJECTKIND
 {
 	E_OBJECTKIND_PLAYERTOP = 0,
@@ -151,6 +220,38 @@ enum E_OBJECTKIND
 	E_OBJECTKIND_BG1,
 	E_OBJECTKIND_BG2
 
+};
+
+// 총알별 데미지 enum
+enum E_DAMAGE
+{
+	E_DAMAGE_NORMAL = 10
+};
+
+// 스코어 아이템 enum
+enum E_ITEMSCORE
+{
+	E_ITEMSCORE_CURE = 2000,
+	E_ITEMSCORE_FISH = 2001,
+	E_ITEMSCORE_BREAD = 2002,
+	E_ITEMSCORE_MEAT = 2003,
+	E_ITEMSCORE_CAN = 2004,
+	E_ITEMSCORE_CHICKEN = 2005,
+	E_ITEMSCORE_FRUIT = 2006,
+	E_ITEMSCORE_CARRAT = 2007,
+	E_ITEMSCORE_BANANA = 2008,
+	E_ITEMSCORE_BONE = 2009
+};
+
+// 총알 아이템 enum
+enum E_ITEMWEAPON
+{
+	E_ITEMWEAPON_BOMB = 2100,
+	E_ITEMWEAPON_H = 2101,
+	E_ITEMWEAPON_R = 2102,
+	E_ITEMWEAPON_S = 2103,
+	E_ITEMWEAPON_F = 2104,
+	E_ITEMWEAPON_L = 2105
 };
 
 // 오브젝트 특징 담은 구조체 

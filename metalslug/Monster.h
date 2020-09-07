@@ -50,7 +50,7 @@ public:
 	int GetHP() { return m_ihp; };
 
 	DISPLAYINFO* GetMonsterDis() { return &m_DisMon; };
-	void SetMonsterDis(DISPLAYINFO _disobj) { m_DisMon = _disobj; return; }
+	void SetMonsterDis(POINT _disobj) { m_DisMon.ptDestPos = _disobj; return; }
 	bool GetSee() { return m_bsee; };
 };
 

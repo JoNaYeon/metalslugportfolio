@@ -20,7 +20,7 @@ private:
 	// 배경화면이 움직인 정도를 담는 POINT
 	POINT ptTileMove;
 
-	std::vector<POINT> m_vecpos;
+	//std::vector<POINT> m_vecpos;
 
 
 
@@ -49,7 +49,7 @@ public:
 	// 타일을 깔아 줄 함수
 	void BackgroundTile(int _i);
 	// 개체들의 y의 위치를 잡아줄 함수
-	int GetTileY();
+	//int GetTileY(Object* _obj);
 	/*void BackgroundTileset(int _i, int _iposy1, int _iposy2, 
 		int _iposx1, int _iposx2, RECT* _rec);*/
 	//POINT GetRatio(int iwidth, int iheight);
@@ -59,6 +59,8 @@ public:
 	// 배경 이동 함수 
 	void BackgroundMove(E_USERSTATE _e_state);
 	DISPLAYINFO GetBG() { return m_DisBG; };
+
+	//std::vector<POINT>* GetBGTilevecpt() { return &m_vecpos; };
 	
 };
 

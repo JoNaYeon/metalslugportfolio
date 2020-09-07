@@ -17,7 +17,9 @@ private:
 	std::vector<Object*>::iterator m_DBobjiter;
 
 	// tile 을 담는 vector 변수 
-	std::vector<RECT> m_vecBGpos;
+	//std::vector<RECT> m_vecBGpos;
+	std::vector<POINT> m_vecpos;
+
 	// Tile 생성 여부를 확인해주는 bool 변수
 	bool m_bTile;
 	int m_itile;
@@ -44,7 +46,7 @@ public:
 	RECT GetRect();
 	void SetRect(RECT _recClient);
 
-	std::vector<RECT>* GetvecBGpos() { return &m_vecBGpos; };
+	//std::vector<RECT>* GetvecBGpos() { return &m_vecBGpos; };
 
 	// DB
 	void Run();
@@ -59,8 +61,10 @@ public:
 	void BackgroundMove();
 
 	// 타일 깔아주는 함수
-	void BackgroundTileSet();
+	void BackgroundTileSet(E_OBJECT _Eobj, std::vector<Object*> _objvec);
 	// 타일을 움직여주는 함수
 	void TileMove(E_USERSTATE _e_state);
+	std::vector<POINT>* GetTile() { return &m_vecpos; };
+
 };
 

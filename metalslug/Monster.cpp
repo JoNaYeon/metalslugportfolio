@@ -41,7 +41,7 @@ void Monster::Hit()
 }
 
 
-void MovePattern()
+void Monster::MovePattern()
 {
     return;
 }

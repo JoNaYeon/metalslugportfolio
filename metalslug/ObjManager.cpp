@@ -15,6 +15,74 @@ ObjManager::ObjManager()
 	m_recClient = { 0, 0, 0, 0 };
 	m_bTile = false;
 	m_itile = 0;
+
+	 for (int i = 0; i <= POSPOINT; i++)
+    {
+        POINT postemp = { 0,0 };
+        if (i == 0)
+        { postemp = { POSX0, POSY0 }; }
+        else if (i == 1)
+        { postemp = { POSX1, POSY1 }; }
+        else if (i == 2)
+        { postemp = { POSX2, POSY2 }; }
+        else if (i == 3)
+        { postemp = { POSX3, POSY3 }; }
+        else if (i == 4)
+        { postemp = { POSX4, POSY4 }; }
+        else if (i == 5)
+        { postemp = { POSX5, POSY5 }; }
+        else if (i == 6)
+        { postemp = { POSX6, POSY6 }; }
+        else if (i == 7)
+        { postemp = { POSX7, POSY7 }; }
+        else if (i == 8)
+        { postemp = { POSX8, POSY8 }; }
+        else if (i == 9)
+        { postemp = { POSX9, POSY9 }; }
+        else if (i == 10)
+        { postemp = { POSX10, POSY10 }; }
+        else if (i == 11)
+        { postemp = { POSX11, POSY11 }; }
+        else if (i == 12)
+        { postemp = { POSX12, POSY12 }; }
+        else if (i == 13)
+        { postemp = { POSX13, POSY13 }; }
+        else if (i == 14)
+        { postemp = { POSX14, POSY14 }; }
+        else if (i == 15)
+        { postemp = { POSX15, POSY15 }; }
+        else if (i == 16)
+        { postemp = { POSX16, POSY16 }; }
+        else if (i == 17)
+        { postemp = { POSX17, POSY17 }; }
+        else if (i == 18)
+        { postemp = { POSX18, POSY18 }; }
+        else if (i == 19)
+        { postemp = { POSX19, POSY19 }; }
+        else if (i == 20)
+        { postemp = { POSX20, POSY20 }; }
+        else if (i == 21)
+        { postemp = { POSX21, POSY21 }; }
+        else if (i == 22)
+        { postemp = { POSX22, POSY22 }; }
+        else if (i == 23)
+        { postemp = { POSX23, POSY23 }; }
+        else if (i == 24)
+        { postemp = { POSX24, POSY24 }; }
+        else if (i == 25)
+        { postemp = { POSX25, POSY25 }; }
+        else if (i == 26)
+        { postemp = { POSX26, POSY26 }; }
+        else if (i == 27)
+        { postemp = { POSX27, POSY27 }; }
+        
+        // POINT 의 x값 위치 조정
+        postemp.x = postemp.x * BGSIZE;
+        // POINT 의 y값 위치 조정
+        postemp.y = postemp.y * BGTILESIZE;
+
+        m_vecpos.push_back(postemp);
+    }
 };
 
 ObjManager* ObjManager::GetInstance()
@@ -127,10 +195,10 @@ void ObjManager::Run()
 	CollisionCheck();
 	BackgroundMove();
 
-	if (m_bTile == false)
+	/*if (m_bTile == false)
 	{
 		BackgroundTileSet();
-	}
+	}*/
 
 	return;
 };
@@ -165,6 +233,13 @@ void ObjManager::Rend(HWND& _hWnd)
 				// 동시에  bullet이 삭제되면 이 부분에서 문제가 남
 				(m_vecObj[i])[j]->Render(hMemdc, _hWnd);
 			}
+		}
+		
+		// 임의로 바닥 그려주기
+		for (int i = 0; i < m_vecpos.size() - 1; i++)
+		{
+			MoveToEx(hdc, m_vecpos[i].x, m_vecpos[i].y, NULL);
+			LineTo(hdc, m_vecpos[i + 1].x, m_vecpos[i + 1].y);
 		}
 
 
@@ -225,6 +300,7 @@ void ObjManager::CollisionCheck()
 	bool bCollisiontemp = false;
 	RECT rectemp = { 0,0,0,0 };
 
+
 	// Bullet 과 Monster 의 충돌시 
 	for (int i = 0; i < m_vecObj[EOBJECT_BULLET].size(); i++)
 	{
@@ -268,7 +344,7 @@ void ObjManager::CollisionCheck()
 					DISPLAYINFO MonDisTemp = *(((Monster*)m_vecObj[EOBJECT_MONSTER][j])->GetMonsterDis());
 					MonDisTemp.ptDestPos.x -= MONHITEDMOTION;
 
-					((Monster*)m_vecObj[EOBJECT_MONSTER][j])->SetMonsterDis(MonDisTemp);
+					((Monster*)m_vecObj[EOBJECT_MONSTER][j])->SetMonsterDis(MonDisTemp.ptDestPos);
 				}
 				// 왼쪽에서 맞을 때
 				//else
@@ -277,7 +353,7 @@ void ObjManager::CollisionCheck()
 					DISPLAYINFO MonDisTemp = *(((Monster*)m_vecObj[EOBJECT_MONSTER][j])->GetMonsterDis());
 					MonDisTemp.ptDestPos.x += MONHITEDMOTION;
 
-					((Monster*)m_vecObj[EOBJECT_MONSTER][j])->SetMonsterDis(MonDisTemp);
+					((Monster*)m_vecObj[EOBJECT_MONSTER][j])->SetMonsterDis(MonDisTemp.ptDestPos);
 				}
 
 				// 몬스터 피격으로 HP 깎기 
@@ -295,36 +371,76 @@ void ObjManager::CollisionCheck()
 		}
 	}
 
+	// Object 와 Tile 충돌시
+	for (int i = 0; i < EOBJECT_OBJNUM; i++)
+	{
+		switch (i)
+		{
+			// 몬스터와 타일 충돌시
+			case EOBJECT_MONSTER:
+				BackgroundTileSet(EOBJECT_MONSTER, m_vecObj[EOBJECT_MONSTER]);
+				break;
+
+			// 유저와 타일 충돌시
+			case EOBJECT_USER:
+				BackgroundTileSet(EOBJECT_USER, m_vecObj[EOBJECT_USER]);
+				BackgroundTileSet(EOBJECT_USER, m_vecObj[EOBJECT_USER]);
+				break;
+		}
+	}
+
+
+	/*for (int i = 0; i < EOBJECT_OBJNUM; i++)
+	{
+		int iobj = 0;
+
+		switch(i)
+		{
+			case EOBJECT_MONSTER:
+			{
+				iobj = EOBJECT_MONSTER;
+
+				for (int j = 0; j < m_vecObj[iobj].size(); j++)
+				{
+					BackgroundTileSet((E_OBJECT)iobj, ((Monster*)(m_vecObj[iobj])[j])->GetMonsterDis());
+				}
+			}
+				break;
+			case EOBJECT_USER:
+			{
+				iobj = EOBJECT_USER; 
+				
+				for (int j = 0; j < m_vecObj[iobj].size(); j++)
+				{
+					BackgroundTileSet((E_OBJECT)iobj, ((PlayerNormal*)(m_vecObj[iobj])[j])->GetPlayerDisTop());
+					BackgroundTileSet((E_OBJECT)iobj, ((PlayerNormal*)(m_vecObj[iobj])[j])->GetPlayerDisBot());
+				}
+			}
+				break;
+		}
+
+		/*for (int j = 0; j < m_vecObj[iobj].size(); j++)
+		{
+			switch (iobj)
+			{
+			case EOBJECT_MONSTER:
+				BackgroundTileSet((E_OBJECT)iobj, ((Monster*)(m_vecObj[iobj])[j])->GetMonsterDis());
+				break;
+			case EOBJECT_USER:
+				BackgroundTileSet((E_OBJECT)iobj, ((PlayerNormal*)(m_vecObj[iobj])[j])->GetPlayerDisTop());
+				BackgroundTileSet((E_OBJECT)iobj, ((PlayerNormal*)(m_vecObj[iobj])[j])->GetPlayerDisBot());
+				break;
+
+			}
+		}
+	}*/
+
 
 	// Player 과 BackgroundTile 의 충돌시 
-	for (int i = 0; i < m_vecObj[EOBJECT_USER].size(); i++)
+	/*for (int i = 0; i < m_vecObj[EOBJECT_USER].size(); i++)
 	{
 		RECT recHitPlayer = m_vecObj[EOBJECT_USER][i]->GetHitBox();
 
-		/*for (int j = 0; j < m_vecObj[EOBJECT_BG].size(); j++)
-		{
-			RECT recHitBG = m_vecObj[EOBJECT_BG][j]->GetHitBox();
-
-			// background Tile 과 Player 의 HitBox 가 부딪혔을 때 조금씩 올라오도록.
-			if (IntersectRect(&rectemp, &recHitPlayer, &recHitBG) == true)
-			{
-				// top과 bot을 일정한 위치에 위치하도록 해주기.
-				DISPLAYINFO* disinfotemp = ((Player*)(m_vecObj[EOBJECT_USER][i]))->GetPlayerDisTop();
-				//disinfotemp->ptDestPos.y -= 0.4f;
-				disinfotemp->ptDestPos.y = recHitBG.top - (disinfotemp->ptDestSize.y * PLAYERSIZE);
-
-				disinfotemp = ((Player*)(m_vecObj[EOBJECT_USER][i]))->GetPlayerDisBot();
-				//disinfotemp->ptDestPos.y -= 0.4f;
-				disinfotemp->ptDestPos.y = recHitBG.top - (disinfotemp->ptDestSize.y * PLAYERSIZE);
-
-				(m_vecObj[EOBJECT_USER][i])->SetboolGravity(false);
-			}
-			// backgoround 와 부딪히지 않았을 경우 계속 gravity 받도록. 
-			else
-			{
-				(m_vecObj[EOBJECT_USER][i])->SetboolGravity(true);
-			}
-		}*/
 
 		for (int j = 0; j < m_vecBGpos.size(); j++)
 		{
@@ -351,34 +467,12 @@ void ObjManager::CollisionCheck()
 				(m_vecObj[EOBJECT_USER][i])->SetboolGravity(true);
 			}
 		}
-	}
+	}*/
 
 	// Monster 과 Background Tile 충돌
-	for (int i = 0; i < m_vecObj[EOBJECT_MONSTER].size(); i++)
+	/*for (int i = 0; i < m_vecObj[EOBJECT_MONSTER].size(); i++)
 	{
 		RECT recHitPlayer = m_vecObj[EOBJECT_MONSTER][i]->GetHitBox();
-
-		/*for (int j = 0; j < m_vecObj[EOBJECT_BG].size(); j++)
-		{
-			RECT recHitBG = m_vecObj[EOBJECT_BG][j]->GetHitBox();
-
-			// background Tile 과 Monster 의 HitBox 가 부딪혔을 때 조금씩 올라오도록.
-			if (IntersectRect(&rectemp, &recHitPlayer, &recHitBG) == true)
-			{
-				DISPLAYINFO* disinfotemp = ((Monster*)(m_vecObj[EOBJECT_MONSTER][i]))->GetMonsterDis();
-				disinfotemp->ptDestPos.y -= 0.4f;
-
-				disinfotemp = ((Monster*)(m_vecObj[EOBJECT_MONSTER][i]))->GetMonsterDis();
-				disinfotemp->ptDestPos.y -= 0.4f;
-
-				(m_vecObj[EOBJECT_MONSTER][i])->SetboolGravity(false);
-			}
-			// backgoround 와 부딪히지 않았을 경우 계속 gravity 받도록. 
-			else
-			{
-				(m_vecObj[EOBJECT_MONSTER][i])->SetboolGravity(true);
-			}
-		}*/
 
 		for (int j = 0; j < m_vecBGpos.size(); j++)
 		{
@@ -408,10 +502,126 @@ void ObjManager::CollisionCheck()
 				(m_vecObj[EOBJECT_MONSTER][i])->SetboolGravity(true);
 			}
 		}
-	}
+	}*/
+
+
 
 	
 	return; 
+}
+
+
+// 선타일을 깔아주는 함수
+void ObjManager::BackgroundTileSet(E_OBJECT _Eobj, std::vector<Object*> _objvec)
+{
+	/*for (int i = 0; i < m_vecObj[EOBJECT_BG].size(); i++)
+	{
+		for (int j = 0; j < BGEND; j++)
+		{
+			m_vecBGpos.push_back(((Background*)(m_vecObj[EOBJECT_BG][i]))->BackgroundTile(j));
+		}
+	}
+
+	m_bTile = true;*/
+
+	// 직선의 기울기
+	int im = 0;
+	// y의 절편
+	int iy = 0;
+	// y의 값
+	int iypostemp = 0;
+
+	// 직선의 기울기 구하기
+	for (int i = 0; i < m_vecpos.size() - 1; i++)
+	{
+		// 기울기 구하기
+		im = (m_vecpos[i + 1].y - m_vecpos[i].y) / (m_vecpos[i + 1].x - m_vecpos[i].x);
+		// y절편 구하기
+		iy = m_vecpos[i].y - (im * m_vecpos[i].x);
+
+		// x 위치에 따른 y의 값
+		for (int j = 0; j < m_vecObj[EOBJECT_USER].size(); j++)
+		{
+			int ixplayerpos = ((PlayerNormal*)_objvec[j])->GetPlayerDisTop()->ptDestPos.x;
+			int iyplayerpos = ((PlayerNormal*)_objvec[j])->GetPlayerDisTop()->ptDestPos.y;
+
+			// y의 타일 위치 계산
+			iypostemp = (im * ixplayerpos) + iy;
+
+			// 플레이어의 이미지 시작점이 타일의 위치 - 플레이어의 세로 크기 보다 작다면 위치 고정시켜주기
+			if (iyplayerpos < iypostemp - iyplayerpos)
+			{
+				POINT pitplayerpos = { ixplayerpos - (ixplayerpos / 2) ,iyplayerpos };
+
+				//((PlayerNormal*)_objvec[j])->SetPlayerDisTop(pitplayerpos);
+				((PlayerNormal*)_objvec[j])->SetPlayerDisBot(pitplayerpos);
+				break;
+			}
+		}
+
+	}
+
+
+	/*for (int i = 0; i < _objvec.size(); i++)
+	{
+		if (((PlayerNormal*)_objvec[i])->GetPlayerDisTop() tile 의 y값 - ((PlayerNormal*)_objvec[i])->GetPlayerDisTop().y / 2 보다 크다면)
+		{
+			// 위치 고정시키기
+		}
+	}
+
+	for (int i = 0; i < m_vecObj[_Eobj].size(); i++)
+	{
+		for (int j = 0; j < m_vecObj[EOBJECT_BG].size(); j++)
+		{
+			int ix = 0;
+			int iy = 0;
+
+			switch (_Eobj)
+			{
+			case EOBJECT_USER:
+			{
+				ix = (((PlayerNormal*)(m_vecObj[_Eobj])[i])->GetPlayerDisTop()->ptDestPos.x)
+					- (((PlayerNormal*)(m_vecObj[_Eobj])[i])->GetPlayerDisTop()->ptDestSize.x / 2);
+				iy = (((Background*)(m_vecObj[EOBJECT_BG])[j])->GetTileY(m_vecObj[_Eobj][i]))
+					- (((PlayerNormal*)(m_vecObj[_Eobj])[i])->GetPlayerDisTop()->ptDestSize.y);
+
+				POINT postemp = { ix,iy };
+
+				// object 의 y의 위치가 postemp.y 보다 작을 경우
+				if (((PlayerNormal*)m_vecObj[_Eobj][i])->GetPlayerDisTop()->ptDestPos.y <= postemp.y)
+				{
+					((PlayerNormal*)(m_vecObj[_Eobj])[i])->SetPlayerDisTop(postemp);
+					((PlayerNormal*)(m_vecObj[_Eobj])[i])->SetPlayerDisBot(postemp);
+				}
+			}
+			break;
+			case EOBJECT_MONSTER:
+			{
+				ix = (((Monster*)(m_vecObj[_Eobj])[i])->GetMonsterDis()->ptDestPos.x)
+					- (((Monster*)(m_vecObj[_Eobj])[i])->GetMonsterDis()->ptDestSize.x / 2);
+				iy = (((Background*)(m_vecObj[EOBJECT_BG])[j])->GetTileY(m_vecObj[_Eobj][i]))
+					- (((Monster*)(m_vecObj[_Eobj])[i])->GetMonsterDis()->ptDestSize.y);
+
+				POINT postemp = { ix,iy };
+
+				// object 의 y의 위치가 postemp.y 보다 작을 경우
+				if (((Monster*)m_vecObj[_Eobj][i])->GetMonsterDis()->ptDestPos.y <= postemp.y)
+				{
+					((Monster*)(m_vecObj[_Eobj])[i])->SetMonsterDis(postemp);
+				}
+			}
+			break;
+			}
+
+			//POINT postemp = { ((PlayerNormal*)(m_vecObj[EOBJECT_USER])[i])->GetPlayerDisTop()->ptDestPos.x, 
+			//	((Background*)(m_vecObj[EOBJECT_BG])[j])->GetTileY(m_vecObj[EOBJECT_USER][i]) };
+		}
+	}*/
+
+	m_bTile = true;
+
+	return;
 }
 
 
@@ -431,7 +641,9 @@ void ObjManager::BackgroundMove()
 			for (int i = 0; i < vectemp.size(); i++)
 			{
 				Background* bgtemp = (Background*)vectemp[i];
+				// 배경 움직이기
 				bgtemp->BackgroundMove(E_USERSTATE_RWALK);
+				// 타일 움직여주기
 				TileMove(E_USERSTATE_RWALK);
 			}
 
@@ -449,65 +661,35 @@ void ObjManager::BackgroundMove()
 }
 
 
-void ObjManager::BackgroundTileSet()
-{
-	/*for (int i = 0; i < m_vecObj[EOBJECT_BG].size(); i++)
-	{
-		for (int j = 0; j < BGEND; j++)
-		{
-			m_vecBGpos.push_back(((Background*)(m_vecObj[EOBJECT_BG][i]))->BackgroundTile(j));
-		}
-	}
 
-	m_bTile = true;*/
-
-	for (int i = 0; i < m_vecObj[EOBJECT_USER].size(); i++)
-	{
-		for (int j = 0; j < m_vecObj[EOBJECT_BG].size(); j++)
-		{
-			POINT postemp = { ((PlayerNormal*)(m_vecObj[EOBJECT_USER])[i])->GetPlayerDisTop()->ptDestPos.x, 
-				((Background*)(m_vecObj[EOBJECT_BG])[j])->GetTileY() };
-
-			((PlayerNormal*)(m_vecObj[EOBJECT_USER])[i])->SetPlayerDisTop(postemp);
-			((PlayerNormal*)(m_vecObj[EOBJECT_USER])[i])->SetPlayerDisBot(postemp);
-		}
-	}
-
-	m_bTile = true;
-
-	return;
-}
-
-
+// 타일 움직여주는 함수
 void ObjManager::TileMove(E_USERSTATE _e_state)
 {
+
+	/*std::vector<POINT>* vecBGTilePos = NULL;
+
+	for (int i = 0; i < m_vecObj[EOBJECT_BG].size(); i++)
+	{
+		vecBGTilePos = ((Background*)(m_vecObj[EOBJECT_BG])[i])->GetBGTilevecpt();
+	}*/
+
 	switch (_e_state)
 	{
-	case E_USERSTATE_LWALK:
-	{
-		//m_itile += BACKGROUNDMOVE;
-
-		for (int i = 0; i < m_vecObj[EOBJECT_BG].size(); i++)
+		case E_USERSTATE_LWALK:
 		{
-			for (int j = 0; j < m_vecBGpos.size(); j++)
+			for (int i = 0; i < m_vecpos.size() - 1; i++)
 			{
-				m_vecBGpos[j].left += (BACKGROUNDMOVE * BGSIZE);
-				m_vecBGpos[j].right += (BACKGROUNDMOVE * BGSIZE);
+				(m_vecpos)[i].x += (BACKGROUNDMOVE * BGTILESIZE);
+				(m_vecpos)[i + 1].x += (BACKGROUNDMOVE * BGTILESIZE);
 			}
 		}
-	}
-	case E_USERSTATE_RWALK:
-	{
-		//m_itile -= BACKGROUNDMOVE;
-
-		for (int i = 0; i < m_vecObj[EOBJECT_BG].size(); i++)
+		case E_USERSTATE_RWALK:
 		{
-			for (int j = 0; j < m_vecBGpos.size(); j++)
+			for (int i = 0; i < m_vecpos.size() - 1; i++)
 			{
-				m_vecBGpos[j].left -= (BACKGROUNDMOVE * BGSIZE);
-				m_vecBGpos[j].right -= (BACKGROUNDMOVE * BGSIZE);
+				(m_vecpos)[i].x -= (BACKGROUNDMOVE * BGTILESIZE);
+				(m_vecpos)[i + 1].x -= (BACKGROUNDMOVE * BGTILESIZE);
 			}
-		}
 	}
 	}
 

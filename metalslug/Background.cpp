@@ -21,67 +21,7 @@ Background::Background()
 
     ptTileMove = { 0,0 };
 
-    for (int i = 0; i <= POSPOINT; i++)
-    {
-        if (i == 0)
-        { POINT postemp = { POSX0, POSY0 }; }
-        else if (i == 1)
-        { POINT postemp = { POSX1, POSY1 }; }
-        else if (i == 2)
-        { POINT postemp = { POSX2, POSY2 }; }
-        else if (i == 3)
-        { POINT postemp = { POSX3, POSY3 }; }
-        else if (i == 4)
-        { POINT postemp = { POSX4, POSY4 }; }
-        else if (i == 5)
-        { POINT postemp = { POSX5, POSY5 }; }
-        else if (i == 6)
-        { POINT postemp = { POSX6, POSY6 }; }
-        else if (i == 7)
-        { POINT postemp = { POSX7, POSY7 }; }
-        else if (i == 8)
-        { POINT postemp = { POSX8, POSY8 }; }
-        else if (i == 9)
-        { POINT postemp = { POSX9, POSY9 }; }
-        else if (i == 10)
-        { POINT postemp = { POSX10, POSY10 }; }
-        else if (i == 11)
-        { POINT postemp = { POSX11, POSY11 }; }
-        else if (i == 12)
-        { POINT postemp = { POSX12, POSY12 }; }
-        else if (i == 13)
-        { POINT postemp = { POSX13, POSY13 }; }
-        else if (i == 14)
-        { POINT postemp = { POSX14, POSY14 }; }
-        else if (i == 15)
-        { POINT postemp = { POSX15, POSY15 }; }
-        else if (i == 16)
-        { POINT postemp = { POSX16, POSY16 }; }
-        else if (i == 17)
-        { POINT postemp = { POSX17, POSY17 }; }
-        else if (i == 18)
-        { POINT postemp = { POSX18, POSY18 }; }
-        else if (i == 19)
-        { POINT postemp = { POSX19, POSY19 }; }
-        else if (i == 20)
-        { POINT postemp = { POSX20, POSY20 }; }
-        else if (i == 21)
-        { POINT postemp = { POSX21, POSY21 }; }
-        else if (i == 22)
-        { POINT postemp = { POSX22, POSY22 }; }
-        else if (i == 23)
-        { POINT postemp = { POSX23, POSY23 }; }
-        else if (i == 24)
-        { POINT postemp = { POSX24, POSY24 }; }
-        else if (i == 25)
-        { POINT postemp = { POSX25, POSY25 }; }
-        else if (i == 26)
-        { POINT postemp = { POSX26, POSY26 }; }
-        else if (i == 27)
-        { POINT postemp = { POSX27, POSY27 }; }
-        
-        m_vecpos.push_back(ptTileMove);
-    }
+   
 
 
     //m_ibgTile1 = 0;
@@ -154,7 +94,7 @@ void Background::Render(HDC& _hdc, HWND& _hWnd)
     // 바닥을 보여주는 임시 수식
     //Rectangle(_hdc, m_recHitBox.left, m_recHitBox.top, m_recHitBox.right, m_recHitBox.bottom);
     //BackgroundTile();
-    for (int i = 0; i < ObjManager::GetInstance()->GetVector(EOBJECT_BG).size(); i++)
+    /*for (int i = 0; i < ObjManager::GetInstance()->GetVector(EOBJECT_BG).size(); i++)
     {
         for (int j = 0; j < (*(ObjManager::GetInstance()->GetvecBGpos())).size(); j++)
         {
@@ -163,7 +103,13 @@ void Background::Render(HDC& _hdc, HWND& _hWnd)
 
             Rectangle(_hdc, recBGTemp.left, recBGTemp.top, recBGTemp.right, recBGTemp.bottom);
         }
-    }
+    }*/
+    /*for (int i = 0; i < m_vecpos.size() - 1; i++)
+    {
+        MoveToEx(_hdc, m_vecpos[i].x, m_vecpos[i].y, NULL);
+        LineTo(_hdc, m_vecpos[i + 1].x, m_vecpos[i + 1].y);
+    }*/
+
 
     // 다시 hOldBit 으로 갈아주기
     SelectObject(himgdc, hOldBit_img);
@@ -223,7 +169,8 @@ void Background::Destroy()
     return;
 }*/
 
-int Background::GetTileY()
+// POINT 와 POINT 사이의 기울기를 계산하여 object 의 y값을 구하는 함수
+/*int Background::GetTileY(Object* _obj)
 {
     std::vector<Object*> vecObjTemp = ObjManager::GetInstance()->GetVector(EOBJECT_USER);
 
@@ -243,12 +190,12 @@ int Background::GetTileY()
         iPlayerX = distemp->ptDestPos.x;
     }
 
-    for (int i = 0; i < m_vecpos.size(); i++)
+    for (int i = 0; i < m_vecpos.size() - 1; i++)
     {
-        if (iPlayerX >= m_vecpos[i - 1].x && iPlayerX < m_vecpos[i].x)
+        if (iPlayerX >= m_vecpos[i].x && iPlayerX < m_vecpos[i + 1].x)
         {
-            posleft = m_vecpos[i - 1];
-            posright = m_vecpos[i];
+            posleft = m_vecpos[i];
+            posright = m_vecpos[i + 1];
         }
     }
 
@@ -262,7 +209,7 @@ int Background::GetTileY()
     iPlayerY = (im * iPlayerX) + iY;
 
     return iPlayerY;
-}
+}*/
 
 
 void Background::BackgroundTile(int _i)
@@ -429,9 +376,9 @@ void Background::BackgroundTile(int _i)
 
     for (int i = 0; i < ObjManager::GetInstance()->GetVector(EOBJECT_USER).size(); i++)
     {
-        POINT postemp = { ((PlayerNormal*)(ObjManager::GetInstance()->GetVector(EOBJECT_USER))[i])->GetPlayerDisTop()->ptDestPos.x,GetTileY() };
-        ((PlayerNormal*)(ObjManager::GetInstance()->GetVector(EOBJECT_USER))[i])->SetPlayerDisTop(postemp);
-        ((PlayerNormal*)(ObjManager::GetInstance()->GetVector(EOBJECT_USER))[i])->SetPlayerDisBot(postemp);
+        //POINT postemp = { ((PlayerNormal*)(ObjManager::GetInstance()->GetVector(EOBJECT_USER))[i])->GetPlayerDisTop()->ptDestPos.x,GetTileY() };
+        //((PlayerNormal*)(ObjManager::GetInstance()->GetVector(EOBJECT_USER))[i])->SetPlayerDisTop(postemp);
+        //((PlayerNormal*)(ObjManager::GetInstance()->GetVector(EOBJECT_USER))[i])->SetPlayerDisBot(postemp);
     }
 
     /*// 음의 기울기일 때

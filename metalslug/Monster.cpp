@@ -6,7 +6,8 @@ void Monster::MonsterMove(E_USERSTATE _e_state)
     {
         case E_USERSTATE_RWALK:
         {
-            m_DisMon.ptDestPos.x -= (BACKGROUNDMOVE * BGSIZE);
+            m_DisTop.ptDestPos.x -= (BACKGROUNDMOVE * BGSIZE);
+            //m_DisMon.ptDestPos.x -= (BACKGROUNDMOVE * BGSIZE);
         }
     }
 

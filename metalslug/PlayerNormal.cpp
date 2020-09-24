@@ -41,6 +41,7 @@ PlayerNormal::PlayerNormal()
 	m_recHitBox = { m_DisTop.ptDestPos.x, m_DisTop.ptDestPos.y,
 		m_DisTop.ptDestPos.x + (m_DisTop.ptDestSize.x * PLAYERSIZE), m_DisTop.ptDestPos.y + (m_DisTop.ptDestSize.y * PLAYERSIZE) };
 
+
 	return;
 }
 
@@ -173,6 +174,7 @@ void PlayerNormal::AnimationStateCheck()
 			m_bleftright = false;
 			// 점프 true
 			m_bjump = true;
+			m_t = 0;
 		}
 		// 왼쪽 방향으로 움직이기
 		else if (InputManager::GetInstance()->Keyboard(E_KEYLEFT) == true)

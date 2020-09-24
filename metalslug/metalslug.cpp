@@ -205,7 +205,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_TIMER:
         {
             // 지정 영역 (null)을 갱신. NULL일 경우에 Client 전체를 리셋함
-           // RECT rec_temp = { 10,10,20,20 };
+            // RECT rec_temp = { 10,10,20,20 };
             //InvalidateRect(hWnd, &rec_temp, false);
         }   
         break;

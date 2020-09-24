@@ -17,22 +17,28 @@ MonsterZombieMan::MonsterZombieMan()
 	m_iobjmove = MONSTERMOVE;
 
 	// 몬스터 구조체 정의
-	m_DisMon.ptSrcPos = { 0,0 }; 
-	m_DisMon.ptDestPos = { 1000, 400 };
-	m_DisMon.ptDestSize = { MONSTERWANIMATION, MONSTERHANIMATION };
+	m_DisTop.ptSrcPos = { 0,0 }; 
+	m_DisTop.ptDestPos = { 1000, 400 };
+	m_DisTop.ptDestSize = { MONSTERWANIMATION, MONSTERHANIMATION };
 	
 
-	m_ImgMon.iWidthnum = MONSTERWNUM;
+	/*m_ImgMon.iWidthnum = MONSTERWNUM;
 	m_ImgMon.iHightnum = MONSTERHNUM;
-	m_ImgMon.ptSrcSize = { MONSTERWANIMATION, MONSTERHANIMATION };
+	m_ImgMon.ptSrcSize = { MONSTERWANIMATION, MONSTERHANIMATION };*/
+	m_ImgTop.iWidthnum = MONSTERWNUM;
+	m_ImgTop.iHightnum = MONSTERHNUM;
+	m_ImgTop.ptSrcSize = { MONSTERWANIMATION, MONSTERHANIMATION };
 
 	m_fdelay = 0.5;
 
-	m_recHitBox = { m_DisMon.ptDestPos.x, m_DisMon.ptDestPos.y,
-		m_DisMon.ptDestPos.x + (m_DisMon.ptDestSize.x * PLAYERSIZE), m_DisMon.ptDestPos.y + (m_DisMon.ptDestSize.y * PLAYERSIZE) };
+	/*m_recHitBox = { m_DisMon.ptDestPos.x, m_DisMon.ptDestPos.y,
+		m_DisMon.ptDestPos.x + (m_DisMon.ptDestSize.x * PLAYERSIZE), m_DisMon.ptDestPos.y + (m_DisMon.ptDestSize.y * PLAYERSIZE) };*/
+	m_recHitBox = { m_DisTop.ptDestPos.x, m_DisTop.ptDestPos.y,
+		m_DisTop.ptDestPos.x + (m_DisTop.ptDestSize.x * PLAYERSIZE), m_DisTop.ptDestPos.y + (m_DisTop.ptDestSize.y * PLAYERSIZE) };
 
 	m_bjump = false;
 	m_bsee = true;
+	m_bypos = true;
 };
 
 
@@ -49,21 +55,25 @@ void MonsterZombieMan::Run()
 	{
 		// object 상태 움직임 변경 
 		//Animation(_hdc, m_Monster, m_iobjstate);
-		Aniimage(m_DisMon, m_ImgMon);
+		//Aniimage(m_DisMon, m_ImgMon);
+		Aniimage(m_DisTop, m_ImgTop);
 
 		// 이전 시간을 현재 시간으로 대체
 		m_dPrevTime = m_dcurTime;
 	}
 
 	// 중력 적용
-	Gravity(&m_DisMon, EOBJECT_MONSTER);
+	//Gravity(&m_DisMon, EOBJECT_MONSTER);
+	Gravity(&m_DisTop, EOBJECT_MONSTER);
 
 	// 움직임 패턴 적용
 	//MovePattern();
 
 	// HitBox 갱신
-	m_recHitBox = { m_DisMon.ptDestPos.x, m_DisMon.ptDestPos.y,
-		m_DisMon.ptDestPos.x + (m_DisMon.ptDestSize.x * PLAYERSIZE), m_DisMon.ptDestPos.y + (m_DisMon.ptDestSize.y * PLAYERSIZE) };
+	/*m_recHitBox = { m_DisMon.ptDestPos.x, m_DisMon.ptDestPos.y,
+		m_DisMon.ptDestPos.x + (m_DisMon.ptDestSize.x * PLAYERSIZE), m_DisMon.ptDestPos.y + (m_DisMon.ptDestSize.y * PLAYERSIZE) };*/
+	m_recHitBox = { m_DisTop.ptDestPos.x, m_DisTop.ptDestPos.y,
+		m_DisTop.ptDestPos.x + (m_DisTop.ptDestSize.x * PLAYERSIZE), m_DisTop.ptDestPos.y + (m_DisTop.ptDestSize.y * PLAYERSIZE) };
 
 	//Gravity(&m_DisMon);
 
@@ -94,10 +104,15 @@ void MonsterZombieMan::Render(HDC& _hdc, HWND& _hWnd)
 	holdBit = (HBITMAP)SelectObject(hobjdc, hMonsterobjBit);
 
 	// 몬스터 이미지 출력
-	TransparentBlt(_hdc, m_DisMon.ptDestPos.x, m_DisMon.ptDestPos.y,
+	/*TransparentBlt(_hdc, m_DisMon.ptDestPos.x, m_DisMon.ptDestPos.y,
 		m_DisMon.ptDestSize.x * PLAYERSIZE, m_DisMon.ptDestSize.y * PLAYERSIZE,
 		hobjdc, m_DisMon.ptSrcPos.x, m_DisMon.ptSrcPos.y,
-		m_DisMon.ptDestSize.x, m_DisMon.ptDestSize.y, RGB(255, 255, 255));
+		m_DisMon.ptDestSize.x, m_DisMon.ptDestSize.y, RGB(255, 255, 255));*/
+	// 몬스터 이미지 출력
+	TransparentBlt(_hdc, m_DisTop.ptDestPos.x, m_DisTop.ptDestPos.y,
+		m_DisTop.ptDestSize.x * PLAYERSIZE, m_DisTop.ptDestSize.y * PLAYERSIZE,
+		hobjdc, m_DisTop.ptSrcPos.x, m_DisTop.ptSrcPos.y,
+		m_DisTop.ptDestSize.x, m_DisTop.ptDestSize.y, RGB(255, 255, 255));
 
 	// 히트박스 디스플레이
 	Rectangle(_hdc, m_recHitBox.left, m_recHitBox.top, m_recHitBox.right, m_recHitBox.bottom);
@@ -162,7 +177,8 @@ void MonsterZombieMan::MovePattern()
 
 	if (bmoveright == false)
 	{
-		m_DisMon.ptDestPos.x -= MONSTERMOVE;
+		m_DisTop.ptDestPos.x -= MONSTERMOVE;
+		//m_DisMon.ptDestPos.x -= MONSTERMOVE;
 		imovepattern += MONSTERMOVE;
 
 		// 만약 100px 이상 움직였을 경우 반대로 
@@ -173,7 +189,8 @@ void MonsterZombieMan::MovePattern()
 	}
 	else
 	{
-		m_DisMon.ptDestPos.x += MONSTERMOVE;
+		//m_DisMon.ptDestPos.x += MONSTERMOVE;
+		m_DisTop.ptDestPos.x += MONSTERMOVE;
 		imovepattern -= MONSTERMOVE;
 
 		// 만약 원상태로 돌아왔을 경우 반대로

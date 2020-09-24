@@ -1,17 +1,23 @@
 ﻿  ObjManager.cpp
 D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(127,22): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
 D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(168,22): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(230,22): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(239,21): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(305,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(311,21): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(326,70): warning C4805: '==': 연산에 'BOOL' 형식과 'bool' 형식을 함께 사용하는 것은 안전하지 않습니다.
-D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(535,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(543,21): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(635,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(641,22): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(653,22): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(680,22): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(688,22): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(295): warning C4715: 'ObjManager::GetVector': 모든 제어 경로에서 값을 반환하지는 않습니다.
+D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(238,22): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(247,21): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(313,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(319,21): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(334,70): warning C4805: '==': 연산에 'BOOL' 형식과 'bool' 형식을 함께 사용하는 것은 안전하지 않습니다.
+D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(516,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(529,22): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(535,20): warning C4244: '초기화 중': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(536,16): warning C4244: '초기화 중': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(537,20): warning C4244: '초기화 중': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(538,16): warning C4244: '초기화 중': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(543,25): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(546,41): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(726,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(732,22): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(744,22): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(771,22): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(779,22): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+D:\Private\Git\metalslug\metalslugportfolio\metalslug\ObjManager.cpp(303): warning C4715: 'ObjManager::GetVector': 모든 제어 경로에서 값을 반환하지는 않습니다.
   metalslug.vcxproj -> D:\Private\Git\metalslug\metalslugportfolio\Debug\metalslug.exe

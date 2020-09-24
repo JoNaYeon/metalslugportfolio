@@ -192,12 +192,20 @@ void ObjManager::Run()
 		}
 	}
 
-	CollisionCheck();
+	// 임시주석 - 라인 충돌 검사를 위해 잠시 빼둠
+	//CollisionCheck();
 	BackgroundMove();
+
+	// Object 와 Tile 충돌시
+	// 이후 CollisionCheck() 와 합치기.
+	for (int i = 0; i < EOBJECT_OBJNUM; i++)
+	{
+		BackgroundLineCollision((E_OBJECT)i);
+	}
 
 	/*if (m_bTile == false)
 	{
-		BackgroundTileSet();
+		BackgroundLineCollision();
 	}*/
 
 	return;
@@ -341,25 +349,26 @@ void ObjManager::CollisionCheck()
 				if (bright == true)
 				{
 					// Monster 뒤로 밀리기
-					DISPLAYINFO MonDisTemp = *(((Monster*)m_vecObj[EOBJECT_MONSTER][j])->GetMonsterDis());
+					DISPLAYINFO MonDisTemp = *((m_vecObj[EOBJECT_MONSTER][j])->GetDisTop());
 					MonDisTemp.ptDestPos.x -= MONHITEDMOTION;
 
-					((Monster*)m_vecObj[EOBJECT_MONSTER][j])->SetMonsterDis(MonDisTemp.ptDestPos);
+					m_vecObj[EOBJECT_MONSTER][j]->SetDisTop(MonDisTemp.ptDestPos);
 				}
 				// 왼쪽에서 맞을 때
 				//else
 				{
 					// Monster 뒤로 밀리기
-					DISPLAYINFO MonDisTemp = *(((Monster*)m_vecObj[EOBJECT_MONSTER][j])->GetMonsterDis());
+					DISPLAYINFO MonDisTemp = *((m_vecObj[EOBJECT_MONSTER][j])->GetDisTop());
 					MonDisTemp.ptDestPos.x += MONHITEDMOTION;
 
-					((Monster*)m_vecObj[EOBJECT_MONSTER][j])->SetMonsterDis(MonDisTemp.ptDestPos);
+					m_vecObj[EOBJECT_MONSTER][j]->SetDisTop(MonDisTemp.ptDestPos);
 				}
 
 				// 몬스터 피격으로 HP 깎기 
 				((Monster*)(m_vecObj[EOBJECT_MONSTER][j]))->Hit();
 			}
 		}
+
 		// iter 가 vector 의 끝부분과 같다면 더이상 iter를 더해주지 않도록.
 		if (iter == (m_vecObj[EOBJECT_BULLET]).end())
 		{
@@ -368,24 +377,6 @@ void ObjManager::CollisionCheck()
 		else
 		{
 			iter++;
-		}
-	}
-
-	// Object 와 Tile 충돌시
-	for (int i = 0; i < EOBJECT_OBJNUM; i++)
-	{
-		switch (i)
-		{
-			// 몬스터와 타일 충돌시
-			case EOBJECT_MONSTER:
-				BackgroundTileSet(EOBJECT_MONSTER, m_vecObj[EOBJECT_MONSTER]);
-				break;
-
-			// 유저와 타일 충돌시
-			case EOBJECT_USER:
-				BackgroundTileSet(EOBJECT_USER, m_vecObj[EOBJECT_USER]);
-				BackgroundTileSet(EOBJECT_USER, m_vecObj[EOBJECT_USER]);
-				break;
 		}
 	}
 
@@ -505,34 +496,105 @@ void ObjManager::CollisionCheck()
 	}*/
 
 
-
 	
 	return; 
 }
 
 
+
 // 선타일을 깔아주는 함수
-void ObjManager::BackgroundTileSet(E_OBJECT _Eobj, std::vector<Object*> _objvec)
+void ObjManager::BackgroundLineCollision(E_OBJECT _Eobj)
 {
-	/*for (int i = 0; i < m_vecObj[EOBJECT_BG].size(); i++)
+	// 직선의 기울기
+	float fm = 0;
+	// y의 절편
+	int iy = 0;
+	// 움직인 위치의 y 값
+	int iobjdistancey = 0;
+
+	// dObjcet 
+	for (int i = 0; i < m_vecObj[_Eobj].size(); i++)
 	{
-		for (int j = 0; j < BGEND; j++)
+		// 이미지의 위치값 가져오기
+		int ixplayerpos = m_vecObj[_Eobj][i]->GetDisTop()->ptDestPos.x;
+		int iyplayerpos = m_vecObj[_Eobj][i]->GetDisTop()->ptDestPos.y; // 해당 오브젝트의 세로축값
+
+		// 이미지 사이즈 가져오기 
+		POINT pImgSizetemp = { (m_vecObj[_Eobj][i]->GetDisTop()->ptDestSize.x) ,
+			(m_vecObj[_Eobj][i]->GetDisTop()->ptDestSize.y)};
+
+		// 충돌할 것만 충돌한다
+		if (m_vecObj[_Eobj][i]->GetbCollision() == true)
 		{
-			m_vecBGpos.push_back(((Background*)(m_vecObj[EOBJECT_BG][i]))->BackgroundTile(j));
+			for (int j = 0; j < m_vecpos.size() - 1; j++)
+			{
+				// Object 의 x 위치가 POINT 사이값에 존재할 경우
+				if (m_vecpos[j].x <= ixplayerpos && ixplayerpos < m_vecpos[j + 1].x)
+				{
+					// 기울기 구하기
+					float fnextjy = m_vecpos[j + 1].y;
+					float fjy = m_vecpos[j].y;
+					float fnextjx = m_vecpos[j + 1].x;
+					float fjx = m_vecpos[j].x;
+
+					fm = ((fnextjy - fjy) / (fnextjx - fjx));
+
+					// y절편 구하기
+					iy = m_vecpos[j].y - (fm * m_vecpos[j].x); // j번째에 있는 선의 y값에서 기울기 * 선의 x값을 더한걸 뺀다. 
+
+					// y의 타일 위치 계산
+					iobjdistancey = (fm * ixplayerpos) + iy;
+
+					// 첫번째 땅이 POINT 가 아닐 때
+					if (j != 0)
+					{
+						// 왼쪽 땅이 더 높을 경우 
+						if (m_vecpos[j].y > m_vecpos[j - 1].y && m_vecpos[j].x == m_vecpos[j - 1].x)
+						{
+							continue;
+						}
+						//오른쪽 땅이 더 높은 경우
+						if (m_vecpos[j].y > m_vecpos[j + 1].y && m_vecpos[j].x == m_vecpos[j + 1].x)
+						{
+							break;
+						}
+					}
+
+					// 플레이어의 이미지 시작점이 타일의 위치 - 플레이어의 세로 크기 보다 작다면 위치 고정시켜주기
+					if (iyplayerpos + (pImgSizetemp.y * PLAYERSIZE) >= iobjdistancey) // 세로축값에서 인게임크기를 더한것이 선보다 하단에 있다면.
+					{
+						POINT pitplayerpos = { ixplayerpos , iobjdistancey - (pImgSizetemp.y * PLAYERSIZE) };
+
+						(m_vecObj[_Eobj][i])->SetDisTop(pitplayerpos);
+
+						// 만약 들어온 Object가 User 일 경우, Bot 부분도 세팅해주기
+						if (_Eobj == EOBJECT_USER)
+						{
+							(m_vecObj[_Eobj][i])->SetDisBot(pitplayerpos);
+						}
+
+						// Object 의 상태가 jump 가 아닐 때에만 gravity를 false 로 바꿔주기
+						if (m_vecObj[_Eobj][i]->Getobjstate() == E_USERSTATE_JUMP)
+						{
+							m_vecObj[_Eobj][i]->SetJump(false);
+							m_vecObj[_Eobj][i]->Setobjstate(E_USERSTATE_IDLE);
+							//m_vecObj[_Eobj][i]->SetboolGravity(false);
+						}
+
+						break;
+					}
+					else
+					{
+						m_vecObj[_Eobj][i]->SetboolGravity(true);
+					}
+					break;
+				}
+			}
 		}
 	}
 
-	m_bTile = true;*/
-
-	// 직선의 기울기
-	int im = 0;
-	// y의 절편
-	int iy = 0;
-	// y의 값
-	int iypostemp = 0;
-
 	// 직선의 기울기 구하기
-	for (int i = 0; i < m_vecpos.size() - 1; i++)
+	/*for (int i = 0; i < m_vecpos.size() - 1; i++)
 	{
 		// 기울기 구하기
 		im = (m_vecpos[i + 1].y - m_vecpos[i].y) / (m_vecpos[i + 1].x - m_vecpos[i].x);
@@ -540,29 +602,58 @@ void ObjManager::BackgroundTileSet(E_OBJECT _Eobj, std::vector<Object*> _objvec)
 		iy = m_vecpos[i].y - (im * m_vecpos[i].x);
 
 		// x 위치에 따른 y의 값
-		for (int j = 0; j < m_vecObj[EOBJECT_USER].size(); j++)
+		for (int j = 0; j < m_vecObj[_Eobj].size() - 1; j++)
 		{
-			int ixplayerpos = ((PlayerNormal*)_objvec[j])->GetPlayerDisTop()->ptDestPos.x;
-			int iyplayerpos = ((PlayerNormal*)_objvec[j])->GetPlayerDisTop()->ptDestPos.y;
-
-			// y의 타일 위치 계산
-			iypostemp = (im * ixplayerpos) + iy;
-
-			// 플레이어의 이미지 시작점이 타일의 위치 - 플레이어의 세로 크기 보다 작다면 위치 고정시켜주기
-			if (iyplayerpos < iypostemp - iyplayerpos)
+			if (m_vecObj[_Eobj][j]->GetyPos() == true)
 			{
-				POINT pitplayerpos = { ixplayerpos - (ixplayerpos / 2) ,iyplayerpos };
+				// 이미지의 위치값 가져오기
+				int ixplayerpos = m_vecObj[_Eobj][j]->GetDisTop()->ptDestPos.x;
+				int iyplayerpos = m_vecObj[_Eobj][j]->GetDisTop()->ptDestPos.y;
 
-				//((PlayerNormal*)_objvec[j])->SetPlayerDisTop(pitplayerpos);
-				((PlayerNormal*)_objvec[j])->SetPlayerDisBot(pitplayerpos);
-				break;
+				// 이미지 사이즈 가져오기 
+				POINT pImgSizetemp = { iyplayerpos - m_vecObj[_Eobj][j]->GetDisTop()->ptDestSize.x ,
+					iyplayerpos - m_vecObj[_Eobj][j]->GetDisTop()->ptDestSize.y };
+
+				// y의 타일 위치 계산
+				iypostemp = (im * ixplayerpos) + iy;
+
+				// 플레이어의 이미지 시작점이 타일의 위치 - 플레이어의 세로 크기 보다 작다면 위치 고정시켜주기
+				if (iyplayerpos < iypostemp - pImgSizetemp.y)
+				{
+					POINT pitplayerpos = { ixplayerpos - (pImgSizetemp.x / 2) ,	iyplayerpos - pImgSizetemp.y };
+
+					(m_vecObj[_Eobj][j])->SetDisTop(pitplayerpos);
+
+					// 만약 User 일 경우, Bot 부분도 세팅해주기
+					if (_Eobj == EOBJECT_USER)
+					{
+						(m_vecObj[_Eobj][j])->SetDisBot(pitplayerpos);
+					}
+					break;
+				}
 			}
+			
 		}
+	}*/
 
+	return;
+}
+
+// 선타일을 깔아주는 함수
+/*void ObjManager::BackgroundTileSet(E_OBJECT _Eobj, std::vector<Object*> _objvec)
+{
+	for (int i = 0; i < m_vecObj[EOBJECT_BG].size(); i++)
+	{
+		for (int j = 0; j < BGEND; j++)
+		{
+			m_vecBGpos.push_back(((Background*)(m_vecObj[EOBJECT_BG][i]))->BackgroundTile(j));
+		}
 	}
 
+	m_bTile = true;
 
-	/*for (int i = 0; i < _objvec.size(); i++)
+
+	for (int i = 0; i < _objvec.size(); i++)
 	{
 		if (((PlayerNormal*)_objvec[i])->GetPlayerDisTop() tile 의 y값 - ((PlayerNormal*)_objvec[i])->GetPlayerDisTop().y / 2 보다 크다면)
 		{
@@ -617,12 +708,12 @@ void ObjManager::BackgroundTileSet(E_OBJECT _Eobj, std::vector<Object*> _objvec)
 			//POINT postemp = { ((PlayerNormal*)(m_vecObj[EOBJECT_USER])[i])->GetPlayerDisTop()->ptDestPos.x, 
 			//	((Background*)(m_vecObj[EOBJECT_BG])[j])->GetTileY(m_vecObj[EOBJECT_USER][i]) };
 		}
-	}*/
+	}
 
 	m_bTile = true;
 
 	return;
-}
+}*/
 
 
 // 유저의 위치에 따라서 배경과 오브젝트들을 움직여주는 함수

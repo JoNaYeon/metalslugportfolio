@@ -22,12 +22,15 @@ protected:
 
 	Object* m_classobjptr;
 
-	// 플레이어 구조체
+
+	int m_t;		// 물체의 시각 
+
+	/*// 플레이어 구조체
 	DISPLAYINFO	m_DisTop;
 	DISPLAYINFO	m_DisBot;
 
 	IMAGEINFO	m_ImgTop;
-	IMAGEINFO	m_ImgBot;
+	IMAGEINFO	m_ImgBot;*/
 
 public:
 	// 생성자
@@ -60,10 +63,13 @@ public:
 	// 좀비가 되는 애니메이션 
 	void DeadZombie();
 
-	DISPLAYINFO* GetPlayerDisTop() { return &m_DisTop; };
-	DISPLAYINFO* GetPlayerDisBot() { return &m_DisBot; };
-	void SetPlayerDisTop(POINT _disTop) { m_DisTop.ptDestPos = _disTop; return; };
-	void SetPlayerDisBot(POINT _disBot) { m_DisBot.ptDestPos = _disBot; return; };
+	DISPLAYINFO* GetDisTop() { return &m_DisTop; };
+	DISPLAYINFO* GetDisBot() { return &m_DisBot; };
+	void SetDisTop(POINT _disTop);
+	void SetDisBot(POINT _disBot);
 	bool GetBGMove() { return m_bmove; };
+
+	// 플레이어의 gravity 세팅
+	void SetboolGravity(bool _bGravity);
 };
 

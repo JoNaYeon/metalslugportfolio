@@ -61,7 +61,9 @@ public:
 	void BackgroundMove();
 
 	// 타일 깔아주는 함수
-	void BackgroundTileSet(E_OBJECT _Eobj, std::vector<Object*> _objvec);
+	//void BackgroundTileSet(E_OBJECT _Eobj, std::vector<Object*> _objvec);
+	// 선 깔아주는 함수
+	void BackgroundLineCollision(E_OBJECT _Eobj);
 	// 타일을 움직여주는 함수
 	void TileMove(E_USERSTATE _e_state);
 	std::vector<POINT>* GetTile() { return &m_vecpos; };

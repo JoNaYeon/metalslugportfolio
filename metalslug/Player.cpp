@@ -80,28 +80,58 @@ void Player::AttackBomb()
 // 점프 (오버라이딩)
 void Player::Jump()
 {
-	static int t = 0;		// 물체의 시각 
-
-
 	// 유저와 타일이 완전히 부딪혔을 경우, t를 초기화 시켜주고 점프를 false 시켜준다.
-	if (m_bgravity == false)
+	/*if (m_bgravity == true)
 	{
-		t = 0;
+		m_t = 0;
 		m_bjump = false;
 
 		return;
-	}
+	}*/
 
 
 	// x방향의 위치 결정 
 	// 4.0 < 이게 솟구치는 정도, 속력
 	// 0.4f < 떨어지는 정도. 중력
 	// t : 적분값 -> 정적분 -> 미분 -> 방정식 -> 다항식 -> 미지수(x,y,x) 
-	m_DisTop.ptDestPos.y = 0.5f * 0.4f * t * t + (-4.0f) * t + m_DisTop.ptDestPos.y;
-	m_DisBot.ptDestPos.y = 0.5f * 0.4f * t * t + (-4.0f) * t + m_DisBot.ptDestPos.y;
+	m_DisTop.ptDestPos.y = 0.5f * 0.4f * m_t * m_t + (-4.0f) * m_t + m_DisTop.ptDestPos.y;
+	m_DisBot.ptDestPos.y = 0.5f * 0.4f * m_t * m_t + (-4.0f) * m_t + m_DisBot.ptDestPos.y;
 
-	t++; // 물체의 시각을 진행한다 
+	m_t++; // 물체의 시각을 진행한다 
 	
 
 	return;
+};
+
+
+
+void Player::SetDisTop(POINT _disTop)
+{ 
+	m_DisTop.ptDestPos = _disTop; 
+	
+	return; 
+}
+
+void Player::SetDisBot(POINT _disBot)
+{ 
+	m_DisBot.ptDestPos = _disBot; 
+	
+	return; 
+};
+
+void Player::SetboolGravity(bool _bGravity)
+{ 
+	m_bgravity = _bGravity; 
+
+	if (m_bgravity == false)
+	{
+		if (m_iobjstate == E_USERSTATE_JUMP)
+		{
+			m_bjump = false;
+			m_t = 0;
+			m_iobjstate = E_USERSTATE_IDLE;
+		}
+	}
+	
+	return; 
 };

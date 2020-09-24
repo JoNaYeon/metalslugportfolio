@@ -49,5 +49,6 @@ public:
 
 	// 플레이어의 위치 체크해주는 함수
 	bool PlayerPosCheck();
+	
 };
 

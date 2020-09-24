@@ -21,7 +21,8 @@ Background::Background()
 
     ptTileMove = { 0,0 };
 
-   
+
+    m_bypos = false;
 
 
     //m_ibgTile1 = 0;
@@ -212,7 +213,7 @@ void Background::Destroy()
 }*/
 
 
-void Background::BackgroundTile(int _i)
+/*void Background::BackgroundTile(int _i)
 {
     //POINT ptTiletemp = { 1,1 };
     /*int iposx = 0;
@@ -226,7 +227,7 @@ void Background::BackgroundTile(int _i)
     {
         iposx = POSX1;
         iposy = POSY1;
-    }*/
+    }
 
     /*for (int i = 0; i < BGEND; i++)
     {
@@ -262,7 +263,7 @@ void Background::BackgroundTile(int _i)
     {
         Rectangle(_hdc, (&(ObjManager::GetInstance()->GetvecBGpos())[i]).left, (&(ObjManager::GetInstance()->GetvecBGpos())[i]).top, 
             (&(ObjManager::GetInstance()->GetvecBGpos())[i]).right, (&(ObjManager::GetInstance()->GetvecBGpos())[i]).bottom);
-    }*/ 
+    }
 
     /*if (POSX0 * BGSIZE < _i && _i < POSX1 * BGSIZE)
     {
@@ -371,7 +372,7 @@ void Background::BackgroundTile(int _i)
     else if (POSX26 * BGSIZE < _i && _i < POSX27 * BGSIZE)
     {
         BackgroundTileset(_i, POSY26, POSY27, POSX26, POSX27, &recTemp);
-    }*/
+    }
 
 
     for (int i = 0; i < ObjManager::GetInstance()->GetVector(EOBJECT_USER).size(); i++)
@@ -381,24 +382,8 @@ void Background::BackgroundTile(int _i)
         //((PlayerNormal*)(ObjManager::GetInstance()->GetVector(EOBJECT_USER))[i])->SetPlayerDisBot(postemp);
     }
 
-    /*// 음의 기울기일 때
-    if (GetTileY() < 0)
-    {
-        
-    }
-    // 양의 기울기일 때
-    else if (GetTileY() > 0)
-    {
-
-    }
-    // 기울기가 0일 때
-    else
-    {
-
-    }*/
-
     return;
-}
+}*/
 
 
 

@@ -9,8 +9,8 @@ protected:
 	int m_ispeed;
 
 	// 몬스터 구조체
-	DISPLAYINFO m_DisMon;
-	IMAGEINFO m_ImgMon;
+	//DISPLAYINFO m_DisMon;
+	//IMAGEINFO m_ImgMon;
 
 	bool m_bsee;
 
@@ -49,8 +49,10 @@ public:
 
 	int GetHP() { return m_ihp; };
 
-	DISPLAYINFO* GetMonsterDis() { return &m_DisMon; };
-	void SetMonsterDis(POINT _disobj) { m_DisMon.ptDestPos = _disobj; return; }
+	//DISPLAYINFO* GetDisTop() { return &m_DisMon; };
+	//void SetDisTop(POINT _disobj) { m_DisMon.ptDestPos = _disobj; return; }
+	DISPLAYINFO* GetDisTop() { return &m_DisTop; };
+	void SetDisTop(POINT _disobj) { m_DisTop.ptDestPos = _disobj; return; }
 	bool GetSee() { return m_bsee; };
 };
 

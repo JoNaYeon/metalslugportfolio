@@ -1,5 +1,16 @@
 #include "Monster.h"
 
+// »ý¼ºÀÚ
+Monster::Monster()
+{
+    //m_iobjsize = 1;
+
+    m_ihp = 0;
+    m_istrength = 0;
+    m_ispeed = 0;
+
+};
+
 void Monster::MonsterMove(E_USERSTATE _e_state)
 {
     switch (_e_state)

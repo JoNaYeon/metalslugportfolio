@@ -63,7 +63,6 @@ void MonsterZombieMan::Run()
 	}
 
 	// 중력 적용
-	//Gravity(&m_DisMon, EOBJECT_MONSTER);
 	Gravity(&m_DisTop, EOBJECT_MONSTER);
 
 	// 움직임 패턴 적용

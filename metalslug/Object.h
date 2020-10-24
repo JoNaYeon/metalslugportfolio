@@ -8,6 +8,11 @@ protected:
 	// 오브젝트의 상태
 	int m_iobjstate;
 	int m_iobjstatetemp;
+	// 오브젝트 사이즈 뻥튀기 값
+	//int m_iobjsize;
+
+	// y값에 따른 오브젝트의 상하멈춤 상태
+	int m_iuserycase = 0;
 
 	// 시간을 통제할 변수
 	DWORD m_dcurTime;
@@ -44,7 +49,7 @@ protected:
 	IMAGEINFO	m_ImgTop;
 	IMAGEINFO	m_ImgBot;
 
-	int m_gravitytemp = 0;
+	int m_gravitytemp;
 
 public:
 	// 생성자
@@ -67,7 +72,7 @@ public:
 	// dbject를 움직여줄 애니메이션에 추가된 함수
 	void Aniimage(DISPLAYINFO& _displayInfo, IMAGEINFO _imageInfo);
 
-	int Getobjstate() { return m_iobjstate; };
+	int Getobjstate();
 	void Setobjstate(int _objstate) { m_iobjstate = _objstate; };
 
 	// object의 사망여부 함수
@@ -79,6 +84,11 @@ public:
 	// Object들이 배경에 설 수 있도록 해주는 함수 
 	//void ObjStand(ST_OBJECT* _obj);
 
+	// y값(위치 높이)의 상하를 정해주는 함수
+	int ObjectyLevel(int _iobjdistancey);
+	// 오브젝트의 y값이 올라가지 말아야 할 때 좌우로 움직일 수 없도록 하는 함수
+	//void ObjectStopYLevelControl(int _iobjyLevel);
+
 	RECT GetHitBox() { return m_recHitBox; };
 	// 피격 체크
 	void SetCollisionCheck(bool _CollisionCheck) { m_bCollisionCheck = _CollisionCheck; };
@@ -89,12 +99,12 @@ public:
 	bool GetJump() { return m_bjump; };
 	void SetJump(bool _bjump) { m_bjump = _bjump; return; };
 	int GetGravityTemp() { return m_gravitytemp; };
+	void SetGravityTemp(int _igravitytemp) { m_gravitytemp = _igravitytemp; return; };
 
 	virtual DISPLAYINFO* GetDisTop();
 	virtual DISPLAYINFO* GetDisBot();
 	virtual void SetDisTop(POINT _disTop);
 	virtual void SetDisBot(POINT _disTop);
-	virtual bool GetbCollision() { return m_bypos; };
-	
+	virtual bool GetbCollision() { return m_bypos; };	
 };
 

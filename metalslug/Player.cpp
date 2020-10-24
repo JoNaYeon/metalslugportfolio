@@ -5,6 +5,9 @@
 // 생성자
 Player::Player()
 {
+	// 플레이어 사이즈 지정
+	//m_iobjsize = PLAYERSIZE;
+
 	m_ihp = 0;
 	m_istrength = 0;
 	m_ispeed = 0;
@@ -80,16 +83,6 @@ void Player::AttackBomb()
 // 점프 (오버라이딩)
 void Player::Jump()
 {
-	// 유저와 타일이 완전히 부딪혔을 경우, t를 초기화 시켜주고 점프를 false 시켜준다.
-	/*if (m_bgravity == true)
-	{
-		m_t = 0;
-		m_bjump = false;
-
-		return;
-	}*/
-
-
 	// x방향의 위치 결정 
 	// 4.0 < 이게 솟구치는 정도, 속력
 	// 0.4f < 떨어지는 정도. 중력

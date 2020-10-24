@@ -18,6 +18,7 @@
 
 #define BGSIZE 4
 #define BGTILESIZE 2
+#define BGDELETESIZE 190
 
 #define BGEND 5482
 // 배경 움직이는 거리
@@ -35,6 +36,8 @@
 #define BGHNUM 1
 
 #define PLAYERSIZE 4
+// 오브젝트들에게 허용되는 뛰어넘을 수 있는 픽셀의 크기
+#define OBJALLOWEDPIXEL 5
 
 // 플레이어 RUN / IDEL object 구조체에 들어갈 define
 // object가 움직이는 거리
@@ -122,17 +125,17 @@ extern HINSTANCE hInst;
 #define POSY9 380
 #define POSX10 771
 #define POSY10 357
-#define POSX11 823
-#define POSY11 356
-#define POSX12 824
+#define POSX11 820
+#define POSY11 355
+#define POSX12 820
 #define POSY12 380
 #define POSX13 1038
 #define POSY13 370
 #define POSX14 1185
 #define POSY14 370
-#define POSX15 1743
-#define POSY15 229
-#define POSX16 1747
+#define POSX15 1745
+#define POSY15 240
+#define POSX16 1745
 #define POSY16 360
 #define POSX17 2056
 #define POSY17 360
@@ -192,6 +195,15 @@ enum E_USERSTATE
 	E_USERSTATE_JUMP,
 	E_USERSTATE_FIRE,
 	E_USERSTATE_DROP,
+};
+
+enum E_USERYUPDOWN
+{
+	E_USERYUPDOWN_JUMP = 9000,
+	E_USERUPDOWN_JUMPSTOP,
+	E_USERYUPDOWN_UP,
+	E_USERYUPDOWN_DOWN,
+	E_USERYUPDOWN_STOP,
 };
 
 // 총알의 상태 enum

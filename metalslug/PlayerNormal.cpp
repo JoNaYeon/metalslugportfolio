@@ -12,6 +12,9 @@ PlayerNormal::PlayerNormal()
 	m_iobjstate = E_USERSTATE_IDLE;
 	m_iobjmove = IDLEUSERDMOVE;
 
+	// 플레이어 사이즈 크기 지정
+	//m_iobjsize = PLAYERSIZE;
+
 	m_fdelay = 0.5;
 	m_bleftright = true;
 	// 중력 받기
@@ -256,102 +259,6 @@ void PlayerNormal::AnimationStateCheck()
 			}
 		}
 	}
-	
-	//////////////////////////////////////// top 반응
-	/*// 총을 쏠 때 
-	if (InputManager::GetInstance()->Keyboard(E_KEYFIRE) == true)
-	{
-		// 오른쪽 방향으로 발사 
-		if (m_bleftright == true)
-		{
-			m_iobjstate = E_USERSTATE_FIRE;
-			m_strBitmapTop = "..\\source\\user\\usertopfire.bmp";
-
-			// struct에 자료 삽입해주는 함수
-			m_iobjmove = FIREUSERDMOVE;
-			ptImgSize = { FIREPLAYERWANIMATION , FIREPLAYERHANIMATION };
-			m_DisTop.ptDestSize = ptImgSize;
-			SetImgInfo(m_ImgTop, ptImgSize, FIREPLAYERWNUM, FIREPLAYERHNUM);
-		}
-		// 왼쪽 방향으로 발사 
-		else
-		{
-			m_iobjstate = E_USERSTATE_FIRE;
-			m_strBitmapTop = "..\\source\\user\\usertopfire.bmp";
-			
-			m_iobjmove = -FIREUSERDMOVE;
-			ptImgSize = { FIREPLAYERWANIMATION , FIREPLAYERHANIMATION };
-			m_DisTop.ptDestSize = ptImgSize;
-			SetImgInfo(m_ImgTop, ptImgSize, FIREPLAYERWNUM, FIREPLAYERHNUM);
-		}
-
-		m_bfire = true;
-	}
-	// 점프할 때 
-	else if (InputManager::GetInstance()->Keyboard(E_KEYJUMP) == true)
-	{
-		// 중력 false
-		m_bleftright = false;
-		// 점프 true
-		m_bjump = true;
-
-	}
-	// 왼쪽으로 걷기
-	else if (InputManager::GetInstance()->Keyboard(E_KEYLEFT) == true)
-	{
-		m_iobjstate = E_USERSTATE_LWALK;
-		m_strBitmapTop = "..\\source\\user\\UserIdle_Top2.bmp";
-		// 중력 true
-		m_bleftright = true;
-
-		m_iobjmove = IDLEUSERDMOVE;
-		ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
-		m_DisTop.ptDestSize = ptImgSize;
-		SetImgInfo(m_ImgTop, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
-	}
-	// 오른쪽으로 걷기
-	else if (InputManager::GetInstance()->Keyboard(E_KEYRIGHT) == true)
-	{
-		m_iobjstate = E_USERSTATE_RWALK;
-		m_strBitmapTop = "..\\source\\user\\UserIdle_Top1.bmp";
-		// 중력 true
-		m_bleftright = true;
-
-		m_iobjmove = IDLEUSERDMOVE;
-		ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
-		m_DisTop.ptDestSize = ptImgSize;
-		SetImgInfo(m_ImgTop, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
-	}
-	// IDLE
-	else
-	{
-		// bool 변수 혹은 enum 으로 좌우 위치 확인해주기
-		if (m_bleftright == true)
-		{
-			m_iobjstate = E_USERSTATE_IDLE;
-			m_strBitmapTop = "..\\source\\user\\UserIdle_Top1.bmp";
-			// 중력 true
-			m_bleftright = true;
-
-			m_iobjmove = IDLEUSERDMOVE;
-			ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
-			m_DisTop.ptDestSize = ptImgSize;
-			SetImgInfo(m_ImgTop, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
-		}
-		else
-		{
-			m_iobjstate = E_USERSTATE_IDLE;
-			m_strBitmapTop = "..\\source\\user\\UserIdle_Top2.bmp";
-			// 중력 true
-			m_bleftright = true;
-
-			m_iobjmove = IDLEUSERDMOVE;
-			ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
-			m_DisTop.ptDestSize = ptImgSize;
-			SetImgInfo(m_ImgTop, ptImgSize, IDLEPLAYERWNUM, IDLEPLAYERHNUM);
-		}
-	}*/
-	
 
 	return;
 }
@@ -473,8 +380,12 @@ void PlayerNormal::AnimationStateMove()
 				{
 					m_bmove = false;
 
-					m_DisTop.ptDestPos.x += IDLEUSERDMOVE;
-					m_DisBot.ptDestPos.x += IDLEUSERDMOVE;
+					// 임시 - 오브젝트 y가 극단적으로 차이가 나지 않을 때에만 좌우로 움직일 수 있도록 예외처리
+					if (ObjectyLevel(m_iuserycase) != E_USERYUPDOWN_STOP)
+					{
+						m_DisTop.ptDestPos.x += IDLEUSERDMOVE;
+						m_DisBot.ptDestPos.x += IDLEUSERDMOVE;
+					}
 				}
 				// 플레이어가 화면 중앙에 위치할 때
 				else
@@ -496,8 +407,12 @@ void PlayerNormal::AnimationStateMove()
 			{
 				m_bmove = false;
 
-				m_DisTop.ptDestPos.x -= IDLEUSERDMOVE;
-				m_DisBot.ptDestPos.x -= IDLEUSERDMOVE;
+				// 임시 - 오브젝트 y가 극단적으로 차이가 나지 않을 때에만 좌우로 움직일 수 있도록 예외처리
+				if (ObjectyLevel(m_iuserycase) != E_USERYUPDOWN_STOP)
+				{
+					m_DisTop.ptDestPos.x -= IDLEUSERDMOVE;
+					m_DisBot.ptDestPos.x -= IDLEUSERDMOVE;
+				}
 			}
 		}
 		break;
@@ -684,5 +599,10 @@ void PlayerNormal::Jump()
 bool PlayerNormal::bObjDead()
 {
 	return false;
+}
+
+bool PlayerNormal::PlayerLeftRightCheck()
+{
+	return m_bleftright;
 }
 

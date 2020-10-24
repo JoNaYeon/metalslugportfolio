@@ -15,14 +15,7 @@ protected:
 	bool m_bsee;
 
 public:
-	// 持失切
-	Monster()
-	{
-		m_ihp = 0;
-		m_istrength = 0;
-		m_ispeed = 0;
-
-	};
+	Monster();
 	// 社瑚切
 	virtual ~Monster()
 	{

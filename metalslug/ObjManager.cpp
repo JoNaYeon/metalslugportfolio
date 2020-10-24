@@ -79,7 +79,7 @@ ObjManager::ObjManager()
         // POINT 의 x값 위치 조정
         postemp.x = postemp.x * BGSIZE;
         // POINT 의 y값 위치 조정
-        postemp.y = postemp.y * BGTILESIZE;
+        postemp.y = (postemp.y - BGDELETESIZE) * BGSIZE;
 
         m_vecpos.push_back(postemp);
     }
@@ -505,92 +505,133 @@ void ObjManager::CollisionCheck()
 // 선타일을 깔아주는 함수
 void ObjManager::BackgroundLineCollision(E_OBJECT _Eobj)
 {
-	// 직선의 기울기
-	float fm = 0;
-	// y의 절편
-	int iy = 0;
-	// 움직인 위치의 y 값
-	int iobjdistancey = 0;
-
-	// dObjcet 
+	// 오브젝트 갯수만큼 돌아주기
 	for (int i = 0; i < m_vecObj[_Eobj].size(); i++)
 	{
+		// false일 경우 continue로 하단 코드 넘어가기
+		if (m_vecObj[_Eobj][i]->GetbCollision() == false)
+		{
+			continue;
+		}
+
+
 		// 이미지의 위치값 가져오기
-		int ixplayerpos = m_vecObj[_Eobj][i]->GetDisTop()->ptDestPos.x;
-		int iyplayerpos = m_vecObj[_Eobj][i]->GetDisTop()->ptDestPos.y; // 해당 오브젝트의 세로축값
+		int ixobjectpos = m_vecObj[_Eobj][i]->GetDisTop()->ptDestPos.x;
+		int iyobjectpos = m_vecObj[_Eobj][i]->GetDisTop()->ptDestPos.y; // 해당 오브젝트의 세로축값
 
 		// 이미지 사이즈 가져오기 
 		POINT pImgSizetemp = { (m_vecObj[_Eobj][i]->GetDisTop()->ptDestSize.x) ,
 			(m_vecObj[_Eobj][i]->GetDisTop()->ptDestSize.y)};
 
-		// 충돌할 것만 충돌한다
-		if (m_vecObj[_Eobj][i]->GetbCollision() == true)
+
+		// 충돌할 라인의 POINT 의 갯수만큼 돌아서 검사해주기 
+		for (int j = 0; j < m_vecpos.size() - 1; j++)
 		{
-			for (int j = 0; j < m_vecpos.size() - 1; j++)
+			// Object 의 x 위치가 POINT 사이값에 존재할 경우
+			if (m_vecpos[j].x <= ixobjectpos && ixobjectpos < m_vecpos[j + 1].x)
 			{
-				// Object 의 x 위치가 POINT 사이값에 존재할 경우
-				if (m_vecpos[j].x <= ixplayerpos && ixplayerpos < m_vecpos[j + 1].x)
+				// 직선의 기울기
+				float fm = 0;
+				// y의 절편
+				int iy = 0;
+				// 움직인 위치의 y 값
+				int iobjdistancey = 0;
+
+				// 기울기 구하기
+				float fnextjy =  (float)m_vecpos[j + 1].y;
+				float fjy = (float)m_vecpos[j].y;
+				float fnextjx = (float)m_vecpos[j + 1].x;
+				float fjx = (float)m_vecpos[j].x;
+
+				fm = ((fnextjy - fjy) / (fnextjx - fjx));
+
+				// y절편 구하기
+				iy = m_vecpos[j].y - (fm * m_vecpos[j].x); // j번째에 있는 선의 y값에서 기울기 * 선의 x값을 더한걸 뺀다. 
+
+				// y의 타일 위치 계산
+				iobjdistancey = (fm * ixobjectpos) + iy;
+
+
+				// 임시 - y위치를 계산하여 좌우 레벨 움직임의 상하와 움직이지 않음 등을 가려주는 함수
+				switch (m_vecObj[_Eobj][i]->ObjectyLevel(iobjdistancey))
 				{
-					// 기울기 구하기
-					float fnextjy = m_vecpos[j + 1].y;
-					float fjy = m_vecpos[j].y;
-					float fnextjx = m_vecpos[j + 1].x;
-					float fjx = m_vecpos[j].x;
-
-					fm = ((fnextjy - fjy) / (fnextjx - fjx));
-
-					// y절편 구하기
-					iy = m_vecpos[j].y - (fm * m_vecpos[j].x); // j번째에 있는 선의 y값에서 기울기 * 선의 x값을 더한걸 뺀다. 
-
-					// y의 타일 위치 계산
-					iobjdistancey = (fm * ixplayerpos) + iy;
-
-					// 첫번째 땅이 POINT 가 아닐 때
-					if (j != 0)
+					// 캐릭터가 올라가야 할 때
+					case E_USERYUPDOWN_UP:
 					{
-						// 왼쪽 땅이 더 높을 경우 
-						if (m_vecpos[j].y > m_vecpos[j - 1].y && m_vecpos[j].x == m_vecpos[j - 1].x)
-						{
-							continue;
-						}
-						//오른쪽 땅이 더 높은 경우
-						if (m_vecpos[j].y > m_vecpos[j + 1].y && m_vecpos[j].x == m_vecpos[j + 1].x)
-						{
-							break;
-						}
-					}
-
-					// 플레이어의 이미지 시작점이 타일의 위치 - 플레이어의 세로 크기 보다 작다면 위치 고정시켜주기
-					if (iyplayerpos + (pImgSizetemp.y * PLAYERSIZE) >= iobjdistancey) // 세로축값에서 인게임크기를 더한것이 선보다 하단에 있다면.
-					{
-						POINT pitplayerpos = { ixplayerpos , iobjdistancey - (pImgSizetemp.y * PLAYERSIZE) };
-
-						(m_vecObj[_Eobj][i])->SetDisTop(pitplayerpos);
+						// Object 의 위치값을 구해온 뒤
+						POINT ptobjectpos = { m_vecObj[_Eobj][i]->GetDisTop()->ptDestPos.x, iobjdistancey - (m_vecObj[_Eobj][i]->GetDisTop()->ptDestSize.y * PLAYERSIZE) };
+						
+						// y 위치값 대입해주기...
+						m_vecObj[_Eobj][i]->SetDisTop(ptobjectpos);
 
 						// 만약 들어온 Object가 User 일 경우, Bot 부분도 세팅해주기
 						if (_Eobj == EOBJECT_USER)
 						{
-							(m_vecObj[_Eobj][i])->SetDisBot(pitplayerpos);
+							// top 위치에 bot 맞춰주기
+							(m_vecObj[_Eobj][i])->SetDisBot(ptobjectpos);
 						}
 
-						// Object 의 상태가 jump 가 아닐 때에만 gravity를 false 로 바꿔주기
-						if (m_vecObj[_Eobj][i]->Getobjstate() == E_USERSTATE_JUMP)
-						{
-							m_vecObj[_Eobj][i]->SetJump(false);
-							m_vecObj[_Eobj][i]->Setobjstate(E_USERSTATE_IDLE);
-							//m_vecObj[_Eobj][i]->SetboolGravity(false);
-						}
+						// line 충돌이 일어나면 GravityTemp 를 0으로 만들어주어서 Gravity의 강도를 0부터 설정하도록 하기
+						m_vecObj[_Eobj][i]->SetGravityTemp(0);
 
-						break;
 					}
-					else
+						break;
+
+					// 캐릭터가 내려가야 할 때
+					case E_USERYUPDOWN_DOWN:
 					{
 						m_vecObj[_Eobj][i]->SetboolGravity(true);
 					}
-					break;
+						break;
+
+					// 캐릭터가 멈춰야 할 때
+					case E_USERYUPDOWN_STOP:
+					{
+						// 임시 - 한번 더 ObjectState를 검사하기 위해 함수를 또 사용하는 것이 옳은가...? 고민고민... 
+						// 하지만 임시처리를 해놓지 않으면 혹시 다른 곳에서 사용할 때 오류가 날 수도 있을 것 같음.
+						//m_vecObj[_Eobj][i]->ObjectStopYLevelControl(iobjdistancey);
+					}
+						break;
+				
+					case E_USERYUPDOWN_JUMP:
+					{
+						m_vecObj[_Eobj][i]->SetJump(true);
+						m_vecObj[_Eobj][i]->Setobjstate(E_USERSTATE_IDLE);
+					}
+						break;
+					case E_USERUPDOWN_JUMPSTOP:
+					{
+
+					}
+						break;
 				}
+
+
+				// Object 의 상태가 jump 가 아닐 때에만 gravity를 false 로 바꿔주기
+				/*if (m_vecObj[_Eobj][i]->Getobjstate() == E_USERSTATE_JUMP)
+				{
+					m_vecObj[_Eobj][i]->SetJump(false);
+					m_vecObj[_Eobj][i]->Setobjstate(E_USERSTATE_IDLE);
+				}
+				else
+				{
+					m_vecObj[_Eobj][i]->SetboolGravity(true);
+				}*/
+
+				// 오브젝트의 y값이 나아갈 위치의 y값보다 많이 작을 경우 나아가지 못하도록.
+				/*if ((iyplayerpos + (pImgSizetemp.y * PLAYERSIZE)) - iobjdistancey >= 10)
+				{
+					if(m_vecObj[_Eobj][i]->Getobjstate() == )
+					POINT posobjectreposition = { ixplayerpos , iyplayerpos };
+
+					// 나아가지 못하도록 하는 코드
+					m_vecObj[_Eobj][i]->SetDisTop();
+				}*/
+
+				break;
 			}
 		}
+		
 	}
 
 	// 직선의 기울기 구하기

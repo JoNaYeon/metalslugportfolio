@@ -8,6 +8,8 @@ DWORD Object::m_dPrevTime = timeGetTime();
 // 생성자
 Object::Object()
 {
+	//m_iobjsize = 1;
+
 	m_iobjstate = -1;
 	m_dcurTime = timeGetTime();
 	m_fdelay = 1;
@@ -23,6 +25,9 @@ Object::Object()
 	
 	// 임시 - 라인 충돌 검사를 위해 임시로 true 해둠
 	m_bypos = true;
+
+
+	int m_gravitytemp = 0;
 };
 
 void Object::Aniimage(DISPLAYINFO& _displayInfo, IMAGEINFO _imageInfo)
@@ -139,3 +144,77 @@ void Object::SetDisBot(POINT _disTop)
 {
 	return;
 }
+
+int Object::Getobjstate()
+{
+	return m_iobjstate; 
+};
+
+// y값(위치 높이)을 계산하여 위치값을 지정해주는 함수
+int Object:: ObjectyLevel(int _iobjdistancey)
+{
+	// 오브젝트가 라인보다 아래에 있을 경우 m_iobjstate 초기화
+	if (m_DisTop.ptDestPos.y - _iobjdistancey > -((m_DisTop.ptDestSize.y * PLAYERSIZE) + OBJALLOWEDPIXEL))
+	{
+		m_iobjstate = 0;
+	}
+
+	// 점프하는 중이 아닐 경우에만 검사하기
+	if (m_iobjstate != E_USERSTATE_JUMP)
+	{
+		// 오브젝트를 높인다
+		if (m_DisTop.ptDestPos.y - _iobjdistancey < - ((m_DisTop.ptDestSize.y * PLAYERSIZE) + OBJALLOWEDPIXEL))
+		{
+			m_iuserycase = E_USERYUPDOWN_UP;
+			m_bgravity = false;
+
+		}
+		// 오브젝트를 낮춘다
+		else if (m_DisTop.ptDestPos.y - _iobjdistancey >= ((m_DisTop.ptDestSize.y * PLAYERSIZE) + OBJALLOWEDPIXEL))
+		{
+			m_iuserycase = E_USERYUPDOWN_DOWN;
+		}
+		// 오브젝트를 멈춘다
+		else if (m_DisTop.ptDestPos.y - _iobjdistancey >= ((m_DisTop.ptDestSize.y * PLAYERSIZE) + OBJALLOWEDPIXEL)
+			|| m_DisTop.ptDestPos.y - _iobjdistancey < - ((m_DisTop.ptDestSize.y * PLAYERSIZE) + OBJALLOWEDPIXEL))
+		{
+			m_iuserycase = E_USERYUPDOWN_STOP;
+		}
+	}
+	// 점프중일 때
+	else
+	{
+		if (m_DisTop.ptDestPos.y - _iobjdistancey > ((m_DisTop.ptDestSize.y * PLAYERSIZE) + OBJALLOWEDPIXEL))
+		{
+			m_iuserycase = E_USERYUPDOWN_JUMP;
+		}
+		else if (m_DisTop.ptDestPos.y - _iobjdistancey > ((m_DisTop.ptDestSize.y * PLAYERSIZE) + OBJALLOWEDPIXEL))
+		{
+			m_iuserycase = E_USERUPDOWN_JUMPSTOP;
+
+			// 점프가 아닌 중에는 점프 false로 바꿔주기
+			m_bjump = false;
+		}
+
+	}
+
+	return m_iuserycase;
+}
+
+// 오브젝트의 y값이 올라가지 말아야 할 때 좌우로 움직일 수 없도록 하는 함수
+/*void Object::ObjectStopYLevelControl(int _iobjyLevel)
+{
+	// 멈춤일 경우 
+	if (ObjectyLevel(_iobjyLevel) == E_USERYUPDOWN_STOP)
+	{
+		if (m_iobjstate == E_USERSTATE_LWALK)
+		{
+			
+		}
+		else if (m_iobjstate == E_USERSTATE_RWALK)
+		{
+
+		}
+	}
+	return;
+}*/

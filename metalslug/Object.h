@@ -87,7 +87,7 @@ public:
 	// y값(위치 높이)의 상하를 정해주는 함수
 	int ObjectyLevel(int _iobjdistancey);
 	// 오브젝트의 y값이 올라가지 말아야 할 때 좌우로 움직일 수 없도록 하는 함수
-	//void ObjectStopYLevelControl(int _iobjyLevel);
+	void ObjectStopYLevelControl(int _iobjyLevel);
 
 	RECT GetHitBox() { return m_recHitBox; };
 	// 피격 체크

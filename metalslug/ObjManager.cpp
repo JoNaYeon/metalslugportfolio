@@ -561,6 +561,9 @@ void ObjManager::BackgroundLineCollision(E_OBJECT _Eobj)
 						// Object 의 위치값을 구해온 뒤
 						POINT ptobjectpos = { m_vecObj[_Eobj][i]->GetDisTop()->ptDestPos.x, iobjdistancey - (m_vecObj[_Eobj][i]->GetDisTop()->ptDestSize.y * PLAYERSIZE) };
 						
+						// 일정 수치 이상 올라가야 할 경우, 올라가는 것 막아주기 함수 추가
+						//m_vecObj[_Eobj][i]->ObjectStopYLevelControl();
+
 						// y 위치값 대입해주기...
 						m_vecObj[_Eobj][i]->SetDisTop(ptobjectpos);
 
@@ -572,7 +575,7 @@ void ObjManager::BackgroundLineCollision(E_OBJECT _Eobj)
 						}
 
 						// line 충돌이 일어나면 GravityTemp 를 0으로 만들어주어서 Gravity의 강도를 0부터 설정하도록 하기
-						m_vecObj[_Eobj][i]->SetGravityTemp(0);
+						//m_vecObj[_Eobj][i]->SetGravityTemp(0);
 
 					}
 						break;
@@ -580,7 +583,7 @@ void ObjManager::BackgroundLineCollision(E_OBJECT _Eobj)
 					// 캐릭터가 내려가야 할 때
 					case E_USERYUPDOWN_DOWN:
 					{
-						m_vecObj[_Eobj][i]->SetboolGravity(true);
+
 					}
 						break;
 
@@ -595,8 +598,8 @@ void ObjManager::BackgroundLineCollision(E_OBJECT _Eobj)
 				
 					case E_USERYUPDOWN_JUMP:
 					{
-						m_vecObj[_Eobj][i]->SetJump(true);
-						m_vecObj[_Eobj][i]->Setobjstate(E_USERSTATE_IDLE);
+						//m_vecObj[_Eobj][i]->SetJump(true);
+						//m_vecObj[_Eobj][i]->Setobjstate(E_USERSTATE_IDLE);
 					}
 						break;
 					case E_USERUPDOWN_JUMPSTOP:

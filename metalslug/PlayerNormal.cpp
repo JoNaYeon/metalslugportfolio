@@ -104,7 +104,7 @@ void PlayerNormal::AnimationStateCheck()
 		else if (InputManager::GetInstance()->Keyboard(E_KEYLEFT) == true)
 		{
 			// 중력 true
-			m_bleftright = true;
+			m_bgravity = true;
 
 			m_iobjstate = E_USERSTATE_LWALK;
 			m_iobjmove = IDLEUSERDMOVE;
@@ -123,7 +123,7 @@ void PlayerNormal::AnimationStateCheck()
 		else if (InputManager::GetInstance()->Keyboard(E_KEYRIGHT) == true)
 		{
 			// 중력 true
-			m_bleftright = true;
+			m_bgravity = true;
 
 			m_iobjstate = E_USERSTATE_RWALK;
 			m_iobjmove = IDLEUSERDMOVE;
@@ -174,7 +174,7 @@ void PlayerNormal::AnimationStateCheck()
 		else if (InputManager::GetInstance()->Keyboard(E_KEYJUMP) == true)
 		{
 			// 중력 false
-			m_bleftright = false;
+			m_bgravity = false;
 			// 점프 true
 			m_bjump = true;
 			m_t = 0;
@@ -183,7 +183,7 @@ void PlayerNormal::AnimationStateCheck()
 		else if (InputManager::GetInstance()->Keyboard(E_KEYLEFT) == true)
 		{
 			// 중력 true
-			m_bleftright = true;
+			m_bgravity = true;
 
 			m_iobjstate = E_USERSTATE_LWALK;
 			m_iobjmove = IDLEUSERDMOVE;
@@ -202,7 +202,7 @@ void PlayerNormal::AnimationStateCheck()
 		else if (InputManager::GetInstance()->Keyboard(E_KEYRIGHT) == true)
 		{
 			// 중력 true
-			m_bleftright = true;
+			m_bgravity = true;
 
 			m_iobjstate = E_USERSTATE_RWALK;
 			m_iobjmove = IDLEUSERDMOVE;
@@ -223,7 +223,7 @@ void PlayerNormal::AnimationStateCheck()
 			if (m_bleftright == true)
 			{
 				// 중력 true
-				m_bleftright = true;
+				m_bgravity = true;
 
 				m_iobjstate = E_USERSTATE_IDLE;
 				m_iobjmove = IDLEUSERDMOVE;
@@ -241,7 +241,7 @@ void PlayerNormal::AnimationStateCheck()
 			else
 			{
 				// 중력 true
-				m_bleftright = true;
+				m_bgravity = true;
 
 				m_iobjstate = E_USERSTATE_IDLE;
 				m_iobjmove = IDLEUSERDMOVE;
@@ -334,6 +334,16 @@ void PlayerNormal::AnimationStateMove()
 					m_bmove = true;
 				}
 			}
+
+			// 위치보다 한참 위로 올라가야 할 때
+			/*if (ObjectStopYLevelControl() == true)
+			{
+				
+			}
+			else
+			{
+				
+			}*/
 		}
 		break;
 		case E_USERSTATE_LWALK:

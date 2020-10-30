@@ -153,9 +153,9 @@ int Object::Getobjstate()
 // y값(위치 높이)을 계산하여 위치값을 지정해주는 함수
 int Object:: ObjectyLevel(int _iobjdistancey)
 {
-
 	// 점프하는 중이 아닐 경우에만 검사하기
-	if (m_iobjstate != E_USERSTATE_JUMP)
+	//if (m_iobjstate != E_USERSTATE_JUMP)
+	if (m_bjump == false)
 	{
 		// 오브젝트가 line보다 아래에 있을 때 
 		if (_iobjdistancey - m_DisTop.ptDestPos.y <= ((m_DisTop.ptDestSize.y * PLAYERSIZE)))
@@ -170,32 +170,10 @@ int Object:: ObjectyLevel(int _iobjdistancey)
 			m_iuserycase = E_USERYUPDOWN_DOWN;
 			m_bgravity = true;
 		}
-		// 오브젝트를 멈춘다
-		/*else if (m_DisTop.ptDestPos.y - _iobjdistancey >= ((m_DisTop.ptDestSize.y * PLAYERSIZE) + OBJALLOWEDPIXEL)
-			|| m_DisTop.ptDestPos.y - _iobjdistancey < - ((m_DisTop.ptDestSize.y * PLAYERSIZE) + OBJALLOWEDPIXEL))
-		{
-			m_iuserycase = E_USERYUPDOWN_STOP;
-		}*/
 	}
-	// 점프중일 때
 	else
 	{
-		// 오브젝트 + (IDLE의 크기 - JUMP의 크기) 가 라인보다 아래에 있을 경우 m_iobjstate 초기화
-		if (_iobjdistancey - m_DisTop.ptDestPos.y < ((m_DisTop.ptDestSize.y * PLAYERSIZE) + (JUMPPLAYERHANIMATION - IDLEPLAYERHANIMATION)))
-		{
-			m_bjump = false;
-		}
 
-		// 오브젝트가 line보다 아래에 있을 때 
-		/*if (_iobjdistancey - m_DisTop.ptDestPos.y  <= ((m_DisTop.ptDestSize.y * PLAYERSIZE)))
-		{
-			m_bjump = false;
-		}
-		// 오브젝트가 line보다 위에 있을 때
-		else if (_iobjdistancey - m_DisTop.ptDestPos.y >= ((m_DisTop.ptDestSize.y * PLAYERSIZE)))
-		{
-
-		}*/
 	}
 
 	// 오브젝트 + (IDLE의 크기 - JUMP의 크기) 가 라인보다 아래에 있을 경우 m_iobjstate 초기화

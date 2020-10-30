@@ -203,11 +203,6 @@ void ObjManager::Run()
 		BackgroundLineCollision((E_OBJECT)i);
 	}
 
-	/*if (m_bTile == false)
-	{
-		BackgroundLineCollision();
-	}*/
-
 	return;
 };
 
@@ -560,9 +555,6 @@ void ObjManager::BackgroundLineCollision(E_OBJECT _Eobj)
 					{
 						// Object 의 위치값을 구해온 뒤
 						POINT ptobjectpos = { m_vecObj[_Eobj][i]->GetDisTop()->ptDestPos.x, iobjdistancey - (m_vecObj[_Eobj][i]->GetDisTop()->ptDestSize.y * PLAYERSIZE) };
-						
-						// 일정 수치 이상 올라가야 할 경우, 올라가는 것 막아주기 함수 추가
-						//m_vecObj[_Eobj][i]->ObjectStopYLevelControl();
 
 						// y 위치값 대입해주기...
 						m_vecObj[_Eobj][i]->SetDisTop(ptobjectpos);
@@ -598,8 +590,8 @@ void ObjManager::BackgroundLineCollision(E_OBJECT _Eobj)
 				
 					case E_USERYUPDOWN_JUMP:
 					{
-						//m_vecObj[_Eobj][i]->SetJump(true);
-						//m_vecObj[_Eobj][i]->Setobjstate(E_USERSTATE_IDLE);
+						m_vecObj[_Eobj][i]->SetJump(true);
+						m_vecObj[_Eobj][i]->Setobjstate(E_USERSTATE_JUMP);
 					}
 						break;
 					case E_USERUPDOWN_JUMPSTOP:
@@ -610,8 +602,9 @@ void ObjManager::BackgroundLineCollision(E_OBJECT _Eobj)
 				}
 
 
+
 				// Object 의 상태가 jump 가 아닐 때에만 gravity를 false 로 바꿔주기
-				/*if (m_vecObj[_Eobj][i]->Getobjstate() == E_USERSTATE_JUMP)
+				if (m_vecObj[_Eobj][i]->Getobjstate() == E_USERSTATE_JUMP)
 				{
 					m_vecObj[_Eobj][i]->SetJump(false);
 					m_vecObj[_Eobj][i]->Setobjstate(E_USERSTATE_IDLE);
@@ -619,7 +612,7 @@ void ObjManager::BackgroundLineCollision(E_OBJECT _Eobj)
 				else
 				{
 					m_vecObj[_Eobj][i]->SetboolGravity(true);
-				}*/
+				}
 
 				// 오브젝트의 y값이 나아갈 위치의 y값보다 많이 작을 경우 나아가지 못하도록.
 				/*if ((iyplayerpos + (pImgSizetemp.y * PLAYERSIZE)) - iobjdistancey >= 10)

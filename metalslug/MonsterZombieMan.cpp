@@ -22,17 +22,12 @@ MonsterZombieMan::MonsterZombieMan()
 	m_DisTop.ptDestSize = { MONSTERWANIMATION, MONSTERHANIMATION };
 	
 
-	/*m_ImgMon.iWidthnum = MONSTERWNUM;
-	m_ImgMon.iHightnum = MONSTERHNUM;
-	m_ImgMon.ptSrcSize = { MONSTERWANIMATION, MONSTERHANIMATION };*/
 	m_ImgTop.iWidthnum = MONSTERWNUM;
 	m_ImgTop.iHightnum = MONSTERHNUM;
 	m_ImgTop.ptSrcSize = { MONSTERWANIMATION, MONSTERHANIMATION };
 
 	m_fdelay = 0.5;
 
-	/*m_recHitBox = { m_DisMon.ptDestPos.x, m_DisMon.ptDestPos.y,
-		m_DisMon.ptDestPos.x + (m_DisMon.ptDestSize.x * PLAYERSIZE), m_DisMon.ptDestPos.y + (m_DisMon.ptDestSize.y * PLAYERSIZE) };*/
 	m_recHitBox = { m_DisTop.ptDestPos.x, m_DisTop.ptDestPos.y,
 		m_DisTop.ptDestPos.x + (m_DisTop.ptDestSize.x * PLAYERSIZE), m_DisTop.ptDestPos.y + (m_DisTop.ptDestSize.y * PLAYERSIZE) };
 
@@ -54,8 +49,6 @@ void MonsterZombieMan::Run()
 	if (m_dcurTime - m_dPrevTime >= 0.1f * m_fdelay)
 	{
 		// object 상태 움직임 변경 
-		//Animation(_hdc, m_Monster, m_iobjstate);
-		//Aniimage(m_DisMon, m_ImgMon);
 		Aniimage(m_DisTop, m_ImgTop);
 
 		// 이전 시간을 현재 시간으로 대체
@@ -69,12 +62,8 @@ void MonsterZombieMan::Run()
 	//MovePattern();
 
 	// HitBox 갱신
-	/*m_recHitBox = { m_DisMon.ptDestPos.x, m_DisMon.ptDestPos.y,
-		m_DisMon.ptDestPos.x + (m_DisMon.ptDestSize.x * PLAYERSIZE), m_DisMon.ptDestPos.y + (m_DisMon.ptDestSize.y * PLAYERSIZE) };*/
-	m_recHitBox = { m_DisTop.ptDestPos.x, m_DisTop.ptDestPos.y,
+		m_recHitBox = { m_DisTop.ptDestPos.x, m_DisTop.ptDestPos.y,
 		m_DisTop.ptDestPos.x + (m_DisTop.ptDestSize.x * PLAYERSIZE), m_DisTop.ptDestPos.y + (m_DisTop.ptDestSize.y * PLAYERSIZE) };
-
-	//Gravity(&m_DisMon);
 
 	return;
 };

@@ -92,7 +92,6 @@ void Player::Jump()
 
 	m_t++; // 물체의 시각을 진행한다 
 	
-
 	return;
 };
 
@@ -116,10 +115,13 @@ void Player::SetboolGravity(bool _bGravity)
 { 
 	m_bgravity = _bGravity; 
 
+	// 중력이 false
 	if (m_bgravity == false)
 	{
+		// 오브젝트의 state가 jump일 경우
 		if (m_iobjstate == E_USERSTATE_JUMP)
 		{
+			// 점프 취소
 			m_bjump = false;
 			m_t = 0;
 			m_iobjstate = E_USERSTATE_IDLE;

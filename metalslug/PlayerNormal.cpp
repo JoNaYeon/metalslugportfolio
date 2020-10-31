@@ -16,9 +16,8 @@ PlayerNormal::PlayerNormal()
 	//m_iobjsize = PLAYERSIZE;
 
 	m_fdelay = 0.5;
+	// 캐릭터 오른쪽 보기
 	m_bleftright = true;
-	// 중력 받기
-	m_bgravity = true;
 	
 	// 플레이어 배경 움직이기
 	m_bmove = false;
@@ -72,6 +71,9 @@ void PlayerNormal::AnimationStateCheck()
 		m_DisTop.ptDestSize = ptImgSize;
 		SetImgInfo(m_ImgTop, ptImgSize, JUMPPLAYERWNUM, JUMPPLAYERHNUM);
 
+		// 중력 false
+		m_bgravity = false;
+
 		// 총 쏠 때 
 		if (InputManager::GetInstance()->Keyboard(E_KEYFIRE) == true)
 		{
@@ -103,9 +105,6 @@ void PlayerNormal::AnimationStateCheck()
 		// 왼쪽 방향으로 움직이기
 		else if (InputManager::GetInstance()->Keyboard(E_KEYLEFT) == true)
 		{
-			// 중력 true
-			m_bgravity = true;
-
 			m_iobjstate = E_USERSTATE_LWALK;
 			m_iobjmove = IDLEUSERDMOVE;
 			ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
@@ -122,9 +121,6 @@ void PlayerNormal::AnimationStateCheck()
 		// 오른쪽 방향으로 움직이기
 		else if (InputManager::GetInstance()->Keyboard(E_KEYRIGHT) == true)
 		{
-			// 중력 true
-			m_bgravity = true;
-
 			m_iobjstate = E_USERSTATE_RWALK;
 			m_iobjmove = IDLEUSERDMOVE;
 			ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
@@ -141,6 +137,9 @@ void PlayerNormal::AnimationStateCheck()
 	// 점프중이 아닐 때
 	else
 	{
+		// 중력 true
+		m_bgravity = true;
+
 		// 총 쏠 때 
 		if (InputManager::GetInstance()->Keyboard(E_KEYFIRE) == true)
 		{
@@ -182,8 +181,6 @@ void PlayerNormal::AnimationStateCheck()
 		// 왼쪽 방향으로 움직이기
 		else if (InputManager::GetInstance()->Keyboard(E_KEYLEFT) == true)
 		{
-			// 중력 true
-			m_bgravity = true;
 
 			m_iobjstate = E_USERSTATE_LWALK;
 			m_iobjmove = IDLEUSERDMOVE;
@@ -201,9 +198,6 @@ void PlayerNormal::AnimationStateCheck()
 		// 오른쪽 방향으로 움직이기
 		else if (InputManager::GetInstance()->Keyboard(E_KEYRIGHT) == true)
 		{
-			// 중력 true
-			m_bgravity = true;
-
 			m_iobjstate = E_USERSTATE_RWALK;
 			m_iobjmove = IDLEUSERDMOVE;
 			ptImgSize = { IDLEPLAYERWANIMATION , IDLEPLAYERHANIMATION };
@@ -222,9 +216,6 @@ void PlayerNormal::AnimationStateCheck()
 			// bool 변수 혹은 enum 으로 좌우 위치 확인해주기
 			if (m_bleftright == true)
 			{
-				// 중력 true
-				m_bgravity = true;
-
 				m_iobjstate = E_USERSTATE_IDLE;
 				m_iobjmove = IDLEUSERDMOVE;
 
@@ -240,9 +231,6 @@ void PlayerNormal::AnimationStateCheck()
 			}
 			else
 			{
-				// 중력 true
-				m_bgravity = true;
-
 				m_iobjstate = E_USERSTATE_IDLE;
 				m_iobjmove = IDLEUSERDMOVE;
 
@@ -470,6 +458,7 @@ void PlayerNormal::Run()
 	{
 		Jump();
 	}
+
 	// fire 실행
 	if (m_bfire == true)
 	{
@@ -477,7 +466,6 @@ void PlayerNormal::Run()
 	}
 
 	AnimationStateMove();
-
 
 	// #임시 - 필요하다면 수정하기
 	// bottom hitbox 정의시켜주기 
@@ -541,20 +529,6 @@ void PlayerNormal::Render(HDC& _hdc, HWND& _hWnd)
 		m_DisTop.ptDestSize.x * PLAYERSIZE, m_DisTop.ptDestSize.y * PLAYERSIZE,
 		hobjdc, m_DisTop.ptSrcPos.x, m_DisTop.ptSrcPos.y,
 		m_ImgTop.ptSrcSize.x, m_ImgTop.ptSrcSize.y, RGB(255, 255, 255));
-
-	
-	// 플레이어 하체 출력
-	/*Rectangle(_hdc, m_DisBot.ptDestPos.x, m_DisBot.ptDestPos.y,
-		(m_DisBot.ptDestSize.x * PLAYERSIZE) + m_DisBot.ptDestPos.x, 
-		(m_DisBot.ptDestSize.y * PLAYERSIZE) + m_DisBot.ptDestPos.y);*/
-
-	// 플레이어 상체 출력
-	/*Rectangle(_hdc, m_DisTop.ptDestPos.x, m_DisTop.ptDestPos.y,
-		(m_DisTop.ptDestSize.x * PLAYERSIZE) + m_DisTop.ptDestPos.x, 
-		(m_DisTop.ptDestSize.y * PLAYERSIZE) + m_DisTop.ptDestPos.y);*/
-
-	// 히트박스 디스플레이
-	//Rectangle(_hdc, m_recHitBox.left, m_recHitBox.top, m_recHitBox.right, m_recHitBox.bottom);
 
 	// oldbit로 바꿔주기
 	SelectObject(hobjdc, holdBit);

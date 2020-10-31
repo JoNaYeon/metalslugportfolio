@@ -25,13 +25,6 @@ protected:
 
 	int m_t;		// 물체의 시각 
 
-	/*// 플레이어 구조체
-	DISPLAYINFO	m_DisTop;
-	DISPLAYINFO	m_DisBot;
-
-	IMAGEINFO	m_ImgTop;
-	IMAGEINFO	m_ImgBot;*/
-
 public:
 	// 생성자
 	Player();

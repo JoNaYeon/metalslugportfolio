@@ -25,7 +25,7 @@ public:
 	// 오브젝트 초기화 (오버라이딩)
 	virtual void Init() PURE;
 	// 오브젝트 움직임 (오버라이딩)
-	virtual void Run() PURE;
+	void Run();
 	// 오브젝트 출력 (오버라이딩)
 	virtual void Render(HDC& _hdc, HWND& _hWnd) PURE;
 	// 오브젝트 파괴 (오버라이딩)

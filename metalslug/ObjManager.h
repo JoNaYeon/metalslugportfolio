@@ -46,8 +46,6 @@ public:
 	RECT GetRect();
 	void SetRect(RECT _recClient);
 
-	//std::vector<RECT>* GetvecBGpos() { return &m_vecBGpos; };
-
 	// DB
 	void Run();
 	// Rend

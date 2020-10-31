@@ -375,123 +375,6 @@ void ObjManager::CollisionCheck()
 		}
 	}
 
-
-	/*for (int i = 0; i < EOBJECT_OBJNUM; i++)
-	{
-		int iobj = 0;
-
-		switch(i)
-		{
-			case EOBJECT_MONSTER:
-			{
-				iobj = EOBJECT_MONSTER;
-
-				for (int j = 0; j < m_vecObj[iobj].size(); j++)
-				{
-					BackgroundTileSet((E_OBJECT)iobj, ((Monster*)(m_vecObj[iobj])[j])->GetMonsterDis());
-				}
-			}
-				break;
-			case EOBJECT_USER:
-			{
-				iobj = EOBJECT_USER; 
-				
-				for (int j = 0; j < m_vecObj[iobj].size(); j++)
-				{
-					BackgroundTileSet((E_OBJECT)iobj, ((PlayerNormal*)(m_vecObj[iobj])[j])->GetPlayerDisTop());
-					BackgroundTileSet((E_OBJECT)iobj, ((PlayerNormal*)(m_vecObj[iobj])[j])->GetPlayerDisBot());
-				}
-			}
-				break;
-		}
-
-		/*for (int j = 0; j < m_vecObj[iobj].size(); j++)
-		{
-			switch (iobj)
-			{
-			case EOBJECT_MONSTER:
-				BackgroundTileSet((E_OBJECT)iobj, ((Monster*)(m_vecObj[iobj])[j])->GetMonsterDis());
-				break;
-			case EOBJECT_USER:
-				BackgroundTileSet((E_OBJECT)iobj, ((PlayerNormal*)(m_vecObj[iobj])[j])->GetPlayerDisTop());
-				BackgroundTileSet((E_OBJECT)iobj, ((PlayerNormal*)(m_vecObj[iobj])[j])->GetPlayerDisBot());
-				break;
-
-			}
-		}
-	}*/
-
-
-	// Player 과 BackgroundTile 의 충돌시 
-	/*for (int i = 0; i < m_vecObj[EOBJECT_USER].size(); i++)
-	{
-		RECT recHitPlayer = m_vecObj[EOBJECT_USER][i]->GetHitBox();
-
-
-		for (int j = 0; j < m_vecBGpos.size(); j++)
-		{
-			RECT recHitBG = m_vecBGpos[j];
-
-			// background Tile 과 Player 의 HitBox 가 부딪혔을 때 조금씩 올라오도록.
-			if (IntersectRect(&rectemp, &recHitPlayer, &recHitBG) == true)
-			{
-				// top과 bot을 일정한 위치에 위치하도록 해주기.
-				DISPLAYINFO* disinfotemp = ((Player*)(m_vecObj[EOBJECT_USER][i]))->GetPlayerDisTop();
-				disinfotemp->ptDestPos.y = recHitBG.top - (disinfotemp->ptDestSize.y * PLAYERSIZE);
-
-				disinfotemp = ((Player*)(m_vecObj[EOBJECT_USER][i]))->GetPlayerDisBot();
-				disinfotemp->ptDestPos.y = recHitBG.top - (disinfotemp->ptDestSize.y * PLAYERSIZE);
-
-				(m_vecObj[EOBJECT_USER][i])->SetboolGravity(false);
-
-				// 부딫힐 경우 다른 background tile 과는 비교하지 않도록 
-				break;
-			}
-			// backgoround 와 부딪히지 않았을 경우 계속 gravity 받도록. 
-			else
-			{
-				(m_vecObj[EOBJECT_USER][i])->SetboolGravity(true);
-			}
-		}
-	}*/
-
-	// Monster 과 Background Tile 충돌
-	/*for (int i = 0; i < m_vecObj[EOBJECT_MONSTER].size(); i++)
-	{
-		RECT recHitPlayer = m_vecObj[EOBJECT_MONSTER][i]->GetHitBox();
-
-		for (int j = 0; j < m_vecBGpos.size(); j++)
-		{
-			RECT recHitBG = m_vecBGpos[j];
-			
-			// background tile 의 위치 조정 
-			//recHitBG.left += m_itile;
-			//recHitBG.right += m_itile;
-
-			// background Tile 과 Monster 의 HitBox 가 부딪혔을 때 조금씩 올라오도록.
-			if (IntersectRect(&rectemp, &recHitPlayer, &recHitBG) == true)
-			{
-				DISPLAYINFO* disinfotemp = ((Monster*)(m_vecObj[EOBJECT_MONSTER][i]))->GetMonsterDis();
-				disinfotemp->ptDestPos.y -= 0.4f;
-
-				disinfotemp = ((Monster*)(m_vecObj[EOBJECT_MONSTER][i]))->GetMonsterDis();
-				disinfotemp->ptDestPos.y -= 0.4f;
-
-				(m_vecObj[EOBJECT_MONSTER][i])->SetboolGravity(false);
-
-				// 부딫힐 경우 다른 background tile 과는 비교하지 않도록 
-				break;
-			}
-			// backgoround 와 부딪히지 않았을 경우 계속 gravity 받도록. 
-			else
-			{
-				(m_vecObj[EOBJECT_MONSTER][i])->SetboolGravity(true);
-			}
-		}
-	}*/
-
-
-	
 	return; 
 }
 
@@ -565,10 +448,6 @@ void ObjManager::BackgroundLineCollision(E_OBJECT _Eobj)
 							// top 위치에 bot 맞춰주기
 							(m_vecObj[_Eobj][i])->SetDisBot(ptobjectpos);
 						}
-
-						// line 충돌이 일어나면 GravityTemp 를 0으로 만들어주어서 Gravity의 강도를 0부터 설정하도록 하기
-						//m_vecObj[_Eobj][i]->SetGravityTemp(0);
-
 					}
 						break;
 
@@ -630,128 +509,9 @@ void ObjManager::BackgroundLineCollision(E_OBJECT _Eobj)
 		
 	}
 
-	// 직선의 기울기 구하기
-	/*for (int i = 0; i < m_vecpos.size() - 1; i++)
-	{
-		// 기울기 구하기
-		im = (m_vecpos[i + 1].y - m_vecpos[i].y) / (m_vecpos[i + 1].x - m_vecpos[i].x);
-		// y절편 구하기
-		iy = m_vecpos[i].y - (im * m_vecpos[i].x);
-
-		// x 위치에 따른 y의 값
-		for (int j = 0; j < m_vecObj[_Eobj].size() - 1; j++)
-		{
-			if (m_vecObj[_Eobj][j]->GetyPos() == true)
-			{
-				// 이미지의 위치값 가져오기
-				int ixplayerpos = m_vecObj[_Eobj][j]->GetDisTop()->ptDestPos.x;
-				int iyplayerpos = m_vecObj[_Eobj][j]->GetDisTop()->ptDestPos.y;
-
-				// 이미지 사이즈 가져오기 
-				POINT pImgSizetemp = { iyplayerpos - m_vecObj[_Eobj][j]->GetDisTop()->ptDestSize.x ,
-					iyplayerpos - m_vecObj[_Eobj][j]->GetDisTop()->ptDestSize.y };
-
-				// y의 타일 위치 계산
-				iypostemp = (im * ixplayerpos) + iy;
-
-				// 플레이어의 이미지 시작점이 타일의 위치 - 플레이어의 세로 크기 보다 작다면 위치 고정시켜주기
-				if (iyplayerpos < iypostemp - pImgSizetemp.y)
-				{
-					POINT pitplayerpos = { ixplayerpos - (pImgSizetemp.x / 2) ,	iyplayerpos - pImgSizetemp.y };
-
-					(m_vecObj[_Eobj][j])->SetDisTop(pitplayerpos);
-
-					// 만약 User 일 경우, Bot 부분도 세팅해주기
-					if (_Eobj == EOBJECT_USER)
-					{
-						(m_vecObj[_Eobj][j])->SetDisBot(pitplayerpos);
-					}
-					break;
-				}
-			}
-			
-		}
-	}*/
 
 	return;
 }
-
-// 선타일을 깔아주는 함수
-/*void ObjManager::BackgroundTileSet(E_OBJECT _Eobj, std::vector<Object*> _objvec)
-{
-	for (int i = 0; i < m_vecObj[EOBJECT_BG].size(); i++)
-	{
-		for (int j = 0; j < BGEND; j++)
-		{
-			m_vecBGpos.push_back(((Background*)(m_vecObj[EOBJECT_BG][i]))->BackgroundTile(j));
-		}
-	}
-
-	m_bTile = true;
-
-
-	for (int i = 0; i < _objvec.size(); i++)
-	{
-		if (((PlayerNormal*)_objvec[i])->GetPlayerDisTop() tile 의 y값 - ((PlayerNormal*)_objvec[i])->GetPlayerDisTop().y / 2 보다 크다면)
-		{
-			// 위치 고정시키기
-		}
-	}
-
-	for (int i = 0; i < m_vecObj[_Eobj].size(); i++)
-	{
-		for (int j = 0; j < m_vecObj[EOBJECT_BG].size(); j++)
-		{
-			int ix = 0;
-			int iy = 0;
-
-			switch (_Eobj)
-			{
-			case EOBJECT_USER:
-			{
-				ix = (((PlayerNormal*)(m_vecObj[_Eobj])[i])->GetPlayerDisTop()->ptDestPos.x)
-					- (((PlayerNormal*)(m_vecObj[_Eobj])[i])->GetPlayerDisTop()->ptDestSize.x / 2);
-				iy = (((Background*)(m_vecObj[EOBJECT_BG])[j])->GetTileY(m_vecObj[_Eobj][i]))
-					- (((PlayerNormal*)(m_vecObj[_Eobj])[i])->GetPlayerDisTop()->ptDestSize.y);
-
-				POINT postemp = { ix,iy };
-
-				// object 의 y의 위치가 postemp.y 보다 작을 경우
-				if (((PlayerNormal*)m_vecObj[_Eobj][i])->GetPlayerDisTop()->ptDestPos.y <= postemp.y)
-				{
-					((PlayerNormal*)(m_vecObj[_Eobj])[i])->SetPlayerDisTop(postemp);
-					((PlayerNormal*)(m_vecObj[_Eobj])[i])->SetPlayerDisBot(postemp);
-				}
-			}
-			break;
-			case EOBJECT_MONSTER:
-			{
-				ix = (((Monster*)(m_vecObj[_Eobj])[i])->GetMonsterDis()->ptDestPos.x)
-					- (((Monster*)(m_vecObj[_Eobj])[i])->GetMonsterDis()->ptDestSize.x / 2);
-				iy = (((Background*)(m_vecObj[EOBJECT_BG])[j])->GetTileY(m_vecObj[_Eobj][i]))
-					- (((Monster*)(m_vecObj[_Eobj])[i])->GetMonsterDis()->ptDestSize.y);
-
-				POINT postemp = { ix,iy };
-
-				// object 의 y의 위치가 postemp.y 보다 작을 경우
-				if (((Monster*)m_vecObj[_Eobj][i])->GetMonsterDis()->ptDestPos.y <= postemp.y)
-				{
-					((Monster*)(m_vecObj[_Eobj])[i])->SetMonsterDis(postemp);
-				}
-			}
-			break;
-			}
-
-			//POINT postemp = { ((PlayerNormal*)(m_vecObj[EOBJECT_USER])[i])->GetPlayerDisTop()->ptDestPos.x, 
-			//	((Background*)(m_vecObj[EOBJECT_BG])[j])->GetTileY(m_vecObj[EOBJECT_USER][i]) };
-		}
-	}
-
-	m_bTile = true;
-
-	return;
-}*/
-
 
 // 유저의 위치에 따라서 배경과 오브젝트들을 움직여주는 함수
 void ObjManager::BackgroundMove()
@@ -793,14 +553,6 @@ void ObjManager::BackgroundMove()
 // 타일 움직여주는 함수
 void ObjManager::TileMove(E_USERSTATE _e_state)
 {
-
-	/*std::vector<POINT>* vecBGTilePos = NULL;
-
-	for (int i = 0; i < m_vecObj[EOBJECT_BG].size(); i++)
-	{
-		vecBGTilePos = ((Background*)(m_vecObj[EOBJECT_BG])[i])->GetBGTilevecpt();
-	}*/
-
 	switch (_e_state)
 	{
 		case E_USERSTATE_LWALK:

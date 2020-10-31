@@ -8,18 +8,15 @@ DWORD Object::m_dPrevTime = timeGetTime();
 // 생성자
 Object::Object()
 {
-	//m_iobjsize = 1;
-
 	m_iobjstate = -1;
 	m_dcurTime = timeGetTime();
 	m_fdelay = 1;
 
-	//m_fvelocity = -VELOCITY;
-	//m_bgravity = true;
+	// 중력 true
+	m_bgravity = true;
 
 	m_bdead = false;
 	m_bfire = false;
-	//m_bypos = false;
 
 	m_bCollisionCheck = false;
 	
@@ -79,9 +76,7 @@ void Object::SetImgInfo(IMAGEINFO& _imgInfo, POINT _ptSrcSize, int _iWidthNum, i
 
 void Object::Gravity(DISPLAYINFO* _objdis, E_OBJECT _eobj)
 {
-	//static int temp = 0;		// 물체의 시각 
-
-	// gravity 가 true 일 때 중력 적용
+	// 중력이 true 일 때 
 	if (m_bgravity == true)
 	{
 		for (int i = 0; i < ObjManager::GetInstance()->GetVector(_eobj).size(); i++)
@@ -98,7 +93,6 @@ void Object::Gravity(DISPLAYINFO* _objdis, E_OBJECT _eobj)
 				{
 					// 임시 중력 
 					_objdis->ptDestPos.y += 0.5f * 0.4f * m_gravitytemp * m_gravitytemp;
-					//_objdis->ptDestPos.y += 10;
 				}
 			}
 		}
@@ -107,8 +101,6 @@ void Object::Gravity(DISPLAYINFO* _objdis, E_OBJECT _eobj)
 	{
 		m_gravitytemp = 0;
 	}
-	
-
 
 	m_gravitytemp++;
 
@@ -157,27 +149,37 @@ int Object:: ObjectyLevel(int _iobjdistancey)
 	//if (m_iobjstate != E_USERSTATE_JUMP)
 	if (m_bjump == false)
 	{
+		// 점프가 아닐시, 중력 true
+		m_bgravity = true;
+
 		// 오브젝트가 line보다 아래에 있을 때 
 		if (_iobjdistancey - m_DisTop.ptDestPos.y <= ((m_DisTop.ptDestSize.y * PLAYERSIZE)))
 		{
 			m_iuserycase = E_USERYUPDOWN_UP;
 			m_bgravity = false;
 
+			// 오브젝트 상태 IDLE
+			m_iobjstate = E_USERSTATE_IDLE;
 		}
 		// 오브젝트가 line보다 위에 있을 때
 		else if (_iobjdistancey - m_DisTop.ptDestPos.y > ((m_DisTop.ptDestSize.y * PLAYERSIZE)))
 		{
 			m_iuserycase = E_USERYUPDOWN_DOWN;
-			m_bgravity = true;
+
+			// 오브젝트 상태 JUMP
+			m_iobjstate = E_USERSTATE_JUMP;
 		}
 	}
+	// 점프중일 경우
 	else
 	{
+		// 점프중일 경우, 중력 false
+		m_bgravity = false;
 
 	}
 
 	// 오브젝트 + (IDLE의 크기 - JUMP의 크기) 가 라인보다 아래에 있을 경우 m_iobjstate 초기화
-	if (_iobjdistancey - m_DisTop.ptDestPos.y <= ((m_DisTop.ptDestSize.y * PLAYERSIZE) + (JUMPPLAYERHANIMATION - IDLEPLAYERHANIMATION)))
+	if (_iobjdistancey - m_DisTop.ptDestPos.y <= (m_DisTop.ptDestSize.y * PLAYERSIZE))
 	{
 		m_iobjstate = 0;
 	}

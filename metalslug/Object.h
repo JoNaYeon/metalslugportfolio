@@ -8,8 +8,6 @@ protected:
 	// 오브젝트의 상태
 	int m_iobjstate;
 	int m_iobjstatetemp;
-	// 오브젝트 사이즈 뻥튀기 값
-	//int m_iobjsize;
 
 	// y값에 따른 오브젝트의 상하멈춤 상태
 	int m_iuserycase = 0;
@@ -22,9 +20,6 @@ protected:
 	// 객체의 존재 여부 확인하는 bool 변수
 	bool m_bdead;
 
-	// 중력을 컨트롤 할 변수들
-	//float m_fvelocity;
-	//float m_fgravity;
 	// jump 유무
 	bool m_bjump;
 	// fire 유무
@@ -81,8 +76,6 @@ public:
 	void SetImgInfo(IMAGEINFO& _imgInfo, POINT _ptSrcSize, int _iWidthNum, int _iHightNum);
 	void Gravity(DISPLAYINFO* _objdis, E_OBJECT _eobj);
 	bool IntersectRectCheck(RECT* _rec1, RECT* _rec2);
-	// Object들이 배경에 설 수 있도록 해주는 함수 
-	//void ObjStand(ST_OBJECT* _obj);
 
 	// y값(위치 높이)의 상하를 정해주는 함수
 	int ObjectyLevel(int _iobjdistancey);

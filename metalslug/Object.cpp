@@ -77,7 +77,7 @@ void Object::SetImgInfo(IMAGEINFO& _imgInfo, POINT _ptSrcSize, int _iWidthNum, i
 void Object::Gravity(DISPLAYINFO* _objdis, E_OBJECT _eobj)
 {
 	// 중력이 true 일 때 
-	if (m_bgravity == true)
+	if (m_bgravity == true && m_iobjstate != E_USERSTATE_JUMP)
 	{
 		for (int i = 0; i < ObjManager::GetInstance()->GetVector(_eobj).size(); i++)
 		{
@@ -155,27 +155,36 @@ int Object:: ObjectyLevel(int _iobjdistancey)
 		// 오브젝트가 line보다 아래에 있을 때 
 		if (_iobjdistancey - m_DisTop.ptDestPos.y <= ((m_DisTop.ptDestSize.y * PLAYERSIZE)))
 		{
-			m_iuserycase = E_USERYUPDOWN_UP;
 			m_bgravity = false;
+			m_iuserycase = E_USERYUPDOWN_UP;
 
 			// 오브젝트 상태 IDLE
 			m_iobjstate = E_USERSTATE_IDLE;
 		}
 		// 오브젝트가 line보다 위에 있을 때
-		else if (_iobjdistancey - m_DisTop.ptDestPos.y > ((m_DisTop.ptDestSize.y * PLAYERSIZE)))
+		/*else if (_iobjdistancey - m_DisTop.ptDestPos.y > ((m_DisTop.ptDestSize.y * PLAYERSIZE)))
 		{
 			m_iuserycase = E_USERYUPDOWN_DOWN;
 
 			// 오브젝트 상태 JUMP
-			m_iobjstate = E_USERSTATE_JUMP;
-		}
+			m_iobjstate = E_USERSTATE_IDLE;
+		}*/
 	}
 	// 점프중일 경우
 	else
 	{
-		// 점프중일 경우, 중력 false
-		m_bgravity = false;
+		// 오브젝트 상태 JUMP
+		m_iobjstate = E_USERSTATE_JUMP;
+		m_iuserycase = E_USERYUPDOWN_JUMP;
 
+		// 점프중에 line과 부딪힐 경우 
+		if (_iobjdistancey - m_DisTop.ptDestPos.y <= ((m_DisTop.ptDestSize.y * PLAYERSIZE)))
+		{
+			m_bgravity = false;
+
+			// 오브젝트 상태 IDLE
+			m_iobjstate = E_USERSTATE_IDLE;
+		}
 	}
 
 	// 오브젝트 + (IDLE의 크기 - JUMP의 크기) 가 라인보다 아래에 있을 경우 m_iobjstate 초기화

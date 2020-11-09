@@ -17,7 +17,6 @@ private:
 	std::vector<Object*>::iterator m_DBobjiter;
 
 	// tile 을 담는 vector 변수 
-	//std::vector<RECT> m_vecBGpos;
 	std::vector<POINT> m_vecpos;
 
 	// Tile 생성 여부를 확인해주는 bool 변수
@@ -34,6 +33,7 @@ private:
 	{
 
 	}
+
 public:
 	// static 함수 : class의 선언 없이 사용이 가능.
 	static ObjManager* GetInstance();
@@ -58,12 +58,12 @@ public:
 	// 유저의 움직임에 따라서 background 를 움직여주는 함수
 	void BackgroundMove();
 
-	// 타일 깔아주는 함수
-	//void BackgroundTileSet(E_OBJECT _Eobj, std::vector<Object*> _objvec);
 	// 선 깔아주는 함수
 	void BackgroundLineCollision(E_OBJECT _Eobj);
+
 	// 타일을 움직여주는 함수
 	void TileMove(E_USERSTATE _e_state);
+
 	std::vector<POINT>* GetTile() { return &m_vecpos; };
 
 };

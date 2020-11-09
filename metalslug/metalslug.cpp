@@ -49,7 +49,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // 메세지 루프를 돌기 전에 framework를 생성한다.
     Mainfrm framework;
-    framework.Create();
+    framework.Create(); 
     framework.Initialize();
 
 

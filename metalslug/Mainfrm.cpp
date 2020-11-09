@@ -35,8 +35,7 @@ void Mainfrm::Initialize()
 	if (m_scene == NULL)
 	{
 		// 맨 처음 만들 씬 
-		// intro 막아놓기 
-		Scene* ptrintro = new Game;
+		Scene* ptrintro = new Intro;
 
 		if (ptrintro != NULL)
 		{

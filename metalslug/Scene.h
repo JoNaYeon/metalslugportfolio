@@ -36,5 +36,4 @@ public:
 	void SetNextScene(Scene* _scene) { m_nextscene = _scene; return; };
 
 	virtual void NextScene() PURE;
-	//static Scene* GetNext() { return m_nextscene; };
 };

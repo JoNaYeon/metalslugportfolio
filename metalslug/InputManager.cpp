@@ -51,9 +51,10 @@ void InputManager::Run()
 
 bool InputManager::Keyboard(E_KEY _E_KEY)
 {
-	// 스페이스 받을 경우 넘어가기
+	// Key를 받아서 return값 설정해주기
 	switch (_E_KEY)
 	{
+		// 스페이스 받을 경우 Scene 넘어가기
 		case E_KEYSPACE:
 		{
 			if (GetAsyncKeyState(VK_SPACE) & 0x8000)

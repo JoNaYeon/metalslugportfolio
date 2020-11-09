@@ -28,3 +28,4 @@ public:
 	bool Keyboard(E_KEY _E_KEY);
 	bool Getbkeyboard() { return m_bkeyboard; };
 };
+

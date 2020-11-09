@@ -192,8 +192,7 @@ void ObjManager::Run()
 		}
 	}
 
-	// 임시주석 - 라인 충돌 검사를 위해 잠시 빼둠
-	//CollisionCheck();
+	CollisionCheck();
 	BackgroundMove();
 
 	// Object 와 Tile 충돌시
@@ -215,7 +214,7 @@ void ObjManager::Rend(HWND& _hWnd)
 		PAINTSTRUCT ps;
 		HDC hdc = BeginPaint(_hWnd, &ps);
 
-		// client 화면 크기를 안 받아오고 있으니 화면에 아무것도 안 뜨죠! 
+		// client 화면 크기 받아오기
 		GetClientRect(_hWnd, &m_recClient);
 
 		HBITMAP oldmembit;
@@ -238,7 +237,7 @@ void ObjManager::Rend(HWND& _hWnd)
 			}
 		}
 		
-		// 임의로 바닥 그려주기
+		// 바닥 그려주기
 		for (int i = 0; i < m_vecpos.size() - 1; i++)
 		{
 			MoveToEx(hdc, m_vecpos[i].x, m_vecpos[i].y, NULL);
@@ -441,20 +440,12 @@ void ObjManager::BackgroundLineCollision(E_OBJECT _Eobj)
 
 						// y 위치값 대입해주기...
 						m_vecObj[_Eobj][i]->SetDisTop(ptobjectpos);
-
 						// 만약 들어온 Object가 User 일 경우, Bot 부분도 세팅해주기
 						if (_Eobj == EOBJECT_USER)
 						{
 							// top 위치에 bot 맞춰주기
 							(m_vecObj[_Eobj][i])->SetDisBot(ptobjectpos);
 						}
-					}
-						break;
-
-					// 캐릭터가 내려가야 할 때
-					case E_USERYUPDOWN_DOWN:
-					{
-
 					}
 						break;
 
@@ -471,6 +462,17 @@ void ObjManager::BackgroundLineCollision(E_OBJECT _Eobj)
 					{
 						m_vecObj[_Eobj][i]->SetJump(true);
 						m_vecObj[_Eobj][i]->Setobjstate(E_USERSTATE_JUMP);
+
+						// Object 의 위치값을 구해온 뒤
+						/*POINT ptobjectpos = { m_vecObj[_Eobj][i]->GetDisTop()->ptDestPos.x, iobjdistancey - (m_vecObj[_Eobj][i]->GetDisTop()->ptDestSize.y * PLAYERSIZE) };
+
+						m_vecObj[_Eobj][i]->SetDisTop(ptobjectpos);
+						// 만약 들어온 Object가 User 일 경우, Bot 부분도 세팅해주기
+						if (_Eobj == EOBJECT_USER)
+						{
+							// top 위치에 bot 맞춰주기
+							(m_vecObj[_Eobj][i])->SetDisBot(ptobjectpos);
+						}*/
 					}
 						break;
 					case E_USERUPDOWN_JUMPSTOP:
